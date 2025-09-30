@@ -9,7 +9,7 @@
       <div class="bg-white rounded-xl shadow-lg overflow-hidden flex flex-col md:flex-row items-center mb-16 md:mb-24">
 
         <div class="md:w-1/2 lg:w-2/5 flex-shrink-0">
-          <img src="../public/images/author/men.jpg" alt="Vijay Prathapan - Ad Film Director"
+          <img src="../public/images/author/vijay.png" alt="Vijay Prathapan - Ad Film Director"
             class="w-full h-96 md:h-full object-cover object-center" />
         </div>
 

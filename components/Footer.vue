@@ -146,10 +146,9 @@ const categories = [
 const socialLinks = ref([
   { name: 'Facebook', url: 'https://www.facebook.com/thayaads/', icon: 'facebook-f', hoverColorClass: 'hover:text-[#1877F2]', ariaLabel: 'Facebook' },
   { name: 'Instagram', url: 'https://www.instagram.com/thayaads/', icon: 'instagram', hoverColorClass: 'hover:text-[#E1306C]', ariaLabel: 'Instagram' },
-  { name: 'X', url: 'YOUR_X_URL', icon: 'x-twitter', hoverColorClass: 'hover:text-black', ariaLabel: 'X (Twitter)' },
-  { name: 'LinkedIn', url: 'YOUR_LINKEDIN_URL', icon: 'linkedin-in', hoverColorClass: 'hover:text-[#0A66C2]', ariaLabel: 'LinkedIn' },
+  { name: 'X', url: 'https://x.com/Thayaads?t=vThOBu08KE3jZagZBxt4Gw&s=09', icon: 'x-twitter', hoverColorClass: 'hover:text-black', ariaLabel: 'X (Twitter)' },
   { name: 'YouTube', url: 'https://www.youtube.com/@thayaads', icon: 'youtube', hoverColorClass: 'hover:text-[#FF0000]', ariaLabel: 'YouTube' },
-  { name: 'Whatsapp', url: 'https://wa.me/918056305232?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.', icon: 'whatsapp', hoverColorClass: 'hover:text-[#25D366]', ariaLabel: 'Whatsapp' }
+  { name: 'Whatsapp', url: 'https://wa.me/919841115673?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.', icon: 'whatsapp', hoverColorClass: 'hover:text-[#25D366]', ariaLabel: 'Whatsapp' }
 ])
 
 // Scroll to top

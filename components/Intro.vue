@@ -2,12 +2,13 @@
   <section id="intro" class="py-12 md:py-20 bg-sky-50 overflow-hidden relative">
 
     <!-- Swiper Carousel -->
+    <!-- The Swiper component now iterates over the actual client data -->
     <Swiper
       :modules="modules"
       :loop="true"
       :centered-slides="true"
-      :autoplay="{ delay: 3500, disableOnInteraction: false }"
-      :speed="800"
+      :autoplay="{ delay: 2000, disableOnInteraction: false }"
+      :speed="400"
       :breakpoints="{
         0: { slidesPerView: 1.2, spaceBetween: 16 },
         640: { slidesPerView: 2.2, spaceBetween: 24 },
@@ -18,21 +19,23 @@
       pagination
       class="intro-swiper"
     >
-      <SwiperSlide v-for="(slide, index) in slides" :key="index">
+      <SwiperSlide v-for="(slide, index) in clientSlides" :key="index">
         <div class="group relative overflow-hidden rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300">
           <div class="w-full h-80 sm:h-[400px] bg-gray-200">
-            <img
-              :src="`https://placehold.co/500x742/EAEAEA/1D1860?text=${slide.name}`"
-              :alt="slide.name + ' campaign image'"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            />
+            <a :href="slide.url" target="_blank" rel="noopener noreferrer">
+              <img
+                :src="slide.logoUrl" 
+                :alt="slide.name + ' campaign image'"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              />
+            </a>
           </div>
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent p-5 sm:p-8 flex flex-col justify-end">
             <h3 class="text-xl sm:text-2xl font-bold text-white mb-1 group-hover:text-[#FDD835]">
-              {{ slide.name }}
+              {{ slide.name.toUpperCase() }}
             </h3>
             <span class="text-sm sm:text-base text-gray-300">
-              {{ slide.category }}
+              Client Showcase
             </span>
           </div>
         </div>
@@ -51,19 +54,19 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 
 const modules = [Autoplay, Navigation, Pagination];
 
-const slides = [
-  { name: 'Client1', category: 'Textile & Apparels' },
-  { name: 'Client2', category: 'Fashion & Lifestyle' },
-  { name: 'Client3', category: 'Retail' },
-  { name: 'Client4', category: 'Jewelry' },
-  { name: 'Client5', category: 'Automobile' },
-  { name: 'Client6', category: 'Healthcare' },
-  { name: 'Client7', category: 'Technology' },
-  { name: 'Client8', category: 'Education' },
-  { name: 'Client9', category: 'Finance' },
-  { name: 'Client10', category: 'Hospitality' },
-];
+// Define interface for clarity, based on the client data in the Canvas
+const clientSlides = ref([
+    { name: 'ajj', logoUrl: '/images/clients/ajj.png', url: '#' },
+    { name: 'bro', logoUrl: '/images/clients/bro.png', url: '#' },
+    { name: 'ds', logoUrl: '/images/clients/ds.png', url: '#' },
+    { name: 'kvp', logoUrl: '/images/clients/kvp.png', url: '#' },
+    { name: 'madha', logoUrl: '/images/clients/madha.png', url: '#' },
+    { name: 'paati', logoUrl: '/images/clients/paati.png', url: '#' },
+    { name: 'pristi', logoUrl: '/images/clients/pristi.png', url: '#' },
+    { name: 'saravana', logoUrl: '/images/clients/saravana.png', url: '#' }
+]);
 
+// Original component logic below:
 const showSocial = ref(true);
 let observer;
 

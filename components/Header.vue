@@ -19,7 +19,7 @@
           <NuxtLink to="/" :class="`${textClass} text-lg font-medium transition-opacity`">Home</NuxtLink>
           <a href="#about-us" :class="`${textClass} text-lg font-medium transition-opacity`">About Us</a>
           <a href="#our-services" :class="`${textClass} text-lg font-medium transition-opacity`">Our Services</a>
-          <a href="#gallery" :class="`${textClass} text-lg font-medium transition-opacity`">Gallery</a>
+          <!-- <a href="#gallery" :class="`${textClass} text-lg font-medium transition-opacity`">Gallery</a> -->
           <a href="#clients" :class="`${textClass} text-lg font-medium transition-opacity`">Clients</a>
           <a href="#main-footer" :class="`${textClass} text-lg font-medium transition-opacity`">Contact Us</a>
         </nav>
@@ -54,7 +54,7 @@
         class="fixed inset-0 z-40 lg:hidden bg-black bg-opacity-70"
         @click.self="menuOpen = false"
       >
-        <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-[#1D1860] shadow-xl flex flex-col p-6 pt-20">
+        <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-[#40BFFF] shadow-xl flex flex-col p-6 pt-20">
           <nav class="flex flex-col gap-4">
             <NuxtLink @click="menuOpen = false" to="/"
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Home</NuxtLink>
@@ -62,8 +62,8 @@
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">About Us</a>
             <a @click="menuOpen = false" href="#our-services"
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Our Services</a>
-            <a @click="menuOpen = false" href="#gallery"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Gallery</a>
+            <!-- <a @click="menuOpen = false" href="#gallery"
+              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Gallery</a> -->
             <a @click="menuOpen = false" href="#clients"
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Clients</a>
             <a @click="menuOpen = false" href="#main-footer"

@@ -35,10 +35,9 @@ import { ref, onMounted, onUnmounted } from 'vue';
 const socialLinks = ref([
     { name: 'Facebook', url: 'https://www.facebook.com/thayaads/', icon: 'facebook-f', colorClass: 'text-[#1877F2]', ariaLabel: 'Follow us on Facebook' },
     { name: 'Instagram', url: 'https://www.instagram.com/thayaads/', icon: 'instagram', colorClass: 'text-[#E1306C]', ariaLabel: 'Follow us on Instagram' },
-    { name: 'X', url: '#', icon: 'x-twitter', colorClass: 'text-gray-900', ariaLabel: 'Follow us on X' },
-    { name: 'LinkedIn', url: '#', icon: 'linkedin-in', colorClass: 'text-[#0A66C2]', ariaLabel: 'Connect with us on LinkedIn' },
+    { name: 'X', url: 'https://x.com/Thayaads?t=vThOBu08KE3jZagZBxt4Gw&s=09', icon: 'x-twitter', colorClass: 'text-gray-900', ariaLabel: 'Follow us on X' },
     { name: 'YouTube', url: '#', icon: 'youtube', colorClass: 'text-[#FF0000]', ariaLabel: 'Subscribe to our YouTube channel' },
-    { name: 'Whatsapp', url: 'https://wa.me/918056305232', icon: 'square-whatsapp', colorClass: 'text-[#25D366]', ariaLabel: 'Chat with us on WhatsApp' },
+    { name: 'Whatsapp', url: 'https://wa.me/919841115673?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20your%20services.', icon: 'square-whatsapp', colorClass: 'text-[#25D366]', ariaLabel: 'Chat with us on WhatsApp' },
 ]);
 
 const showSocial = ref(true);

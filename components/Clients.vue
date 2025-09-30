@@ -13,25 +13,22 @@
             </div>
 
             <!-- Responsive Logo Grid -->
-            <!-- Columns: 2 on mobile, 3 on tablet, 4 on desktop -->
-            <!-- Added border-t/b to visually separate this section -->
             <div
                 class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-items-center border-t border-b py-8 border-gray-200">
 
                 <div v-for="(client, index) in clientLogos" :key="index"
-                    class="w-full max-w-[200px] h-[100px] flex items-center justify-center p-3 rounded-lg 
+                    class="w-full max-w-[280px] h-[140px] flex items-center justify-center p-3 rounded-lg 
                            transition-all duration-500 cursor-pointer">
 
                     <a :href="client.url" target="_blank" rel="noopener noreferrer"
                         class="w-full h-full flex items-center justify-center">
                         <img 
-                            :src="getPlaceholderImage(client.name)" 
+                            :src="client.logoUrl" 
                             :alt="client.name + ' logo'"
                             class="max-w-full max-h-full object-contain 
-                                   grayscale opacity-50 
                                    transition-all duration-500 
-                                   hover:grayscale-0 hover:opacity-100 hover:scale-[1.05]"
-                        />
+                                   hover:scale-[1.05]" 
+                            />
                     </a>
                 </div>
 
@@ -47,28 +44,20 @@ import { ref } from 'vue';
 // Define the type for a client object
 interface ClientLogo {
     name: string;
-    logoUrl: string; // Placeholder for the real image path
+    logoUrl: string; // The URL path relative to the site root (starting with /)
     url: string; // Placeholder for the client website/case study link
 }
 
 const clientLogos = ref<ClientLogo[]>([
-    { name: 'Pothys', logoUrl: '/logos/pothys.svg', url: '#' },
-    { name: 'Chennai Silks', logoUrl: '/logos/chennai_silks.svg', url: '#' },
-    { name: 'Saravana Stores', logoUrl: '/logos/saravana_stores.svg', url: '#' },
-    { name: 'SKTM', logoUrl: '/logos/sktm.svg', url: '#' },
-    { name: 'Aachi Masala', logoUrl: '/logos/aachi.svg', url: '#' },
-    { name: 'Balar Murugan', logoUrl: '/logos/balar_murugan.svg', url: '#' },
-    { name: 'Kalyan Jewellers', logoUrl: '/logos/kalyan.svg', url: '#' },
-    { name: 'Tanishq', logoUrl: '/logos/tanishq.svg', url: '#' },
-    { name: 'Tata Motors', logoUrl: '/logos/tata_motors.svg', url: '#' },
-    { name: 'Apollo Hospitals', logoUrl: '/logos/apollo.svg', url: '#' },
+    { name: 'ajj', logoUrl: '/images/clients/ajj.png', url: '#' },
+    { name: 'bro', logoUrl: '/images/clients/bro.png', url: '#' },
+    { name: 'ds', logoUrl: '/images/clients/ds.png', url: '#' },
+    { name: 'kvp', logoUrl: '/images/clients/kvp.png', url: '#' },
+    { name: 'madha', logoUrl: '/images/clients/madha.png', url: '#' },
+    { name: 'paati', logoUrl: '/images/clients/paati.png', url: '#' },
+    { name: 'pristi', logoUrl: '/images/clients/pristi.png', url: '#' },
+    { name: 'saravana', logoUrl: '/images/clients/saravana.png', url: '#' }
 ]);
-
-// Helper function to provide placeholders until you add real URLs
-const getPlaceholderImage = (name: string): string => {
-    // Generates a placeholder image using placehold.co
-    return `https://placehold.co/200x100/E5E7EB/1D1860?text=${encodeURIComponent(name.split(' ')[0])}`;
-};
 
 </script>
 
