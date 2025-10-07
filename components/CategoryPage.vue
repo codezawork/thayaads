@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="relative h-[300px] md:h-[400px] bg-gray-900 mb-12">
+    <div class="relative h-[300px] md:h-[400px] bg-white mb-12">
       <img :src="data.coverImage" :alt="data.name + ' Cover Photo'" class="w-full h-full object-cover opacity-70" />
       
       <div class="absolute inset-0 flex flex-col justify-end p-4 md:p-8 bg-black/30">

@@ -16,12 +16,13 @@
       <!-- Desktop Navigation -->
       <div class="hidden lg:flex items-center gap-10">
         <nav class="flex gap-8">
-          <NuxtLink to="/" :class="`${textClass} text-lg font-medium transition-opacity`">Home</NuxtLink>
-          <a href="#about-us" :class="`${textClass} text-lg font-medium transition-opacity`">About Us</a>
-          <a href="#our-services" :class="`${textClass} text-lg font-medium transition-opacity`">Our Services</a>
-          <!-- <a href="#gallery" :class="`${textClass} text-lg font-medium transition-opacity`">Gallery</a> -->
-          <a href="#clients" :class="`${textClass} text-lg font-medium transition-opacity`">Clients</a>
-          <a href="#main-footer" :class="`${textClass} text-lg font-medium transition-opacity`">Contact Us</a>
+          <!-- EXPLICITLY set to text-white to match the dark headerBg -->
+          <NuxtLink to="/" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Home</NuxtLink>
+          <a href="#about-us" class="text-white text-lg font-medium transition-opacity hover:opacity-80">About Us</a>
+          <a href="#our-services" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Our Services</a>
+          <!-- <a href="#gallery" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Gallery</a> -->
+          <a href="#clients" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Clients</a>
+          <a href="#main-footer" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Contact Us</a>
         </nav>
 
         <a href="#contact"
@@ -41,8 +42,7 @@
       >
         <font-awesome-icon
           :icon="menuOpen ? ['fas', 'xmark'] : ['fas', 'bars']"
-          class="w-7 h-7"
-          :class="textClass"
+          class="w-7 h-7 text-white"
         />
       </button>
     </div>
@@ -54,8 +54,9 @@
         class="fixed inset-0 z-40 lg:hidden bg-black bg-opacity-70"
         @click.self="menuOpen = false"
       >
-        <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-[#40BFFF] shadow-xl flex flex-col p-6 pt-20">
+        <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-[#1D1860] shadow-xl flex flex-col p-6 pt-20">
           <nav class="flex flex-col gap-4">
+            <!-- Mobile drawer links remain white as the drawer background is dark blue -->
             <NuxtLink @click="menuOpen = false" to="/"
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Home</NuxtLink>
             <a @click="menuOpen = false" href="#about-us"
@@ -88,10 +89,10 @@ import { ref, computed } from 'vue'
 
 const menuOpen = ref(false)
 
-// Change your header background color here
-const headerBg = '#40BFFF'
+// Set headerBg to the dark color for consistency, even if the color is applied in the template
+const headerBg = '#1D1860'
 
-// Utility function to detect brightness (so text can flip color)
+// Utility function to detect brightness (no longer strictly needed for desktop links, but kept for mobile icon logic)
 function isDark(hex) {
   const c = hex.substring(1)
   const rgb = parseInt(c, 16)
@@ -102,9 +103,15 @@ function isDark(hex) {
   return luma < 150
 }
 
-const textClass = computed(() =>
-  isDark(headerBg) ? 'text-white hover:opacity-80' : 'text-gray-900 hover:text-[#1C1C84]'
-)
+const textClass = computed(() => {
+  if (isDark(headerBg)) {
+    // If background is dark (which it is now: #1D1860), use white text for mobile toggle visibility
+    return 'text-white hover:opacity-80';
+  } else {
+    // If background is light, use dark text
+    return 'text-[#1D1860] hover:text-blue-700';
+  }
+})
 </script>
 
 <style scoped>
