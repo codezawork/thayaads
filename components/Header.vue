@@ -1,43 +1,82 @@
 <template>
-  <header class="w-full shadow-lg" :style="{ backgroundColor: headerBg }">
-    <div class="max-w-7xl mx-auto flex items-center justify-between h-20 px-4 md:pl-4 md:pr-8">
+  <header class="w-full shadow-lg sticky top-0 z-50 bg-gradient-to-r from-[#1D1860] via-[#342D75] to-[#1D1860]">
+    <div class="max-w-7xl mx-auto flex items-center h-20 px-4 md:px-8">
 
       <!-- Logo -->
-      <div class="flex items-center h-full py-2">
-        <NuxtLink to="/">
-          <img
-            class="object-contain w-36 h-16 max-h-full"
-            src="https://assets.thayaads.com/public/assets/images/author/thaya.webp"
-            alt="Thaya Ads Logo"
-          />
-        </NuxtLink>
-      </div>
+      <NuxtLink to="/" class="flex items-center h-full">
+        <img
+          class="object-contain w-36 h-16 max-h-full"
+          src="https://assets.thayaads.com/public/assets/images/author/thaya.webp"
+          alt="Thaya Ads Logo"
+        />
+      </NuxtLink>
 
-      <!-- Desktop Navigation -->
-      <div class="hidden lg:flex items-center gap-10">
-        <nav class="flex gap-8">
-          <!-- EXPLICITLY set to text-white to match the dark headerBg -->
-          <NuxtLink to="/" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Home</NuxtLink>
-          <a href="#about-us" class="text-white text-lg font-medium transition-opacity hover:opacity-80">About Us</a>
-          <a href="#our-services" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Our Services</a>
-          <a href="#gallery" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Gallery</a>
-          <!-- <a href="#clients" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Clients</a> -->
-          <a href="#main-footer" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Contact Us</a>
+      <!-- Desktop Navigation & Social Links -->
+      <div class="hidden lg:flex items-center h-full ml-auto">
+
+        <!-- Navigation Links -->
+        <nav class="flex items-center gap-10 h-full relative">
+          <NuxtLink to="/" class="desktop-dot nav-link">Home</NuxtLink>
+          <a href="/#about-us" class="desktop-dot nav-link">About Us</a>
+          <a href="/#our-services" class="desktop-dot nav-link">Our Services</a>
+
+          <!-- Categories Dropdown -->
+          <div
+            class="relative h-full flex items-center"
+            @mouseenter="isDropdownOpen = true"
+            @mouseleave="isDropdownOpen = false"
+          >
+            <a href="/#categories" class="desktop-dot nav-link flex items-center focus:outline-none">
+              Categories
+              <font-awesome-icon :icon="['fas', 'angle-down']" class="ml-1 w-3 h-3" />
+            </a>
+
+            <transition name="fade-scale">
+              <div
+                v-if="isDropdownOpen"
+                class="absolute left-0 top-full w-72 rounded-b-xl backdrop-blur-md
+                       bg-[#1D1860]/85 border border-white/10 shadow-xl
+                       transition-all duration-300 ease-out origin-top z-50"
+              >
+                <div class="flex flex-col divide-y divide-white/10">
+                  <NuxtLink
+                    v-for="category in categories"
+                    :key="category.name"
+                    :to="category.link"
+                    class="desktop-dot dropdown-item"
+                    @click="isDropdownOpen = false"
+                  >
+                    {{ category.name }}
+                  </NuxtLink>
+                </div>
+              </div>
+            </transition>
+          </div>
+
+          <a href="/#gallery" class="desktop-dot nav-link">Gallery</a>
+          <a href="#main-footer" class="desktop-dot nav-link">Contact Us</a>
         </nav>
 
-        <a href="#contact"
-          class="bg-[#3DAD37] hover:bg-green-600 text-white px-6 py-2 rounded-full text-lg font-semibold cursor-pointer flex items-center gap-2 transition-colors">
-          <span class="text-xl">
-            <font-awesome-icon :icon="['fas', 'envelope']" class="w-5 h-5 mt-0.5 text-white shrink-0" />
-          </span>
-          Request a Quote
-        </a>
+        <!-- Social Media Icons -->
+        <div class="flex items-center gap-4 ml-8 pl-8 border-l border-white/20">
+          <a 
+            v-for="social in socialMediaLinks" 
+            :key="social.label" 
+            :href="social.url" 
+            :aria-label="social.label"
+            target="_blank" 
+            rel="noopener noreferrer"
+            :class="['transition-all text-white', socialHoverClass(social.label)]"
+          >
+            <font-awesome-icon :icon="social.icon" class="w-5 h-5" />
+          </a>
+        </div>
       </div>
 
-      <!-- Mobile Menu Toggle -->
+      <!-- Mobile Menu Button -->
       <button
         @click="menuOpen = !menuOpen"
-        class="lg:hidden p-2 rounded-lg transition-colors hover:bg-white/10 z-50"
+        class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition z-50 ml-auto"
         aria-label="Toggle menu"
       >
         <font-awesome-icon
@@ -45,94 +84,168 @@
           class="w-7 h-7 text-white"
         />
       </button>
-    </div>
 
-    <!-- Mobile Drawer -->
-    <transition name="slide-fade">
-      <div
-        v-if="menuOpen"
-        class="fixed inset-0 z-40 lg:hidden bg-black bg-opacity-70"
-        @click.self="menuOpen = false"
-      >
-        <div class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-[#1D1860] shadow-xl flex flex-col p-6 pt-20">
-          <nav class="flex flex-col gap-4">
-            <!-- Mobile drawer links remain white as the drawer background is dark blue -->
-            <NuxtLink @click="menuOpen = false" to="/"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Home</NuxtLink>
-            <a @click="menuOpen = false" href="#about-us"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">About Us</a>
-            <a @click="menuOpen = false" href="#our-services"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Our Services</a>
-            <a @click="menuOpen = false" href="#gallery"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Gallery</a>
-            <!-- <a @click="menuOpen = false" href="#clients"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Clients</a> -->
-            <a @click="menuOpen = false" href="#main-footer"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Contact Us</a>
-          </nav>
+      <!-- Mobile Drawer -->
+      <transition name="slide-fade">
+        <div
+          v-if="menuOpen"
+          class="fixed inset-0 bg-black bg-opacity-70 z-40 lg:hidden"
+          @click.self="menuOpen = false"
+        >
+          <div
+            class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-gradient-to-b from-[#1D1860] via-[#342D75] to-[#1D1860] shadow-xl flex flex-col p-6 pt-20"
+          >
+            <nav class="flex flex-col gap-4">
+              <NuxtLink
+                v-for="item in mainLinks"
+                :key="item.name"
+                :to="item.link"
+                @click="menuOpen = false"
+                class="text-white text-xl font-medium p-2 rounded-lg hover:bg-white/10"
+              >
+                {{ item.name }}
+              </NuxtLink>
 
-          <a @click="menuOpen = false" href="#contact"
-            class="mt-8 bg-[#3DAD37] hover:bg-green-600 text-white px-6 py-2 rounded-full text-lg font-semibold cursor-pointer flex items-center justify-center gap-2 transition-colors">
-            <span class="text-xl">
-              <font-awesome-icon :icon="['fas', 'envelope']" class="w-5 h-5 mt-0.5 text-white shrink-0" />
-            </span>
-            Request a Quote
-          </a>
+              <!-- Categories in Mobile -->
+              <div class="border-t border-white/10 mt-2 pt-2">
+                <div class="text-white text-xl font-medium mb-2 p-2">Categories</div>
+                <NuxtLink
+                  v-for="category in categories"
+                  :key="category.name"
+                  :to="category.link"
+                  @click="menuOpen = false"
+                  class="text-white/80 text-lg ml-2 py-1.5 px-2 rounded-lg block hover:bg-white/5"
+                >
+                  - {{ category.name }}
+                </NuxtLink>
+
+                <NuxtLink
+                  to="/event-management"
+                  @click="menuOpen = false"
+                  class="text-white/80 text-lg ml-2 py-1.5 px-2 rounded-lg block hover:bg-white/5"
+                >
+                  - Event Management
+                </NuxtLink>
+              </div>
+
+              <!-- Social Media Icons (Mobile) -->
+              <div class="flex justify-start gap-5 mt-6 pt-4 border-t border-white/10">
+                <a 
+                  v-for="social in socialMediaLinks" 
+                  :key="social.label" 
+                  :href="social.url" 
+                  :aria-label="social.label"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  class="text-white hover:scale-125 transition"
+                >
+                  <font-awesome-icon :icon="social.icon" class="w-7 h-7" />
+                </a>
+              </div>
+            </nav>
+          </div>
         </div>
-      </div>
-    </transition>
+      </transition>
+    </div>
   </header>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
+
+const categories = ref([
+  { name: 'Food', link: '/category/food' },
+  { name: 'Education', link: '/category/education' },
+  { name: 'Personal Care', link: '/category/personalCare' },
+  { name: 'Textile & Apparels', link: '/category/textileApparels' },
+  { name: 'Fashion & Lifestyle', link: '/category/fashionLifestyle' },
+  { name: 'Financial Service', link: '/category/financialService' }
+])
+
+const mainLinks = ref([
+  { name: 'Home', link: '/' },
+  { name: 'About Us', link: '#about-us' },
+  { name: 'Our Services', link: '#our-services' },
+  { name: 'Gallery', link: '#gallery' },
+  { name: 'Contact Us', link: '#main-footer' }
+])
+
+const socialMediaLinks = ref([
+  { icon: ['fab', 'facebook-f'], url: 'https://www.facebook.com/thayaads/', label: 'Facebook' },
+  { icon: ['fab', 'instagram'], url: 'https://www.instagram.com/thayaads/', label: 'Instagram' },
+  { icon: ['fab', 'x-twitter'], url: 'https://x.com/Thayaads', label: 'X (Twitter)' },
+  { icon: ['fab', 'youtube'], url: 'https://www.youtube.com/@thayaads', label: 'YouTube' },
+  { icon: ['fab', 'whatsapp'], url: 'https://wa.me/919841115673', label: 'WhatsApp' } 
+])
 
 const menuOpen = ref(false)
+const isDropdownOpen = ref(false)
 
-// Set headerBg to the dark color for consistency, even if the color is applied in the template
-const headerBg = '#1D1860'
-
-// Utility function to detect brightness (no longer strictly needed for desktop links, but kept for mobile icon logic)
-function isDark(hex) {
-  const c = hex.substring(1)
-  const rgb = parseInt(c, 16)
-  const r = (rgb >> 16) & 0xff
-  const g = (rgb >> 8) & 0xff
-  const b = (rgb >> 0) & 0xff
-  const luma = 0.299 * r + 0.587 * g + 0.114 * b
-  return luma < 150
-}
-
-const textClass = computed(() => {
-  if (isDark(headerBg)) {
-    // If background is dark (which it is now: #1D1860), use white text for mobile toggle visibility
-    return 'text-white hover:opacity-80';
-  } else {
-    // If background is light, use dark text
-    return 'text-[#1D1860] hover:text-blue-700';
+const socialHoverClass = (label) => {
+  switch(label) {
+    case 'Facebook': return 'hover:text-blue-600 hover:scale-125';
+    case 'Instagram': return 'hover:text-pink-500 hover:scale-125';
+    case 'X (Twitter)': return 'hover:text-blue-400 hover:scale-125';
+    case 'YouTube': return 'hover:text-red-600 hover:scale-125';
+    case 'WhatsApp': return 'hover:text-green-500 hover:scale-125';
+    default: return '';
   }
-})
+}
 </script>
 
 <style scoped>
-/* Transition styles for mobile menu */
-.slide-fade-enter-active .absolute,
-.slide-fade-leave-active .absolute {
-  transition: transform 0.3s ease-out;
+.nav-link {
+  @apply text-white text-lg font-medium transition;
+}
+.dropdown-item {
+  @apply px-5 py-3 text-white text-base font-medium transition;
+}
+.dropdown-item:hover {
+  background-color: #342D75;
 }
 
-.slide-fade-enter-from .absolute,
-.slide-fade-leave-to .absolute {
-  transform: translateX(100%);
+/* Desktop hover rectangle with moving dot outside */
+.desktop-dot {
+  position: relative;
+  display: inline-block;
 }
 
-.slide-fade-enter-active,
-.slide-fade-leave-active {
-  transition: opacity 0.3s;
-}
-
-.slide-fade-enter-from,
-.slide-fade-leave-to {
+.desktop-dot::before {
+  content: '';
+  position: absolute;
+  top: -6px; left: -6px; right: -6px; bottom: -6px;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 6px;
   opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.desktop-dot:hover::before {
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+.desktop-dot::after {
+  content: '';
+  position: absolute;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
+  top: -6px; left: -6px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.desktop-dot:hover::after {
+  opacity: 1;
+  animation: move-dot 3s linear infinite;
+}
+
+@keyframes move-dot {
+  0%   { top: -6px; left: -6px; }
+  25%  { top: -6px; left: 100%; transform: translateX(-100%); }
+  50%  { top: 100%; left: 100%; transform: translate(-100%, -100%); }
+  75%  { top: 100%; left: -6px; transform: translateY(-100%); }
+  100% { top: -6px; left: -6px; transform: translate(0,0); }
 }
 </style>

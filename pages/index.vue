@@ -6,30 +6,28 @@
     <!-- 2. Main Content (v-else ensures it only shows when loading is done) -->
     <div v-else class="transition-opacity duration-500 ease-in-out">
       <Header />
+      <ScrollToTop />
       <Intro />
       <AboutUs />
       <OurServices />
       <Categories />
+      <Gallery />
       <Footer />
       
-      <Social />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import Header from '../components/Header.vue'
-import Intro from '../components/Intro.vue'
-import Social from '../components/Social.vue'
-import AboutUs from '../components/AboutUs.vue'
-import OurServices from '../components/OurServices.vue'
-import Categories from '../components/Categories.vue'
-import Footer from '../components/Footer.vue'
-import PageLoader from '../components/PageLoader.vue' // Import the new loader
 
 // State to control the loader visibility
 const isLoading = ref(true)
+
+import AboutUs from './AboutUs.vue'
+import Categories from './Categories.vue'
+import OurServices from './OurServices.vue'
+import Gallery from './Gallery.vue'
 
 // When all components are mounted (and their initial HTML structure is in the DOM)
 onMounted(() => {

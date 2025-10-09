@@ -18,7 +18,7 @@
           class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col items-start">
           <!-- Image only visible on md and up -->
           <div class="aspect-w-16 aspect-h-9 hidden md:block">
-            <img src="/public/images/services/commercial.jpg" alt="Commercial Ads" class="w-full h-full object-cover" />
+            <img src="https://assets.thayaads.com/public/assets/images/our_services/commercial.webp" alt="Commercial Ads" class="w-full h-full object-cover" />
           </div>
           <!-- Text -->
           <div class="p-6 flex items-center gap-3">
@@ -30,7 +30,7 @@
         <div
           class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col items-start">
           <div class="aspect-w-16 aspect-h-9 hidden md:block">
-            <img src="/public/images/services/corporate.jpg" alt="Corporate Films" class="w-full h-full object-cover" />
+            <img src="https://assets.thayaads.com/public/assets/images/our_services/corporate.webp" alt="Corporate Films" class="w-full h-full object-cover" />
           </div>
           <div class="p-6 flex items-center gap-3">
             <span class="text-[#1D1860] text-2xl md:text-3xl">🏢</span>
@@ -41,7 +41,7 @@
         <div
           class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col items-start">
           <div class="aspect-w-16 aspect-h-9 hidden md:block">
-            <img src="/public/images/services/documentary.jpg" alt="Documentary Films"
+            <img src="https://assets.thayaads.com/public/assets/images/our_services/documentary.webp" alt="Documentary Films"
               class="w-full h-full object-cover" />
           </div>
           <div class="p-6 flex items-center gap-3">
@@ -53,7 +53,7 @@
         <div
           class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col items-start">
           <div class="aspect-w-16 aspect-h-9 hidden md:block">
-            <img src="/public/images/services/product-shoot.jpg" alt="Product Shoots"
+            <img src="https://assets.thayaads.com/public/assets/images/our_services/product-shoot.webp" alt="Product Shoots"
               class="w-full h-full object-cover" />
           </div>
           <div class="p-6 flex items-center gap-3">
@@ -65,7 +65,7 @@
         <div
           class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col items-start">
           <div class="aspect-w-16 aspect-h-9 hidden md:block">
-            <img src="/public/images/services/animation.jpg" alt="Animation Works" class="w-full h-full object-cover" />
+            <img src="https://assets.thayaads.com/public/assets/images/our_services/animation.webp" alt="Animation Works" class="w-full h-full object-cover" />
           </div>
           <div class="p-6 flex items-center gap-3">
             <span class="text-[#1D1860] text-2xl md:text-3xl">✨</span>
@@ -76,7 +76,7 @@
         <div
           class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden flex flex-col items-start">
           <div class="aspect-w-16 aspect-h-9 hidden md:block">
-            <img src="/public/images/services/prewedding.jpg" alt="Pre-wedding Shoot"
+            <img src="https://assets.thayaads.com/public/assets/images/our_services/prewedding.webp" alt="Pre-wedding Shoot"
               class="w-full h-full object-cover" />
           </div>
           <div class="p-6 flex items-center gap-3">

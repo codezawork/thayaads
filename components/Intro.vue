@@ -68,46 +68,33 @@ const clientSlides = ref([
 ]);
 const imageRefs = ref([]);
 
-const showSocial = ref(true);
-let observer;
+let imageObserver; // Declare imageObserver in the script scope for cleanup
 
 onMounted(() => {
   nextTick(() => {
-    const elementsToObserve = ['#intro', '#main-footer'];
-    const nodes = elementsToObserve
-      .map(id => document.querySelector(id))
-      .filter(Boolean);
-
     // Create observer for lazy loading images
-    const imageObserver = new IntersectionObserver((entries, imgObserver) => {
+    imageObserver = new IntersectionObserver((entries, imgObserver) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           const img = entry.target;
-          img.src = img.dataset.src;
+          // Check if dataset.src exists before using it
+          if (img.dataset.src) {
+              img.src = img.dataset.src;
+          }
           imgObserver.unobserve(img); // Stop observing once loaded
         }
       });
     }, { threshold: 0.1 });
 
-    imageRefs.value = document.querySelectorAll('.lazy-image');
-    imageRefs.value.forEach(img => imageObserver.observe(img));
-
-    if (nodes.length) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          showSocial.value = !entries.some(entry => entry.isIntersecting && entry.target.id === 'intro');
-        },
-        { threshold: 0.01 }
-      );
-
-      nodes.forEach(node => observer.observe(node));
-    }
+    // Ensure we select all elements with the lazy-image class after component mount
+    const images = document.querySelectorAll('.lazy-image');
+    images.forEach(img => imageObserver.observe(img));
   });
 });
 
 onUnmounted(() => {
-  if (observer) observer.disconnect();
-  if (imageObserver) imageObserver.disconnect(); // Clean up image observer
+  // Clean up image observer
+  if (imageObserver) imageObserver.disconnect();
 });
 </script>
 
