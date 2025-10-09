@@ -65,7 +65,7 @@ const route = useRoute()
 const categories = {
   food: {
     name: 'Foods',
-    image: 'https://thayaads.com/public/assets/images/categories/food.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/food.webp',
     videos: [
       { id: 'dQw4w9WgXcQ', title: 'SKM PORNA RICE BRAN OIL' },
       { id: 'xvFZjo5PgG0', title: 'Darling Chicken 65 Mix' },
@@ -81,7 +81,7 @@ const categories = {
   },
   education: {
     name: 'Education',
-    image: 'https://thayaads.com/public/assets/images/categories/education.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/education.webp',
     videos: [
       { id: 'hY7m5jjJ9mM', title: 'EduTech Promo' },
       { id: '2vjPBrBU-TM', title: 'Online Learning Ad' },
@@ -97,7 +97,7 @@ const categories = {
   },
   personalCare: {
     name: 'Personal Care',
-    image: 'https://thayaads.com/public/assets/images/categories/personal-care.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/personal-care.webp',
     videos: [
       { id: '3AtDnEC4zak', title: 'Personal Care Video 1' },
       { id: 'LsoLEjrDogU', title: 'Personal Care Video 2' },
@@ -113,7 +113,7 @@ const categories = {
   },
   textileApparels: {
     name: 'Textile & Apparels',
-    image: 'https://thayaads.com/public/assets/images/categories/textile-apparels.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/textile-apparels.webp',
     videos: [
       { id: 'hT_nvWreIhg', title: 'Textile Video 1' },
       { id: 'RBumgq5yVrA', title: 'Textile Video 2' },
@@ -129,7 +129,7 @@ const categories = {
   },
   fashionLifestyle: {
     name: 'Fashion & Lifestyle',
-    image: 'https://thayaads.com/public/assets/images/categories/fashion-lifestyle.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/fashion-lifestyle.webp',
     videos: [
       { id: 'dQw4w9WgXcQ', title: 'Fashion Video 1' },
       { id: 'xvFZjo5PgG0', title: 'Fashion Video 2' },
@@ -145,7 +145,7 @@ const categories = {
   },
   financialService: {
     name: 'Financial Service',
-    image: 'https://thayaads.com/public/assets/images/categories/financial-service.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp',
     videos: [
       { id: 'Zi_XLOBDo_Y', title: 'Finance Video 1' },
       { id: 'kffacxfA7G4', title: 'Finance Video 2' },

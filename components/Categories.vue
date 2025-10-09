@@ -57,12 +57,12 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
 const categories = ref([
-  { name: 'Food', image: 'https://thayaads.com/public/assets/images/categories/food.webp', link: '/category/food' },
-  { name: 'Education', image: 'https://thayaads.com/public/assets/images/categories/education.webp', link: '/category/education' },
-  { name: 'Personal Care', image: 'https://thayaads.com/public/assets/images/categories/personal-care.webp', link: '/category/personalCare' },
-  { name: 'Textile & Apparels', image: 'https://thayaads.com/public/assets/images/categories/textile-apparels.webp', link: '/category/textileApparels' },
-  { name: 'Fashion & Lifestyle', image: 'https://thayaads.com/public/assets/images/categories/fashion-lifestyle.webp', link: '/category/fashionLifestyle' },
-  { name: 'Financial Service', image: 'https://thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/financialService' }
+  { name: 'Food', image: 'https://assets.thayaads.com/public/assets/images/categories/food.webp', link: '/category/food' },
+  { name: 'Education', image: 'https://assets.thayaads.com/public/assets/images/categories/education.webp', link: '/category/education' },
+  { name: 'Personal Care', image: 'https://assets.thayaads.com/public/assets/images/categories/personal-care.webp', link: '/category/personalCare' },
+  { name: 'Textile & Apparels', image: 'https://assets.thayaads.com/public/assets/images/categories/textile-apparels.webp', link: '/category/textileApparels' },
+  { name: 'Fashion & Lifestyle', image: 'https://assets.thayaads.com/public/assets/images/categories/fashion-lifestyle.webp', link: '/category/fashionLifestyle' },
+  { name: 'Financial Service', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/financialService' }
 ])
 
 // DOM refs and intersection logic

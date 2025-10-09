@@ -7,7 +7,7 @@
         <NuxtLink to="/">
           <img
             class="object-contain w-36 h-16 max-h-full"
-            src="https://thayaads.com/public/assets/images/author/thaya.webp"
+            src="https://assets.thayaads.com/public/assets/images/author/thaya.webp"
             alt="Thaya Ads Logo"
           />
         </NuxtLink>

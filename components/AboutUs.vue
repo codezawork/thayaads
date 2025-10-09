@@ -17,7 +17,7 @@
           <!-- Image -->
           <div class="md:w-1/2 lg:w-2/5 flex-shrink-0">
             <img
-              src="https://thayaads.com/public/assets/images/author/author.webp"
+              src="https://assets.thayaads.com/public/assets/images/author/author.webp"
               alt="Vijay Prathapan"
               class="w-full h-96 md:h-full object-cover object-center transition-transform duration-700 hover:scale-[1.03]"
             />
@@ -88,14 +88,14 @@ import { ref } from 'vue'
 const modules = [Autoplay]
 
 const careerSlides = ref([
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/5T0A4135.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/5T0A4372.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/5T0A5712.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/DSC_0040.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/DSC_0153.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/DSC_0305.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/IMG_0085.webp' },
-  { imgUrl: 'https://thayaads.com/public/assets/images/author/author-with/IMG_20220222_092439.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/5T0A4135.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/5T0A4372.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/5T0A5712.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/DSC_0040.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/DSC_0153.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/DSC_0305.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/IMG_0085.webp' },
+  { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/IMG_20220222_092439.webp' },
 ])
 </script>
 

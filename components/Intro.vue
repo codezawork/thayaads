@@ -58,13 +58,13 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 const modules = [Autoplay, Navigation, Pagination];
 
 const clientSlides = ref([
-  { name: 'AJJ Halwa', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/ajj.webp', url: '#' },
-  { name: 'Bro', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/bro.webp', url: '#' },
-  { name: 'DS கூட்டுப்பெருங்காயம்', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/ds.webp', url: '#' },
-  { name: 'Kovilpatti Snacks', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/kvp.webp', url: '#' },
-  { name: 'Madha Milk', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/madha.webp', url: '#' },
-  { name: 'Pristiano Madrid', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/pristi.webp', url: '#' },
-  { name: 'Saravana Salt', logoUrl: 'https://thayaads.com/public/assets/images/carousel_images/saravana.webp', url: '#' }
+  { name: 'AJJ Halwa', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/ajj.webp', url: '#' },
+  { name: 'Bro', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/bro.webp', url: '#' },
+  { name: 'DS கூட்டுப்பெருங்காயம்', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/ds.webp', url: '#' },
+  { name: 'Kovilpatti Snacks', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/kvp.webp', url: '#' },
+  { name: 'Madha Milk', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/madha.webp', url: '#' },
+  { name: 'Pristiano Madrid', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/pristi.webp', url: '#' },
+  { name: 'Saravana Salt', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/saravana.webp', url: '#' }
 ]);
 const imageRefs = ref([]);
 
