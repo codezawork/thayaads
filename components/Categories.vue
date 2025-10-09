@@ -1,27 +1,46 @@
 <template>
   <section class="py-12 md:py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 md:px-8">
+    <div class="max-w-screen-2xl mx-auto px-4 lg:px-12">
 
+      <!-- Section Header -->
       <div class="flex items-center justify-center gap-4 mb-10 md:mb-12">
-        <font-awesome-icon :icon="['fas', 'th-large']" class="text-3xl text-gray-800" />
-        <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Categories</h2>
+        <h2
+          class="text-4xl md:text-5xl font-extrabold text-gray-800 relative inline-block after:block after:absolute after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-indigo-600 after:rounded-full">
+          Categories
+        </h2>
       </div>
 
+      <!-- Category Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-        <NuxtLink 
-          v-for="category in categories" 
-          :key="category.name" 
-          :to="category.link"
-          class="block group rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-        >
+        <NuxtLink v-for="(category, index) in categories" :key="category.name" :to="category.link"
+          class="block group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 relative"
+          :ref="el => categoryRefs[index] = el">
+          <!-- Image Wrapper -->
           <div class="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden">
-            <img 
-              :src="category.image" 
-              :alt="category.name + ' category image'" 
-              class="w-full h-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <img :src="category.image" :alt="category.name + ' category image'"
+              class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" />
+
+            <!-- Gradient Overlay -->
+            <div
+              class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+            </div>
+
+            <!-- Hover Text for Desktop -->
+            <div
+              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+              <span class="text-white text-lg md:text-xl font-semibold bg-black/50 px-4 py-2 rounded-lg shadow-lg">
+                👉 Click to see our projects
+              </span>
+            </div>
+
+            <!-- Mobile Scroll Text -->
+            <div v-if="visibleIndices.includes(index)"
+              class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/60 text-white text-sm font-medium px-3 py-1 rounded-full md:hidden animate-fade-in">
+              👆 Tap to see our projects
+            </div>
           </div>
+
+          <!-- Category Name -->
           <div class="p-4 md:p-5 bg-white">
             <h3 class="text-xl md:text-2xl font-semibold text-gray-800 group-hover:text-[#1D1860] transition-colors">
               {{ category.name }}
@@ -35,44 +54,60 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-// Define your category data
 const categories = ref([
-  {
-    name: 'Food',
-    image: '/images/categories/food.jpg', 
-    link: '/pages/category/food' 
-  },
-  {
-    name: 'Education',
-    image: '/images/categories/education.jpg', 
-    link: '/pages/category/education'
-  },
-  {
-    name: 'Personal Care',
-    image: '/images/categories/personal-care.jpg',
-    link: '/pages/category/personal-care'
-  },
-  {
-    name: 'Textile & Apparels',
-    image: '/images/categories/textile-apparels.jpg', 
-    link: '/category/textile-apparels'
-  },
-  {
-    name: 'Fashion & Lifestyle',
-    image: '/images/categories/fashion-lifestyle.jpg', 
-    link: '/category/fashion-lifestyle'
-  },
-  {
-    name: 'Financial Service',
-    image: '/images/categories/financial-service.jpg',
-    link: '/category/financial-service'
-  }
-]);
+  { name: 'Food', image: 'https://thayaads.com/public/assets/images/categories/food.webp', link: '/category/food' },
+  { name: 'Education', image: 'https://thayaads.com/public/assets/images/categories/education.webp', link: '/category/education' },
+  { name: 'Personal Care', image: 'https://thayaads.com/public/assets/images/categories/personal-care.webp', link: '/category/personalCare' },
+  { name: 'Textile & Apparels', image: 'https://thayaads.com/public/assets/images/categories/textile-apparels.webp', link: '/category/textileApparels' },
+  { name: 'Fashion & Lifestyle', image: 'https://thayaads.com/public/assets/images/categories/fashion-lifestyle.webp', link: '/category/fashionLifestyle' },
+  { name: 'Financial Service', image: 'https://thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/financialService' }
+])
+
+// DOM refs and intersection logic
+const categoryRefs = ref([])
+const visibleIndices = ref([])
+let observer
+
+onMounted(() => {
+  observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const index = categoryRefs.value.indexOf(entry.target)
+      if (entry.isIntersecting && index !== -1 && !visibleIndices.value.includes(index)) {
+        visibleIndices.value.push(index)
+        // Hide after 2.5s
+        setTimeout(() => {
+          visibleIndices.value = visibleIndices.value.filter(i => i !== index)
+        }, 2500)
+      }
+    })
+  }, { threshold: 0.4 })
+
+  categoryRefs.value.forEach(el => {
+    if (el instanceof Element) observer.observe(el)
+  })
+})
+
+onBeforeUnmount(() => {
+  if (observer) observer.disconnect()
+})
 </script>
 
 <style scoped>
-/* Scoped styles can be added here if you need custom CSS 
-   not covered by Tailwind utility classes. */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
 </style>

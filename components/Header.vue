@@ -7,7 +7,7 @@
         <NuxtLink to="/">
           <img
             class="object-contain w-36 h-16 max-h-full"
-            src="/images/author/thaya.jpeg"
+            src="https://thayaads.com/public/assets/images/author/thaya.webp"
             alt="Thaya Ads Logo"
           />
         </NuxtLink>
@@ -20,8 +20,8 @@
           <NuxtLink to="/" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Home</NuxtLink>
           <a href="#about-us" class="text-white text-lg font-medium transition-opacity hover:opacity-80">About Us</a>
           <a href="#our-services" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Our Services</a>
-          <!-- <a href="#gallery" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Gallery</a> -->
-          <a href="#clients" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Clients</a>
+          <a href="#gallery" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Gallery</a>
+          <!-- <a href="#clients" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Clients</a> -->
           <a href="#main-footer" class="text-white text-lg font-medium transition-opacity hover:opacity-80">Contact Us</a>
         </nav>
 
@@ -63,10 +63,10 @@
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">About Us</a>
             <a @click="menuOpen = false" href="#our-services"
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Our Services</a>
-            <!-- <a @click="menuOpen = false" href="#gallery"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Gallery</a> -->
-            <a @click="menuOpen = false" href="#clients"
-              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Clients</a>
+            <a @click="menuOpen = false" href="#gallery"
+              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Gallery</a>
+            <!-- <a @click="menuOpen = false" href="#clients"
+              class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Clients</a> -->
             <a @click="menuOpen = false" href="#main-footer"
               class="text-white text-xl font-medium p-2 hover:bg-white/10 rounded-lg transition-colors">Contact Us</a>
           </nav>
