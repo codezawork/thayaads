@@ -75,7 +75,7 @@
 
       <!-- Mobile Menu Button -->
       <button
-        @click="menuOpen = !menuOpen"
+        @click="toggleMenu"
         class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition z-50 ml-auto"
         aria-label="Toggle menu"
       >
@@ -90,17 +90,18 @@
         <div
           v-if="menuOpen"
           class="fixed inset-0 bg-black bg-opacity-70 z-40 lg:hidden"
-          @click.self="menuOpen = false"
+          @click.self="closeMenu"
         >
           <div
-            class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-gradient-to-b from-[#1D1860] via-[#342D75] to-[#1D1860] shadow-xl flex flex-col p-6 pt-20"
+            class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-gradient-to-b from-[#1D1860] via-[#342D75] to-[#1D1860]
+                   shadow-xl flex flex-col p-6 pt-20 mobile-menu"
           >
             <nav class="flex flex-col gap-4">
               <NuxtLink
                 v-for="item in mainLinks"
                 :key="item.name"
                 :to="item.link"
-                @click="menuOpen = false"
+                @click="closeMenu"
                 class="text-white text-xl font-medium p-2 rounded-lg hover:bg-white/10"
               >
                 {{ item.name }}
@@ -113,18 +114,10 @@
                   v-for="category in categories"
                   :key="category.name"
                   :to="category.link"
-                  @click="menuOpen = false"
+                  @click="closeMenu"
                   class="text-white/80 text-lg ml-2 py-1.5 px-2 rounded-lg block hover:bg-white/5"
                 >
                   - {{ category.name }}
-                </NuxtLink>
-
-                <NuxtLink
-                  to="/event-management"
-                  @click="menuOpen = false"
-                  class="text-white/80 text-lg ml-2 py-1.5 px-2 rounded-lg block hover:bg-white/5"
-                >
-                  - Event Management
                 </NuxtLink>
               </div>
 
@@ -151,7 +144,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 const categories = ref([
   { name: 'Food', link: '/category/food' },
@@ -183,13 +176,26 @@ const isDropdownOpen = ref(false)
 
 const socialHoverClass = (label) => {
   switch(label) {
-    case 'Facebook': return 'hover:text-blue-600 hover:scale-125';
-    case 'Instagram': return 'hover:text-pink-500 hover:scale-125';
-    case 'X (Twitter)': return 'hover:text-blue-400 hover:scale-125';
-    case 'YouTube': return 'hover:text-red-600 hover:scale-125';
-    case 'WhatsApp': return 'hover:text-green-500 hover:scale-125';
-    default: return '';
+    case 'Facebook': return 'hover:text-blue-600 hover:scale-125'
+    case 'Instagram': return 'hover:text-pink-500 hover:scale-125'
+    case 'X (Twitter)': return 'hover:text-blue-400 hover:scale-125'
+    case 'YouTube': return 'hover:text-red-600 hover:scale-125'
+    case 'WhatsApp': return 'hover:text-green-500 hover:scale-125'
+    default: return ''
   }
+}
+
+// Lock scroll when menu is open
+watch(menuOpen, (open) => {
+  document.body.style.overflow = open ? 'hidden' : ''
+})
+
+function toggleMenu() {
+  menuOpen.value = !menuOpen.value
+}
+
+function closeMenu() {
+  menuOpen.value = false
 }
 </script>
 
@@ -204,7 +210,7 @@ const socialHoverClass = (label) => {
   background-color: #342D75;
 }
 
-/* Desktop hover rectangle with moving dot outside */
+/* Desktop hover rectangle + animated dot */
 .desktop-dot {
   position: relative;
   display: inline-block;
