@@ -1,9 +1,9 @@
 <template>
   <transition name="fade-slide">
-    <!-- Fixed position on the bottom right -->
+    <!-- Fixed position on the bottom left (CHANGED) -->
     <div 
       v-if="isVisible" 
-      class="fixed bottom-6 right-6 md:bottom-10 md:right-10 z-[100]"
+      class="fixed bottom-6 left-6 md:bottom-10 md:left-10 z-[100]"
     >
       <button 
         @click="scrollToTop" 
@@ -14,6 +14,7 @@
                transform hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-[#FDD835]/50"
       >
         <!-- Arrow Icon -->
+        <!-- Note: You need to ensure you have Font Awesome imported and configured in your main Vue app -->
         <font-awesome-icon :icon="['fas', 'arrow-up']" class="w-6 h-6" />
         
         <!-- Tooltip Text (Appears on hover) -->

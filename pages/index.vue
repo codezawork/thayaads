@@ -7,6 +7,7 @@
     <div v-else class="transition-opacity duration-500 ease-in-out">
       <Header />
       <ScrollToTop />
+      <ChatBot />
       <Intro />
       <AboutUs />
       <OurServices />
@@ -23,7 +24,7 @@ import { ref, onMounted } from 'vue'
 
 // State to control the loader visibility
 const isLoading = ref(true)
-
+import ChatBot from '~/components/ChatBot.vue'
 import AboutUs from './AboutUs.vue'
 import Categories from './Categories.vue'
 import OurServices from './OurServices.vue'
