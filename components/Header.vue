@@ -94,7 +94,7 @@
         >
           <div
             class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-gradient-to-b from-[#1D1860] via-[#342D75] to-[#1D1860]
-                   shadow-xl flex flex-col p-6 pt-20 mobile-menu"
+                   shadow-xl flex flex-col p-6 pt-20 mobile-menu overflow-y-auto"
           >
             <nav class="flex flex-col gap-4">
               <NuxtLink
@@ -107,18 +107,32 @@
                 {{ item.name }}
               </NuxtLink>
 
-              <!-- Categories in Mobile -->
+              <!-- Categories Dropdown (Mobile) -->
               <div class="border-t border-white/10 mt-2 pt-2">
-                <div class="text-white text-xl font-medium mb-2 p-2">Categories</div>
-                <NuxtLink
-                  v-for="category in categories"
-                  :key="category.name"
-                  :to="category.link"
-                  @click="closeMenu"
-                  class="text-white/80 text-lg ml-2 py-1.5 px-2 rounded-lg block hover:bg-white/5"
+                <button
+                  @click="mobileCategoriesOpen = !mobileCategoriesOpen"
+                  class="flex justify-between items-center w-full text-white text-xl font-medium mb-2 p-2 rounded-lg hover:bg-white/10 transition"
                 >
-                  - {{ category.name }}
-                </NuxtLink>
+                  Categories
+                  <font-awesome-icon
+                    :icon="['fas', mobileCategoriesOpen ? 'angle-up' : 'angle-down']"
+                    class="w-4 h-4 text-white transition-transform duration-200"
+                  />
+                </button>
+
+                <transition name="dropdown-fade">
+                  <div v-if="mobileCategoriesOpen" class="flex flex-col ml-2">
+                    <NuxtLink
+                      v-for="category in categories"
+                      :key="category.name"
+                      :to="category.link"
+                      @click="closeMenu"
+                      class="text-white/80 text-lg py-1.5 px-2 rounded-lg block hover:bg-white/5"
+                    >
+                      - {{ category.name }}
+                    </NuxtLink>
+                  </div>
+                </transition>
               </div>
 
               <!-- Social Media Icons (Mobile) -->
@@ -157,9 +171,9 @@ const categories = ref([
 
 const mainLinks = ref([
   { name: 'Home', link: '/' },
-  { name: 'About Us', link: '#about-us' },
-  { name: 'Our Services', link: '#our-services' },
-  { name: 'Gallery', link: '#gallery' },
+  { name: 'About Us', link: '/#about-us' },
+  { name: 'Our Services', link: '/#our-services' },
+  { name: 'Gallery', link: '/#gallery' },
   { name: 'Contact Us', link: '#main-footer' }
 ])
 
@@ -168,14 +182,15 @@ const socialMediaLinks = ref([
   { icon: ['fab', 'instagram'], url: 'https://www.instagram.com/thayaads/', label: 'Instagram' },
   { icon: ['fab', 'x-twitter'], url: 'https://x.com/Thayaads', label: 'X (Twitter)' },
   { icon: ['fab', 'youtube'], url: 'https://www.youtube.com/@thayaads', label: 'YouTube' },
-  { icon: ['fab', 'whatsapp'], url: 'https://wa.me/919841115673', label: 'WhatsApp' } 
+  { icon: ['fab', 'whatsapp'], url: 'https://wa.me/919841115673', label: 'WhatsApp' }
 ])
 
 const menuOpen = ref(false)
 const isDropdownOpen = ref(false)
+const mobileCategoriesOpen = ref(false)
 
 const socialHoverClass = (label) => {
-  switch(label) {
+  switch (label) {
     case 'Facebook': return 'hover:text-blue-600 hover:scale-125'
     case 'Instagram': return 'hover:text-pink-500 hover:scale-125'
     case 'X (Twitter)': return 'hover:text-blue-400 hover:scale-125'
@@ -185,7 +200,6 @@ const socialHoverClass = (label) => {
   }
 }
 
-// Lock scroll when menu is open
 watch(menuOpen, (open) => {
   document.body.style.overflow = open ? 'hidden' : ''
 })
@@ -196,6 +210,7 @@ function toggleMenu() {
 
 function closeMenu() {
   menuOpen.value = false
+  mobileCategoriesOpen.value = false
 }
 </script>
 
@@ -215,7 +230,6 @@ function closeMenu() {
   position: relative;
   display: inline-block;
 }
-
 .desktop-dot::before {
   content: '';
   position: absolute;
@@ -225,12 +239,10 @@ function closeMenu() {
   opacity: 0;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
-
 .desktop-dot:hover::before {
   opacity: 1;
   transform: scale(1.05);
 }
-
 .desktop-dot::after {
   content: '';
   position: absolute;
@@ -241,17 +253,45 @@ function closeMenu() {
   opacity: 0;
   pointer-events: none;
 }
-
 .desktop-dot:hover::after {
   opacity: 1;
   animation: move-dot 3s linear infinite;
 }
-
 @keyframes move-dot {
   0%   { top: -6px; left: -6px; }
   25%  { top: -6px; left: 100%; transform: translateX(-100%); }
   50%  { top: 100%; left: 100%; transform: translate(-100%, -100%); }
   75%  { top: 100%; left: -6px; transform: translateY(-100%); }
   100% { top: -6px; left: -6px; transform: translate(0,0); }
+}
+
+/* Transitions */
+.slide-fade-enter-active, .slide-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+.slide-fade-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.dropdown-fade-enter-active,
+.dropdown-fade-leave-active {
+  transition: all 0.3s ease;
+}
+.dropdown-fade-enter-from,
+.dropdown-fade-leave-to {
+  opacity: 0;
+  max-height: 0;
+  transform: scaleY(0.8);
+}
+.dropdown-fade-enter-to,
+.dropdown-fade-leave-from {
+  opacity: 1;
+  max-height: 500px;
+  transform: scaleY(1);
 }
 </style>
