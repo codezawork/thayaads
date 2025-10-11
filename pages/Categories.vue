@@ -1,50 +1,70 @@
 <template>
-  <section id="categories" class="py-12 md:py-16 bg-white">
-    <div class="max-w-screen-2xl mx-auto px-4 lg:px-12">
+  <section id="categories" class="py-20 md:py-32 bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
 
-      <div class="flex items-center justify-center gap-4 mb-10 md:mb-12">
-        <h2
-          class="text-4xl md:text-5xl font-extrabold text-gray-800 relative inline-block after:block after:absolute after:bottom-[-8px] after:left-1/2 after:-translate-x-1/2 after:w-16 after:h-1 after:bg-indigo-600 after:rounded-full">
-          Categories
-        </h2>
+    <div class="max-w-screen-2xl mx-auto px-4 lg:px-12 relative z-10">
+
+      <!-- Section Title -->
+      <div class="text-center mb-16 md:mb-20">
+        <div class="inline-block">
+          <h2 class="text-5xl md:text-7xl font-black mb-3 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+            Categories
+          </h2>
+          <div class="h-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full"></div>
+        </div>
       </div>
 
+      <!-- Categories Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         <NuxtLink 
           v-for="(category, index) in categories" 
           :key="category.name" 
           :to="category.link"
-          class="block group rounded-lg overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 relative"
+          class="block group bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2"
         >
           <div 
             class="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden"
             :ref="el => categoryRefs[index] = el"
           >
+            <!-- Gradient Overlay on Hover -->
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-blue-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+            
             <img 
               :src="category.image" 
               :alt="category.name + ' category image'"
-              class="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-110" 
+              class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" 
             />
 
-            <!-- Desktop Hover Overlay -->
-            <div
-              class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 md:flex hidden">
-              <span class="text-white text-lg md:text-xl font-semibold bg-black/50 px-4 py-2 rounded-lg shadow-lg">
-                👉 Click to see our projects
-              </span>
+            <!-- Play Button -->
+            <div class="absolute inset-0 flex items-center justify-center z-20">
+              <!-- Desktop Hover -->
+              <div
+                class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              >
+                <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6 4l12 6-12 6V4z" />
+                </svg>
+              </div>
+
+              <!-- Mobile Always Visible -->
+              <div
+                class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg md:hidden"
+              >
+                <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M6 4l12 6-12 6V4z" />
+                </svg>
+              </div>
             </div>
 
-            <!-- Mobile Repeating Hint -->
-            <div 
-              v-if="mobileVisibleIndices.includes(index)"
-              class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/60 text-white text-sm font-medium px-3 py-1 rounded-full md:hidden animate-fade-in"
-            >
-              👆 Tap to see our projects
-            </div>
           </div>
 
-          <div class="p-4 md:p-5 bg-white">
-            <h3 class="text-xl md:text-2xl font-semibold text-gray-800 group-hover:text-[#1D1860] transition-colors">
+          <!-- Category Name -->
+          <div class="p-6">
+            <h3 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:to-pink-300 transition-all">
               {{ category.name }}
             </h3>
           </div>
@@ -63,7 +83,8 @@ const categories = ref([
   { name: 'Personal Care', image: 'https://assets.thayaads.com/public/assets/images/categories/personal-care.webp', link: '/category/personalCare' },
   { name: 'Textile & Apparels', image: 'https://assets.thayaads.com/public/assets/images/categories/textile-apparels.webp', link: '/category/textileApparels' },
   { name: 'Fashion & Lifestyle', image: 'https://assets.thayaads.com/public/assets/images/categories/fashion-lifestyle.webp', link: '/category/fashionLifestyle' },
-  { name: 'Financial Service', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/financialService' }
+  { name: 'Album & Documentaries ', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/albumDocumentaryFilms' },
+  { name: 'Corporate Films', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/corporateFilms' }
 ])
 
 const categoryRefs = ref([])
@@ -78,7 +99,6 @@ onMounted(() => {
       if (index === -1) return
 
       if (entry.isIntersecting) {
-        // Start repeating hint for this category
         if (!intervalIds[index]) {
           mobileVisibleIndices.value.push(index)
           intervalIds[index] = setInterval(() => {
@@ -90,7 +110,6 @@ onMounted(() => {
           }, 2000)
         }
       } else {
-        // Stop interval and remove hint when out of view
         if (intervalIds[index]) {
           clearInterval(intervalIds[index])
           intervalIds[index] = null
@@ -113,10 +132,16 @@ onBeforeUnmount(() => {
 
 <style scoped>
 @keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
 }
-.animate-fade-in {
-  animation: fade-in 0.8s ease-out;
+.animate-fade-in { animation: fade-in 0.8s ease-out; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.1; transform: scale(1); }
+  50% { opacity: 0.15; transform: scale(1.05); }
 }
+.animate-pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+
+.delay-1000 { animation-delay: 1s; }
 </style>

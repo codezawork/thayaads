@@ -4,16 +4,17 @@
     <Header />
 
     <!-- Hero Section -->
-<section class="relative w-full h-[30vh] md:h-[50vh] overflow-hidden">
-      <img
-        :src="categoryData?.image"
-        :alt="categoryData?.name"
-        class="absolute inset-0 w-full h-full object-cover object-center opacity-100"
+    <section class="relative w-full h-[30vh] md:h-[50vh] overflow-hidden">
+      <img 
+        v-if="categoryData?.image" 
+        :src="categoryData.image" 
+        :alt="categoryData.name"
+        class="absolute inset-0 w-full h-full object-cover object-center opacity-100" 
       />
-      <!-- This overlay ensures text is visible -->
+      <!-- Overlay -->
       <div class="absolute inset-0 bg-black/20"></div>
-      
-      <!-- ADDED 'text-white' here to make the text contrast with the dark image/overlay -->
+
+      <!-- Hero Text -->
       <div class="relative z-10 flex flex-col items-center justify-center h-full text-center px-4 text-white">
         <h1 class="text-4xl md:text-6xl font-extrabold mb-4">{{ categoryData?.name }}</h1>
         <p class="text-lg md:text-xl max-w-2xl opacity-90">
@@ -27,20 +28,19 @@
       <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-black">Projects</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div
-          v-for="video in categoryData?.videos"
-          :key="video.id"
-          class="rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-all"
-        >
+        <div v-for="video in categoryData?.videos" :key="video.id"
+          class="rounded-lg overflow-hidden shadow-lg bg-white hover:shadow-2xl transition-all">
+          
           <div class="relative aspect-video">
-            <iframe
-              :src="`https://www.youtube.com/embed/${video.id}`"
-              title="YouTube video"
+            <iframe 
+              :src="`https://www.youtube.com/embed/${video.id}`" 
+              :title="video.title" 
               frameborder="0"
               allowfullscreen
-              class="w-full h-full"
-            ></iframe>
+              class="w-full h-full">
+            </iframe>
           </div>
+
           <div class="p-4">
             <h3 class="text-lg font-semibold text-gray-900">{{ video.title }}</h3>
           </div>
@@ -61,106 +61,108 @@ import Footer from '~/components/Footer.vue'
 // Dynamic route
 const route = useRoute()
 
-// Demo category data with 10 videos each
+// All category data in one place
 const categories = {
   food: {
     name: 'Foods',
     image: 'https://assets.thayaads.com/public/assets/images/categories/food.webp',
     videos: [
-      { id: 'dQw4w9WgXcQ', title: 'SKM PORNA RICE BRAN OIL' },
-      { id: 'xvFZjo5PgG0', title: 'Darling Chicken 65 Mix' },
-      { id: 'ScMzIvxBSi4', title: 'Darling Asafoetida' },
-      { id: 'kXYiU_JCYtU', title: 'Darling Pickle TVC' },
-      { id: '9bZkp7q19f0', title: 'Food Promo Video 1' },
-      { id: '3JZ_D3ELwOQ', title: 'Food Promo Video 2' },
-      { id: 'L_jWHffIx5E', title: 'Food Promo Video 3' },
-      { id: 'tVj0ZTS4WF4', title: 'Food Promo Video 4' },
-      { id: 'fJ9rUzIMcZQ', title: 'Food Promo Video 5' },
-      { id: 'eVTXPUF4Oz4', title: 'Food Promo Video 6' }
-    ] 
+      { id: 'cILkLk90rGw', title: 'AJJ' },
+      { id: 'zE67dykGvsQ', title: 'Saravana Salt' },
+      { id: 'yis-PaIU1k4', title: 'Madha Milk' },
+      { id: '6hW8BoYQ7TE', title: 'AJJ Maskoth Halwa' },
+      { id: 'yn3e1M8OAU8', title: 'Madha Milk' },
+      { id: 'bKX3YsZUFcs', title: 'Angel Food' },
+      { id: 'Xu-TPdwQ2oo', title: 'Saravana Salt' },
+      { id: 'fSM9KpcEJEU', title: 'Bro' },
+      { id: 'XYjMZXun7Dg', title: 'AJJ' },
+      { id: 'zEJ0FBzmwkY', title: 'Thangaya Maskoth Halwa' },
+      { id: 'H1ZcVj1hk54', title: 'Olive Oil' },
+      { id: 'ptxsyXiRg7U', title: 'Saravana Salt' },
+      { id: 'zE67dykGvsQ', title: 'Arasan Murukku' },
+      { id: 'fkU_ec5EQhM', title: 'RPM Snacks' },
+      { id: 'ap46OGHPoI0', title: 'DS Perungayam Animation' },
+      { id: 'IKN0L4YdDLw', title: 'AJJ' }
+    ]
   },
   education: {
     name: 'Education',
     image: 'https://assets.thayaads.com/public/assets/images/categories/education.webp',
     videos: [
-      { id: 'hY7m5jjJ9mM', title: 'EduTech Promo' },
-      { id: '2vjPBrBU-TM', title: 'Online Learning Ad' },
-      { id: 'Zi_XLOBDo_Y', title: 'Education Video 1' },
-      { id: 'kffacxfA7G4', title: 'Education Video 2' },
-      { id: 'CevxZvSJLk8', title: 'Education Video 3' },
-      { id: 'uelHwf8o7_U', title: 'Education Video 4' },
-      { id: 'YQHsXMglC9A', title: 'Education Video 5' },
-      { id: 'hT_nvWreIhg', title: 'Education Video 6' },
-      { id: '09R8_2nJtjg', title: 'Education Video 7' },
-      { id: 'RBumgq5yVrA', title: 'Education Video 8' }
+      { id: 'q2yXWVQ3F9U', title: 'ASPI Life' },
+      { id: 'cTuDT5ScZHo', title: 'ebek Project Power-I' },
+      { id: 'Z6Xb-cK8X80', title: 'ebek Project Power-II' },
+      { id: '_AHAzu23b9Q', title: 'Kerala Neet Academy' },
+      { id: 'zMFT2MZhfpA', title: 'Kerala Neet Academy PROMO' },
+      { id: 'Lj13gz60G4E', title: 'Kerala Neet Academy' },
+      { id: 'boppqbA_UQE', title: 'Fence Education Academy' },
+      { id: 'AZdbYHsqaqI', title: 'Nims Academy' },
+      { id: 'GULF-ftW4ec', title: 'Fence Education-II' },
+      { id: 'RtPEoXOo9I0', title: 'Fence Academy-III' },
+      { id: 'GBnexwY1D_U', title: 'Fence Academy-IV' },
+      { id: '09DzrMSKQo4', title: 'Fence Academy-V Malayalam' },
+      { id: 'EH3FTKVEeuI', title: 'Fence Education-Malayalam' },
+      { id: 'Ns-yIfTyFGs', title: 'Kerala Neet Malayalam' }
     ]
   },
   personalCare: {
     name: 'Personal Care',
     image: 'https://assets.thayaads.com/public/assets/images/categories/personal-care.webp',
     videos: [
-      { id: '3AtDnEC4zak', title: 'Personal Care Video 1' },
-      { id: 'LsoLEjrDogU', title: 'Personal Care Video 2' },
-      { id: 'kJQP7kiw5Fk', title: 'Personal Care Video 3' },
-      { id: 'RgKAFK5djSk', title: 'Personal Care Video 4' },
-      { id: 'uelHwf8o7_U', title: 'Personal Care Video 5' },
-      { id: 'fLexgOxsZu0', title: 'Personal Care Video 6' },
-      { id: 'dMH0bHeiRNg', title: 'Personal Care Video 7' },
-      { id: 'YQHsXMglC9A', title: 'Personal Care Video 8' },
-      { id: 'OPf0YbXqDm0', title: 'Personal Care Video 9' },
-      { id: 'kffacxfA7G4', title: 'Personal Care Video 10' }
+      { id: 'FdQ0LPosA9o', title: 'Sakthi Soaps' },
+      { id: '8GBgGf0LloI', title: 'Merets Soaps' },
+      { id: 'XXn_t7ko_UU', title: 'Merits Soap - II' },
+      { id: 'AdtoqMzKosg', title: 'Solace Oil - Malayalam' },
+      { id: '_iWPGLy3OzQ', title: 'ESOPE' },
+      { id: '2EbTR9U_j2o', title: 'Duka Herbals - I' },
+      { id: 'Ovli-AqGQHk', title: 'Durka Herbals - II' },
+      { id: 'AhFjwuyQB7A', title: 'Durka Herbals - III' },
+      { id: 'iXn7RDKy6PQ', title: 'Safe Excel' }
     ]
   },
   textileApparels: {
     name: 'Textile & Apparels',
     image: 'https://assets.thayaads.com/public/assets/images/categories/textile-apparels.webp',
     videos: [
-      { id: 'hT_nvWreIhg', title: 'Textile Video 1' },
-      { id: 'RBumgq5yVrA', title: 'Textile Video 2' },
-      { id: 'CevxZvSJLk8', title: 'Textile Video 3' },
-      { id: 'fJ9rUzIMcZQ', title: 'Textile Video 4' },
-      { id: '09R8_2nJtjg', title: 'Textile Video 5' },
-      { id: 'YQHsXMglC9A', title: 'Textile Video 6' },
-      { id: 'uelHwf8o7_U', title: 'Textile Video 7' },
-      { id: 'kJQP7kiw5Fk', title: 'Textile Video 8' },
-      { id: '3JZ_D3ELwOQ', title: 'Textile Video 9' },
-      { id: 'L_jWHffIx5E', title: 'Textile Video 10' }
+      { id: 'pW8DE4BCm-g', title: 'Co Optecs - Keerthi Suresh' },
+      { id: 'OAJd37f20Do', title: 'EMK Silks' },
+      { id: 'QT4djGYKU_k', title: 'Dream Leafs' },
+      { id: '0hCGjkNazFU', title: 'D.A Silks - I' },
+      { id: '5ZJEOXXKj6U', title: 'K. Chinnadurai - I' },
+      { id: 'ks8mI14kcC8', title: 'K. Chinnadurai - II' },
+      { id: 'NgPe4AmekO4', title: 'D.A Silks - II' }
     ]
   },
   fashionLifestyle: {
     name: 'Fashion & Lifestyle',
     image: 'https://assets.thayaads.com/public/assets/images/categories/fashion-lifestyle.webp',
     videos: [
-      { id: 'dQw4w9WgXcQ', title: 'Fashion Video 1' },
-      { id: 'xvFZjo5PgG0', title: 'Fashion Video 2' },
-      { id: 'ScMzIvxBSi4', title: 'Fashion Video 3' },
-      { id: 'kXYiU_JCYtU', title: 'Fashion Video 4' },
-      { id: '9bZkp7q19f0', title: 'Fashion Video 5' },
-      { id: '3JZ_D3ELwOQ', title: 'Fashion Video 6' },
-      { id: 'L_jWHffIx5E', title: 'Fashion Video 7' },
-      { id: 'tVj0ZTS4WF4', title: 'Fashion Video 8' },
-      { id: 'fJ9rUzIMcZQ', title: 'Fashion Video 9' },
-      { id: 'eVTXPUF4Oz4', title: 'Fashion Video 10' }
+      { id: '6FF9pv3m_Ww', title: 'Dew Jwells' },
+      { id: '3MVhxNTuiJQ', title: 'Arakkal Jwellery' },
+      { id: '4itMOT_eXVw', title: 'Best Jwellers' },
+      { id: 'vLfIr3IwDig', title: 'Sri Banu Jwellery' }
     ]
   },
-  financialService: {
-    name: 'Financial Service',
+  albumDocumentaryFilms: {
+    name: 'Album & Documentaries',
     image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp',
     videos: [
-      { id: 'Zi_XLOBDo_Y', title: 'Finance Video 1' },
-      { id: 'kffacxfA7G4', title: 'Finance Video 2' },
-      { id: 'RBumgq5yVrA', title: 'Finance Video 3' },
-      { id: 'hT_nvWreIhg', title: 'Finance Video 4' },
-      { id: '09R8_2nJtjg', title: 'Finance Video 5' },
-      { id: 'CevxZvSJLk8', title: 'Finance Video 6' },
-      { id: 'fJ9rUzIMcZQ', title: 'Finance Video 7' },
-      { id: 'YQHsXMglC9A', title: 'Finance Video 8' },
-      { id: 'uelHwf8o7_U', title: 'Finance Video 9' },
-      { id: 'kJQP7kiw5Fk', title: 'Finance Video 10' }
+      { id: 'iOi65sOIhaI', title: 'Motor Song Making' },
+      { id: 'RSloggwy1Ew', title: 'Motor Song Video' },
+      { id: 'TPQZ_tnsvS0', title: 'Motor Song Singing' },
+      { id: 'dyuPJimzXsQ', title: 'Ariyamuthu' },
+      { id: 'Ihyhtb5UStU', title: 'Ariyamuthu-II' }
+    ]
+  },
+  corporateFilms: {
+    name: 'Corporate Films',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp',
+    videos: [
+      { id: 'DtOQngTmzYQ', title: 'Sabari Corporate Ad' }
     ]
   }
 }
 
-// Retrieve the current category using slug with fallback
+// Get category by slug from route
 const categoryData = categories[route.params.slug] || { name: '', image: '', videos: [] }
 </script>

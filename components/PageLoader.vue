@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center">
       <!-- Simple Tailwind CSS Spinner -->
       <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mb-4"></div>
-      <p class="text-lg font-semibold text-gray-700">Welcome to Thaya Ads </p>
+      <p class="text-lg font-semibold text-gray-700">Loading</p>
     </div>
   </div>
 </template>

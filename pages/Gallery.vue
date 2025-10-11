@@ -1,39 +1,56 @@
 <template>
-  <section id="gallery" class="py-12 md:py-20 bg-gray-50">
-    <div class="container mx-auto px-4">
-      <h2 class="text-3xl font-extrabold text-[#1D1860] mb-8 text-center">Our Gallery</h2>
-      <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+  <section id="gallery" class="py-20 md:py-32 bg-gradient-to-br from-slate-950 via-slate-900 to-black text-white relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-20 right-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-20 left-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+    </div>
+
+    <div class="container mx-auto px-4 relative z-10">
+      
+      <!-- Section Title -->
+      <div class="text-center mb-10">
+        <div class="inline-block">
+          <h2 class="text-5xl md:text-7xl font-black mb-3 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent">
+            Our Gallery
+          </h2>
+          <div class="h-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full"></div>
+        </div>
+      </div>
+
+      <p class="text-center text-gray-300 mb-16 max-w-2xl mx-auto text-lg">
         A glimpse of our latest campaigns and creative work.
       </p>
 
       <!-- Initial Gallery View (First 3 Images) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
         <div 
           v-for="(image, index) in limitedImages" 
           :key="index" 
-          class="relative overflow-hidden rounded-xl shadow-lg group transform hover:scale-[1.02] transition duration-300"
+          class="group bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2"
         >
-          <img 
-            :src="image.url" 
-            :alt="'Gallery image ' + (index + 1)" 
-            class="w-full h-72 object-cover" 
-            loading="lazy"
-            onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
-          />
-          <!-- Optional Hover Overlay -->
-          <div class="absolute inset-0 bg-blue-600 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+          <div class="relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-blue-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+            <img 
+              :src="image.url" 
+              :alt="'Gallery image ' + (index + 1)" 
+              class="w-full h-72 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110" 
+              loading="lazy"
+              onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
+            />
+          </div>
         </div>
       </div>
 
       <!-- See More Button -->
-      <div class="text-center mt-12">
+      <div class="text-center mt-16">
         <button 
           @click="openModalAndFetch"
           :disabled="isLoading"
-          class="inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-full shadow-lg text-white bg-blue-600 hover:bg-blue-700 transition duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+          class="group inline-flex items-center justify-center px-10 py-4 text-lg font-bold rounded-full shadow-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20"
         >
           <span v-if="isLoading" class="flex items-center">
-            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <svg class="animate-spin -ml-1 mr-3 h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
               <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
@@ -41,7 +58,7 @@
           </span>
           <span v-else class="flex items-center">
             Click to see more
-            <svg class="ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+            <svg class="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
               <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
             </svg>
@@ -56,15 +73,17 @@
       <div 
         v-if="isModalOpen" 
         @click.self="isModalOpen = false"
-        class="fixed inset-0 z-50 bg-gray-900 bg-opacity-95 overflow-y-auto p-4 md:p-12 backdrop-blur-sm"
+        class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl overflow-y-auto p-4 md:p-12"
       >
         <div class="max-w-7xl mx-auto">
-          <div class="flex justify-between items-center mb-6">
-            <h3 class="text-3xl font-extrabold text-white italic">Where Vision Meets the Lens</h3>
+          <div class="flex justify-between items-center mb-8">
+            <h3 class="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent italic">
+              Where Vision Meets the Lens
+            </h3>
 
             <button 
               @click="isModalOpen = false"
-              class="text-white hover:text-red-400 transition-colors p-2 rounded-full bg-gray-700 hover:bg-gray-800"
+              class="text-white hover:text-red-400 transition-all p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
               aria-label="Close Gallery"
             >
               <svg class="h-8 w-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -74,23 +93,26 @@
           </div>
 
           <!-- All Images Grid -->
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             <div 
               v-for="(image, index) in galleryImages" 
               :key="'full-' + index"
-              class="relative overflow-hidden rounded-lg shadow-xl"
+              class="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20"
             >
-              <img 
-                :src="image.url" 
-                :alt="'Full gallery image ' + (index + 1)" 
-                class="w-full h-48 md:h-64 object-cover cursor-pointer hover:scale-[1.03] transition duration-300"
-                loading="lazy"
-                onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
-              />
+              <div class="relative overflow-hidden">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-blue-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+                <img 
+                  :src="image.url" 
+                  :alt="'Full gallery image ' + (index + 1)" 
+                  class="w-full h-48 md:h-64 object-cover cursor-pointer transition-transform duration-700 group-hover:scale-110"
+                  loading="lazy"
+                  onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
+                />
+              </div>
             </div>
           </div>
 
-          <p v-if="hasFetchedAll && galleryImages.length > 0" class="text-center text-white/70 mt-8 text-lg">
+          <p v-if="hasFetchedAll && galleryImages.length > 0" class="text-center text-white/70 mt-10 text-lg">
             All {{ galleryImages.length }} images loaded.
           </p>
         </div>
@@ -110,12 +132,11 @@ const API_URL = 'https://YOUR_WORKER_DOMAIN/api/gallery';
 // --- State Variables ---
 const isModalOpen = ref(false);
 const isLoading = ref(false);
-const hasFetchedAll = ref(false); // Tracks if the full list has been loaded from KV
+const hasFetchedAll = ref(false);
 
 // --- Initial Image Data (Local Cache) ---
-// This list is what is shown immediately and what we use to compare against the KV data.
 const galleryImages = ref([
-  { url: 'https://picsum.photos/id/10/500/750' },   // Tall Placeholder
+  { url: 'https://picsum.photos/id/10/500/750' },
   { url: 'https://picsum.photos/id/100/500/750' },
   { url: 'https://picsum.photos/id/101/500/750' },
   { url: 'https://picsum.photos/id/102/500/750' },
@@ -167,16 +188,9 @@ const galleryImages = ref([
   { url: 'https://picsum.photos/id/153/500/750' },
 ]);
 
-
-
-// Computed property to show only the first 3 images for the preview
 const limitedImages = computed(() => galleryImages.value.slice(0, 3));
 
-/**
- * Core Logic: Fetches all URLs from the Worker (KV) and merges only the unique ones.
- */
 const fetchAndMergeGallery = async () => {
-    // Prevent multiple fetches if the data is already loaded
     if (hasFetchedAll.value || isLoading.value) {
         return;
     }
@@ -189,18 +203,12 @@ const fetchAndMergeGallery = async () => {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
         
-        // 1. Get the FULL array of URLs from the Worker (KV)
         const fetchedUrls: string[] = await response.json();
-        
-        // 2. Create a Set of existing URLs for fast O(1) lookup
         const existingUrlSet = new Set(galleryImages.value.map(img => img.url));
-
-        // 3. Filter the fetched URLs to find new, unique ones (The "vomit" step)
         const newUniqueImages = fetchedUrls
-            .filter(url => !existingUrlSet.has(url)) // Keep only URLs NOT found locally
-            .map(url => ({ url })); // Convert unique strings back to { url: string } objects
+            .filter(url => !existingUrlSet.has(url))
+            .map(url => ({ url }));
         
-        // 4. Merge the new, unique images into the main gallery array
         if (newUniqueImages.length > 0) {
             galleryImages.value.push(...newUniqueImages);
             console.log(`[Gallery] Added ${newUniqueImages.length} new unique images from KV.`);
@@ -208,7 +216,6 @@ const fetchAndMergeGallery = async () => {
              console.log("[Gallery] No new images found in KV. Local cache is complete.");
         }
 
-        // 5. Mark as fetched so subsequent clicks skip the API call
         hasFetchedAll.value = true;
 
     } catch (error) {
@@ -218,21 +225,11 @@ const fetchAndMergeGallery = async () => {
     }
 }
 
-/**
- * Handles the button click: opens the modal and triggers the fetch operation.
- */
 const openModalAndFetch = () => {
     isModalOpen.value = true;
     fetchAndMergeGallery();
 }
 
-
-// --- Keyboard Handling Logic ---
-
-/**
- * Handles keyboard events globally. Closes the modal if the Escape key is pressed.
- * @param event The keyboard event
- */
 const handleKeydown = (event: KeyboardEvent) => {
   if (isModalOpen.value && event.key === 'Escape') {
     isModalOpen.value = false;
@@ -240,20 +237,15 @@ const handleKeydown = (event: KeyboardEvent) => {
 };
 
 onMounted(() => {
-  // Attach the keydown listener to the window when the component is mounted
   window.addEventListener('keydown', handleKeydown);
 });
 
 onUnmounted(() => {
-  // Remove the listener when the component is destroyed to prevent memory leaks
   window.removeEventListener('keydown', handleKeydown);
 });
 </script>
 
 <style scoped>
-/* * CSS for Modal Transition 
- * Vue transition name is 'modal-fade'
- */
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity 0.3s ease;
@@ -261,5 +253,24 @@ onUnmounted(() => {
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.delay-1000 {
+  animation-delay: 1s;
 }
 </style>

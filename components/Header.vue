@@ -166,7 +166,8 @@ const categories = ref([
   { name: 'Personal Care', link: '/category/personalCare' },
   { name: 'Textile & Apparels', link: '/category/textileApparels' },
   { name: 'Fashion & Lifestyle', link: '/category/fashionLifestyle' },
-  { name: 'Financial Service', link: '/category/financialService' }
+  { name: 'Album & Documentaries', link: '/category/albumDocumentaryFilms' },
+  {name: 'Corporate Films', link: '/category/corporateFilms' }
 ])
 
 const mainLinks = ref([
