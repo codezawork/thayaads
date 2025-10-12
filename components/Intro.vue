@@ -1,9 +1,16 @@
 <template>
-  <section id="intro" class="py-12 md:py-20 overflow-hidden relative bg-gradient-to-br from-slate-950 via-slate-900 to-black">
+  <section
+    id="intro"
+    class="py-12 md:py-20 overflow-hidden relative bg-gradient-to-br from-slate-950 via-slate-900 to-black"
+  >
     <!-- Animated Background Elements -->
     <div class="absolute inset-0 opacity-10">
-      <div class="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
-      <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div
+        class="absolute top-20 left-10 w-96 h-96 bg-purple-500 rounded-full blur-3xl animate-pulse"
+      ></div>
+      <div
+        class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse delay-1000"
+      ></div>
     </div>
 
     <div class="relative z-10">
@@ -25,27 +32,20 @@
         class="intro-swiper"
       >
         <SwiperSlide v-for="(slide, index) in clientSlides" :key="index">
-          <!-- Main Card Container -->
-          <div class="group relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 bg-white/5 backdrop-blur-xl border border-white/10 hover:border-purple-500/50 hover:-translate-y-2">
-            <!-- Image Container -->
+          <!-- Main Card -->
+          <div
+            class="group relative overflow-hidden rounded-3xl shadow-2xl hover:shadow-purple-500/30 transition-all duration-500 bg-white/5 backdrop-blur-xl border border-white/10 hover:border-purple-500/50 hover:-translate-y-2"
+          >
+            <!-- Image -->
             <div class="relative w-full h-80 sm:h-[400px] overflow-hidden">
-              <!-- Gradient Overlay -->
-              <div class="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-purple-600/20 to-blue-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+              ></div>
               <img
                 :data-src="slide.logoUrl"
-                :alt="slide.name + ' campaign image'"
                 class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 lazy-image"
                 ref="imageRefs"
               />
-            </div>
-            
-            <!-- Centered Text Block -->
-            <div class="p-5 flex flex-col items-center justify-center text-center border-t border-white/10">
-              <h3
-                class="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent tracking-wider transition-all duration-300 group-hover:from-purple-300 group-hover:to-pink-300"
-              >
-                {{ slide.name.toUpperCase() }}
-              </h3>
             </div>
           </div>
         </SwiperSlide>
@@ -65,31 +65,36 @@ import { ref, onMounted, onUnmounted, nextTick } from 'vue';
 const modules = [Autoplay, Navigation, Pagination];
 
 const clientSlides = ref([
-  { name: 'AJJ Halwa', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/ajj.webp', url: '#' },
-  { name: 'Bro', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/bro.webp', url: '#' },
-  { name: 'DS கூட்டுப்பெருங்காயம்', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/ds.webp', url: '#' },
-  { name: 'Kovilpatti Snacks', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/kvp.webp', url: '#' },
-  { name: 'Madha Milk', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/madha.webp', url: '#' },
-  { name: 'Pristiano Madrid', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/pristi.webp', url: '#' },
-  { name: 'Saravana Salt', logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/saravana.webp', url: '#' }
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Bro.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/DaDa%20Movie%20Heroine.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/KeerthiSuresh.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay1.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay2.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay3.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay4.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay5.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay6.webp' }
 ]);
-const imageRefs = ref([]);
 
+const imageRefs = ref([]);
 let imageObserver;
 
 onMounted(() => {
   nextTick(() => {
-    imageObserver = new IntersectionObserver((entries, imgObserver) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          if (img.dataset.src) {
+    imageObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            if (img.dataset.src) {
               img.src = img.dataset.src;
+            }
+            observer.unobserve(img);
           }
-          imgObserver.unobserve(img);
-        }
-      });
-    }, { threshold: 0.1 });
+        });
+      },
+      { threshold: 0.1 }
+    );
 
     const images = document.querySelectorAll('.lazy-image');
     images.forEach(img => imageObserver.observe(img));
@@ -107,7 +112,7 @@ onUnmounted(() => {
   padding-bottom: 10px;
 }
 
-/* Custom Swiper Navigation Styles */
+/* Navigation */
 :deep(.swiper-button-next),
 :deep(.swiper-button-prev) {
   color: white;
@@ -132,7 +137,7 @@ onUnmounted(() => {
   font-size: 20px;
 }
 
-/* Custom Pagination Styles */
+/* Pagination */
 :deep(.swiper-pagination-bullet) {
   background: rgba(255, 255, 255, 0.5);
   opacity: 1;
@@ -145,8 +150,10 @@ onUnmounted(() => {
   border-radius: 5px;
 }
 
+/* Background animation */
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.1;
     transform: scale(1);
   }
@@ -155,11 +162,9 @@ onUnmounted(() => {
     transform: scale(1.05);
   }
 }
-
 .animate-pulse {
   animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
-
 .delay-1000 {
   animation-delay: 1s;
 }

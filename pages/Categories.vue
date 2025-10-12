@@ -38,31 +38,8 @@
               :alt="category.name + ' category image'"
               class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" 
             />
-
-            <!-- Play Button -->
-            <div class="absolute inset-0 flex items-center justify-center z-20">
-              <!-- Desktop Hover -->
-              <div
-                class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg hidden md:flex opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              >
-                <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M6 4l12 6-12 6V4z" />
-                </svg>
-              </div>
-
-              <!-- Mobile Always Visible -->
-              <div
-                class="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg md:hidden"
-              >
-                <svg class="w-8 h-8 text-black" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M6 4l12 6-12 6V4z" />
-                </svg>
-              </div>
-            </div>
-
           </div>
 
-          <!-- Category Name -->
           <div class="p-6">
             <h3 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:to-pink-300 transition-all">
               {{ category.name }}
@@ -75,7 +52,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const categories = ref([
   { name: 'Food', image: 'https://assets.thayaads.com/public/assets/images/categories/food.webp', link: '/category/food' },
@@ -83,65 +60,21 @@ const categories = ref([
   { name: 'Personal Care', image: 'https://assets.thayaads.com/public/assets/images/categories/personal-care.webp', link: '/category/personalCare' },
   { name: 'Textile & Apparels', image: 'https://assets.thayaads.com/public/assets/images/categories/textile-apparels.webp', link: '/category/textileApparels' },
   { name: 'Fashion & Lifestyle', image: 'https://assets.thayaads.com/public/assets/images/categories/fashion-lifestyle.webp', link: '/category/fashionLifestyle' },
-  { name: 'Album & Documentaries ', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/albumDocumentaryFilms' },
+  { name: 'Album & Documentaries', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/albumDocumentaryFilms' },
   { name: 'Corporate Films', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/corporateFilms' }
 ])
 
 const categoryRefs = ref([])
-const mobileVisibleIndices = ref([])
-let observer
-let intervalIds = []
 
 onMounted(() => {
-  observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      const index = categoryRefs.value.indexOf(entry.target)
-      if (index === -1) return
-
-      if (entry.isIntersecting) {
-        if (!intervalIds[index]) {
-          mobileVisibleIndices.value.push(index)
-          intervalIds[index] = setInterval(() => {
-            if (mobileVisibleIndices.value.includes(index)) {
-              mobileVisibleIndices.value = mobileVisibleIndices.value.filter(i => i !== index)
-            } else {
-              mobileVisibleIndices.value.push(index)
-            }
-          }, 2000)
-        }
-      } else {
-        if (intervalIds[index]) {
-          clearInterval(intervalIds[index])
-          intervalIds[index] = null
-          mobileVisibleIndices.value = mobileVisibleIndices.value.filter(i => i !== index)
-        }
-      }
-    })
-  }, { threshold: 0.3 })
-
-  categoryRefs.value.forEach(el => {
-    if (el instanceof Element) observer.observe(el)
-  })
-})
-
-onBeforeUnmount(() => {
-  if (observer) observer.disconnect()
-  intervalIds.forEach(id => id && clearInterval(id))
+  // Scroll to category if returning from slug page
+  const lastCategorySlug = sessionStorage.getItem('lastCategory')
+  if (lastCategorySlug) {
+    const index = categories.value.findIndex(cat => cat.link.includes(lastCategorySlug))
+    if (index !== -1 && categoryRefs.value[index]) {
+      categoryRefs.value[index].scrollIntoView({ behavior: 'smooth', block: 'center' })
+      sessionStorage.removeItem('lastCategory')
+    }
+  }
 })
 </script>
-
-<style scoped>
-@keyframes fade-in {
-  from { opacity: 0; transform: translate(-50%, 10px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
-}
-.animate-fade-in { animation: fade-in 0.8s ease-out; }
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.1; transform: scale(1); }
-  50% { opacity: 0.15; transform: scale(1.05); }
-}
-.animate-pulse { animation: pulse 2s cubic-bezier(0.4,0,0.6,1) infinite; }
-
-.delay-1000 { animation-delay: 1s; }
-</style>

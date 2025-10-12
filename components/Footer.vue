@@ -93,10 +93,11 @@ import { ref } from 'vue'
 const categories = [
   { name: 'Food', url: '/category/food' },
   { name: 'Education', url: '/category/education' },
-  { name: 'Personal Care', url: '/category/personal-care' },
-  { name: 'Textile & Apparels', url: '/category/textile-apparels' },
-  { name: 'Fashion & Lifestyle', url: '/category/fashion-lifestyle' },
-  { name: 'Financial Service', url: '/category/financial-service' }
+  { name: 'Personal Care', url: '/category/personalCare' },
+  { name: 'Textile & Apparels', url: '/category/textileApparels' },
+  { name: 'Fashion & Lifestyle', url: '/category/fashionLifestyle' },
+  { name: 'Album & Documentaries', url: '/category/albumDocumentaryFilms' },
+  { name: 'Corporate Films', url: '/category/corporateFilms' }
 ]
 
 const socialLinks = ref([
