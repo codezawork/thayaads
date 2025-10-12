@@ -1,5 +1,5 @@
 <template>
-  <header class="w-full shadow-lg sticky top-0 z-50 bg-gradient-to-r from-[#1D1860] via-[#342D75] to-[#1D1860]">
+  <header class="w-full shadow-lg sticky top-0 z-50 bg-[#0f172a]">
     <div class="max-w-7xl mx-auto flex items-center h-20 px-4 md:px-8">
 
       <!-- Logo -->
@@ -55,7 +55,7 @@
               <div
                 v-if="isDropdownOpen"
                 class="absolute left-0 top-full w-72 rounded-b-xl backdrop-blur-md
-                      bg-[#1D1860]/85 border border-white/10 shadow-xl
+                      bg-[#0f172a]/85 border border-white/10 shadow-xl
                       transition-all duration-300 ease-out origin-top z-50"
               >
                 <div class="flex flex-col divide-y divide-white/10">
@@ -89,7 +89,7 @@
           </a>
         </nav>
 
-        <!-- Social Media Icons -->
+        <!-- Social Media Icons (Desktop) - UPDATED for Square Shape and Colors -->
         <div class="flex items-center gap-4 ml-8 pl-8 border-l border-white/20">
           <a 
             v-for="social in socialMediaLinks" 
@@ -98,9 +98,16 @@
             :aria-label="social.label"
             target="_blank" 
             rel="noopener noreferrer"
-            :class="['transition-all text-white', socialHoverClass(social.label)]"
+            class="social-desktop-link"
           >
-            <font-awesome-icon :icon="social.icon" class="w-5 h-5" />
+            <!-- White square box -->
+            <div class="w-10 h-10 bg-white rounded-lg shadow-xl transition-all duration-300 social-icon-box flex items-center justify-center"> 
+              <font-awesome-icon 
+                :icon="social.icon" 
+                class="w-5 h-5" 
+                :class="social.colorClass"
+              />
+            </div>
           </a>
         </div>
       </div>
@@ -125,10 +132,30 @@
           @click.self="closeMenu"
         >
           <div
-            class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-gradient-to-b from-[#1D1860] via-[#342D75] to-[#1D1860]
+            class="absolute top-0 right-0 w-3/4 max-w-xs h-full bg-[#0f172a]
                    shadow-xl flex flex-col p-6 pt-20 mobile-menu overflow-y-auto"
           >
             <nav class="flex flex-col gap-4">
+              
+              <!-- Social Media Icons (Mobile) - Added grey background for the rectangular outline -->
+              <div class="flex justify-start gap-5 p-3 mb-4 border border-white rounded-lg bg-slate-800">
+                <a 
+                  v-for="social in socialMediaLinks" 
+                  :key="social.label" 
+                  :href="social.url" 
+                  :aria-label="social.label"
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  :class="[
+                      'hover:scale-125 transition',
+                      // Apply white color for X on dark mobile background, otherwise use brand color
+                      social.label === 'X (Twitter)' ? 'text-white' : social.colorClass 
+                  ]"
+                >
+                  <font-awesome-icon :icon="social.icon" class="w-7 h-7" />
+                </a>
+              </div>
+              
               <NuxtLink
                 v-for="item in mainLinks"
                 :key="item.name"
@@ -170,20 +197,6 @@
                 </transition>
               </div>
 
-              <!-- Social Media Icons (Mobile) -->
-              <div class="flex justify-start gap-5 mt-6 pt-4 border-t border-white/10">
-                <a 
-                  v-for="social in socialMediaLinks" 
-                  :key="social.label" 
-                  :href="social.url" 
-                  :aria-label="social.label"
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  class="text-white hover:scale-125 transition"
-                >
-                  <font-awesome-icon :icon="social.icon" class="w-7 h-7" />
-                </a>
-              </div>
             </nav>
           </div>
         </div>
@@ -252,28 +265,19 @@ const mainLinks = ref([
   { name: 'Contact Us', link: '#main-footer' }
 ])
 
+// UPDATED: Added colorClass property for original brand colors, adjusted WhatsApp/Instagram/X colors
 const socialMediaLinks = ref([
-  { icon: ['fab', 'facebook-f'], url: 'https://www.facebook.com/thayaads/', label: 'Facebook' },
-  { icon: ['fab', 'instagram'], url: 'https://www.instagram.com/thayaads/', label: 'Instagram' },
-  { icon: ['fab', 'x-twitter'], url: 'https://x.com/Thayaads', label: 'X (Twitter)' },
-  { icon: ['fab', 'youtube'], url: 'https://www.youtube.com/@thayaads', label: 'YouTube' },
-  { icon: ['fab', 'whatsapp'], url: 'https://wa.me/919841115673', label: 'WhatsApp' }
+  { icon: ['fab', 'facebook-f'], url: 'https://www.facebook.com/thayaads/', label: 'Facebook', colorClass: 'text-blue-600' },
+  { icon: ['fab', 'instagram'], url: 'https://www.instagram.com/thayaads/', label: 'Instagram', colorClass: 'text-pink-600' }, // Deeper pink for better contrast/look
+  { icon: ['fab', 'x-twitter'], url: 'https://x.com/Thayaads', label: 'X (Twitter)', colorClass: 'text-gray-900' }, // Black for contrast against the white desktop box
+  { icon: ['fab', 'youtube'], url: 'https://www.youtube.com/@thayaads', label: 'YouTube', colorClass: 'text-red-600' },
+  { icon: ['fab', 'whatsapp'], url: 'https://wa.me/919841115673', label: 'WhatsApp', colorClass: 'text-emerald-500' } // Full green color
 ])
 
 const menuOpen = ref(false)
 const isDropdownOpen = ref(false)
 const mobileCategoriesOpen = ref(false)
 
-const socialHoverClass = (label) => {
-  switch (label) {
-    case 'Facebook': return 'hover:text-blue-600 hover:scale-125'
-    case 'Instagram': return 'hover:text-pink-500 hover:scale-125'
-    case 'X (Twitter)': return 'hover:text-blue-400 hover:scale-125'
-    case 'YouTube': return 'hover:text-red-600 hover:scale-125'
-    case 'WhatsApp': return 'hover:text-green-500 hover:scale-125'
-    default: return ''
-  }
-}
 
 watch(menuOpen, (open) => {
   document.body.style.overflow = open ? 'hidden' : ''
@@ -344,47 +348,66 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* (The style block remains the same as provided by the user, 
-   except for the .active-link styles which were already good 
-   for the visual feedback.) */
 .nav-link {
   @apply text-white text-lg font-medium transition;
 }
 .dropdown-item {
   @apply px-5 py-3 text-white text-base font-medium transition;
 }
+
+/* --- UPDATED: Applying the gradient background for hover/active dropdown items --- */
 .dropdown-item:hover {
-  background-color: #342D75;
+  /* Requested gradient: bg-gradient-to-r from-purple-400 to-pink-400 */
+  background: linear-gradient(to right, #c084fc, #f472b6);
+  color: #000000; /* Change text color to black for contrast */
+  font-weight: 600;
+}
+
+/* Also applying the gradient to the active dropdown link for visual consistency */
+.active-dropdown-link {
+    background: linear-gradient(to right, #c084fc, #f472b6) !important;
+    color: #000000 !important;
+    font-weight: 700;
+}
+/* --- END UPDATED STYLES --- */
+
+
+/* ------------------------------------- */
+/* --- DESKTOP SOCIAL MEDIA BOX STYLES --- */
+/* ------------------------------------- */
+.social-desktop-link {
+  /* This container handles the overall scale animation for the entire box */
+  @apply relative transform transition-transform duration-300;
+}
+
+.social-desktop-link:hover {
+  /* Make it big and animative */
+  transform: scale(1.6);
+}
+
+.social-icon-box {
+  /* White box styling is applied in the template using Tailwind classes (w-10 h-10) */
+  @apply transition-all duration-300 ease-in-out;
 }
 
 /* ------------------------------------- */
-/* --- NEW ACTIVE LINK STYLES --- */
+/* --- ACTIVE LINK STYLES (Underline) --- */
 /* ------------------------------------- */
 
-/* Desktop Active Link Underline */
+/* Apply simple border-bottom for the active link */
 .active-link {
-    /* Set position relative for the pseudo-element */
-    @apply relative;
+    /* Use Tailwind classes for a clean border-bottom effect */
+    @apply border-b-2 border-white pb-1 relative; 
+    /* The pb-1 provides space between the text and the line */
 }
 
-.active-link::after {
-    content: '';
-    position: absolute;
-    bottom: 5px; /* Adjust vertical position */
-    left: 10%; /* Start the line slightly in */
-    width: 80%; /* Don't span the full width of the padded link */
-    height: 3px;
-    background-color: white; 
-    border-radius: 2px;
-    /* Remove the dot animation when active */
-    animation: none !important; 
-    opacity: 1 !important;
-    transform: none !important;
-    transition: width 0.3s ease;
-}
-
-/* Hide the box/dot border effect when the link is active */
+/* Crucial: Explicitly kill the box/dot pseudo-elements when the link is active */
+/* Kill the hover box (::before) */
 .active-link::before {
+    display: none !important;
+}
+/* Kill the animated dot (::after) */
+.active-link::after {
     display: none !important;
 }
 
@@ -394,12 +417,6 @@ onUnmounted(() => {
 }
 .mobile-active-link-item {
   @apply text-white font-semibold bg-white/10 !important; /* Highlights active category link */
-}
-
-/* Active link for dropdown items (smaller text, less padding) */
-.active-dropdown-link {
-    background-color: #342D75 !important;
-    font-weight: 700;
 }
 
 /* Existing Custom Styles Below */

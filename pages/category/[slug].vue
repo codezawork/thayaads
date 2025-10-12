@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white min-h-screen text-gray-900">
+  <div class="bg-[#0f172a] min-h-screen text-gray-900">
     <!-- Header -->
     <Header />
 
@@ -19,7 +19,7 @@
 
     <!-- Video Grid -->
     <section class="py-12 md:py-16 px-4 lg:px-12 max-w-screen-2xl mx-auto">
-      <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-black">Projects</h2>
+      <h2 class="text-3xl md:text-4xl font-bold text-center mb-10 text-white">Projects</h2>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="video in categoryData?.videos" :key="video.id"
@@ -31,7 +31,7 @@
             </iframe>
           </div>
 
-          <div class="p-4">
+          <div class="p-4 text-center">
             <h3 class="text-lg font-semibold text-gray-900">{{ video.title }}</h3>
           </div>
         </div>

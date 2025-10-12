@@ -10,22 +10,30 @@
     </div>
 
     <div class="max-w-screen-2xl mx-auto px-4 lg:px-12 relative z-10">
-      <!-- Section Title and Underline -->
+      <!-- Section Title and Underline (Styled to match Our Gallery) -->
       <div class="text-center mb-10 md:mb-14">
-        <h2
-          class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent inline-block">
-          Making Videos
-        </h2>
-        <!-- Gradient underline -->
-        <div class="h-1.5 w-32 mx-auto mt-2 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full"></div>
+        <div class="inline-block">
+            <h2
+                class="text-5xl md:text-7xl font-black mb-3 bg-gradient-to-r from-white via-purple-200 to-blue-200 bg-clip-text text-transparent"
+            >
+                Making Videos
+            </h2>
+            <div
+                class="h-1.5 bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full"
+            ></div>
+        </div>
       </div>
 
       <!-- YouTube Previews Grid (Initial View) -->
       <!-- Shows 1 video on mobile, 2 on desktop -->
       <div class="grid gap-6 md:grid-cols-2">
-        <div v-for="(url, index) in visibleVideos" :key="index" class="w-full aspect-video relative">
+        <div 
+            v-for="(url, index) in visibleVideos" 
+            :key="index" 
+            class="w-full aspect-video relative video-card-style"
+        >
           <iframe
-            class="w-full h-full rounded-xl border border-white/20 shadow-lg"
+            class="w-full h-full rounded-xl border-none shadow-lg"
             :src="getEmbedUrl(url)"
             frameborder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -35,32 +43,48 @@
         </div>
       </div>
 
-      <!-- See More Button -->
-      <div v-if="youtubeUrls.length > visibleCount" class="text-center mt-8">
+      <!-- See More Button (Styled to match Our Gallery button) -->
+      <div v-if="youtubeUrls.length > visibleCount" class="text-center mt-16">
         <button
           @click="openModal"
-          class="px-6 py-3 bg-purple-600 hover:bg-purple-700 rounded-lg font-semibold transition-colors shadow-lg hover:shadow-xl"
+          class="group inline-flex items-center justify-center px-10 py-4 text-lg font-bold rounded-full shadow-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed border border-white/20"
         >
-          Click to see all videos
+          <span class="flex items-center">
+            Click to see more
+            <!-- Eye Icon for "See More" -->
+            <svg
+              class="ml-2 h-6 w-6 group-hover:translate-x-1 transition-transform"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+              <path
+                fill-rule="evenodd"
+                d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>
         </button>
       </div>
     </div>
 
-    <!-- Full Video Gallery Modal/Popup -->
+    <!-- Full Video Gallery Modal/Popup (Styled to match Our Gallery modal) -->
     <transition name="modal-fade">
       <div
         v-if="isModalOpen"
         @click.self="closeModal"
-        class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md overflow-y-auto p-4 md:p-10 transition-opacity duration-300"
+        class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl overflow-y-auto p-4 md:p-12 transition-opacity duration-300"
       >
         <div class="max-w-7xl mx-auto">
           <div class="flex justify-between items-center mb-8">
-            <h3 class="text-3xl md:text-4xl font-bold bg-gradient-to-r from-pink-400 to-fuchsia-400 bg-clip-text text-transparent">
+            <h3 class="text-3xl md:text-4xl font-black bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent italic">
               Full Video Archive
             </h3>
             <button
               @click="closeModal"
-              class="text-white hover:text-red-400 p-2 rounded-full transition-all bg-white/10 hover:bg-white/20"
+              class="text-white hover:text-red-400 transition-all p-3 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20"
               aria-label="Close Gallery"
             >
               <!-- Close Icon (X) -->
@@ -86,10 +110,10 @@
             <div
               v-for="(url, index) in youtubeUrls"
               :key="'modal-' + index"
-              class="w-full aspect-video relative"
+              class="w-full aspect-video relative video-card-style-modal"
             >
               <iframe
-                class="w-full h-full rounded-xl border border-white/20 shadow-lg"
+                class="w-full h-full rounded-xl border-none shadow-lg"
                 :src="getEmbedUrl(url)"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -180,11 +204,30 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* Optional: smooth hover effect */
-iframe:hover {
-    transform: scale(1.02);
-    transition: transform 0.3s ease-in-out;
+/* --- Video Card Styling (Initial View) --- */
+.video-card-style {
+    /* Base styling matching the gallery container */
+    @apply bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden 
+           transition-all duration-500 cursor-pointer;
 }
+
+.video-card-style:hover {
+    /* Hover effects matching the gallery container */
+    @apply border-purple-500/50 shadow-2xl shadow-purple-500/20 -translate-y-2;
+}
+
+/* --- Video Card Styling (Modal View) --- */
+.video-card-style-modal {
+    /* Modal video styling is slightly less aggressive with rounded corners */
+    @apply bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden 
+           transition-all duration-500 cursor-pointer;
+}
+
+.video-card-style-modal:hover {
+    /* Hover effects matching the gallery container */
+    @apply border-purple-500/50 shadow-2xl shadow-purple-500/20 transform scale-105;
+}
+
 
 /* Animated background pulse */
 @keyframes pulse {
@@ -217,7 +260,6 @@ iframe:hover {
 }
 
 /* Global style for disabling background scroll when modal is open */
-/* :global() is used to apply style outside of the component's scope (to the body) */
 :global(body.modal-active) {
   overflow: hidden !important;
 }

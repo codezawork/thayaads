@@ -35,9 +35,11 @@
       </p>
 
       <!-- Initial Gallery View (Taller Portrait Images) -->
+      <!-- The grid layout handles showing 1 column on mobile and 3 on desktop -->
       <div
         class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
       >
+        <!-- The v-for now only iterates over 1 item on mobile due to the computed property -->
         <div
           v-for="(image, index) in initialImages"
           :key="index"
@@ -298,6 +300,9 @@ const isLightboxOpen = ref(false); // Controls the single image carousel pop-up
 const currentImageIndex = ref(0);
 let touchStartX = 0; // For swipe detection
 
+// **UPDATED** State to control the number of initial images displayed (1 for mobile, 3 for desktop)
+const initialDisplayCount = ref(3);
+
 // --- Gallery Image URLs (1.webp → 40.webp) ---
 const galleryImages = ref(
   Array.from({ length: 40 }, (_, i) => ({
@@ -306,7 +311,8 @@ const galleryImages = ref(
 );
 
 // --- Computed Properties ---
-const initialImages = computed(() => galleryImages.value.slice(0, 3));
+// **UPDATED** to use the reactive initialDisplayCount
+const initialImages = computed(() => galleryImages.value.slice(0, initialDisplayCount.value));
 const currentImageUrl = computed(() => galleryImages.value[currentImageIndex.value]?.url);
 
 
@@ -416,6 +422,13 @@ watch(isModalOpen, updateBodyClass);
 watch(isLightboxOpen, updateBodyClass);
 
 
+// **NEW/UPDATED** Function to check screen size and update the number of initial images
+const handleResize = () => {
+    // Set to 1 image for screens under 768px (mobile), 3 otherwise (desktop)
+    initialDisplayCount.value = window.innerWidth < 768 ? 1 : 3;
+}
+
+
 // --- Global Event Handlers (Keyboard) ---
 const handleKeydown = (event: KeyboardEvent) => {
   if (isLightboxOpen.value) {
@@ -431,9 +444,14 @@ const handleKeydown = (event: KeyboardEvent) => {
   }
 };
 
-onMounted(() => window.addEventListener('keydown', handleKeydown));
+onMounted(() => {
+    handleResize(); // Initial check on mount
+    window.addEventListener('resize', handleResize); // Listen for resize events
+    window.addEventListener('keydown', handleKeydown);
+});
 
 onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
   window.removeEventListener('keydown', handleKeydown);
   // Clean up body class in case the user navigates away while a modal is open
   document.body.classList.remove('modal-active');

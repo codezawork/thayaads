@@ -1,6 +1,6 @@
 <template>
   <footer id="main-footer"
-    class="w-full bg-gradient-to-r from-[#1D1860] via-[#342D75] to-[#1D1860] py-12 md:py-20 text-gray-100 relative overflow-hidden">
+    class="w-full bg-[#0f172a] py-12 md:py-20 text-gray-100 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 md:px-8">
 
       <!-- Main Grid -->
