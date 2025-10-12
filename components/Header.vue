@@ -1,9 +1,9 @@
 <template>
   <header class="w-full shadow-lg sticky top-0 z-50 bg-[#0f172a]">
-    <div class="max-w-7xl mx-auto flex items-center h-20 px-4 md:px-8">
+    <div class="max-w-7xl mx-auto flex items-center h-20 px-0 md:px-8">
 
-      <!-- Logo -->
-      <NuxtLink to="/" class="flex items-center h-full">
+      <!-- Logo - AGGRESSIVE LEFT ADJUSTMENT FOR MOBILE -->
+      <NuxtLink to="/" class="flex items-center h-full ml-[-2] lg:ml-0">
         <img
           class="object-contain w-36 h-16 max-h-full"
           src="https://assets.thayaads.com/public/assets/images/author/thaya.webp"
@@ -115,7 +115,7 @@
       <!-- Mobile Menu Button -->
       <button
         @click="toggleMenu"
-        class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition z-50 ml-auto"
+        class="lg:hidden p-2 rounded-lg hover:bg-white/10 transition z-50 ml-auto mr-4"
         aria-label="Toggle menu"
       >
         <font-awesome-icon

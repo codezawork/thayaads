@@ -165,16 +165,18 @@ const animatedYears = ref(0);
 const animatedFilms = ref(0);
 const animatedTV = ref(0);
 
-const hasAnimated = ref(false);
+const isCounting = ref(false); // New state to prevent concurrent animations
 const showGlitter = ref(false); 
 const statsRef = ref(null); // Ref to attach the Intersection Observer
 
 const startCounting = () => {
-  if (hasAnimated.value) return;
-  hasAnimated.value = true;
+  // Guard to ensure animation only starts once per scroll-in event
+  if (isCounting.value) return; 
+
+  isCounting.value = true;
   showGlitter.value = false;
 
-  const duration = 1500; // 1.5 seconds animation
+  const duration = 1000; // 1.5 seconds animation
   const startTime = performance.now();
 
   const animate = (timestamp) => {
@@ -194,6 +196,9 @@ const startCounting = () => {
       animatedFilms.value = targetFilms;
       animatedTV.value = targetTV;
       
+      // Animation finished
+      isCounting.value = false; 
+
       // Trigger glitter effect
       showGlitter.value = true;
       // Hide glitter after 1.5s
@@ -204,17 +209,25 @@ const startCounting = () => {
   requestAnimationFrame(animate);
 };
 
-// --- Intersection Observer Setup ---
+// --- Intersection Observer Setup (Updated) ---
 let observer = null;
 
 onMounted(() => {
   observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting && !hasAnimated.value) {
+        if (entry.isIntersecting) {
+          // If section comes into view, start the counting animation
           startCounting();
-          // Stop observing once animation has run
-          observer.unobserve(entry.target);
+        } else {
+          // If section scrolls out of view, reset the values so they can count again 
+          // when scrolled back in. Only reset if the animation isn't actively running.
+          if (!isCounting.value) {
+             animatedYears.value = 0;
+             animatedFilms.value = 0;
+             animatedTV.value = 0;
+             showGlitter.value = false;
+          }
         }
       });
     },

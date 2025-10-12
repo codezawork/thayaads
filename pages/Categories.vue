@@ -18,8 +18,8 @@
         </div>
       </div>
 
-      <!-- Categories Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <!-- Categories Grid - ADJUSTED FOR MOBILE (grid-cols-2) -->
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
         <NuxtLink 
           v-for="(category, index) in categories" 
           :key="category.name" 
@@ -27,7 +27,7 @@
           class="block group bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2"
         >
           <div 
-            class="relative w-full h-64 md:h-72 lg:h-80 overflow-hidden"
+            class="relative w-full h-40 sm:h-56 md:h-72 overflow-hidden" 
             :ref="el => categoryRefs[index] = el"
           >
             <!-- Gradient Overlay on Hover -->
@@ -38,23 +38,24 @@
               :src="category.image" 
               :alt="category.name + ' category image'"
               class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" 
+              onerror="this.onerror=null; this.src='https://placehold.co/400x400/CCCCCC/333333?text=Image+Error';"
             />
 
             <!-- Play Button -->
             <div class="absolute inset-0 flex items-center justify-center z-20">
               <div
-                class="play-button w-16 h-16 md:w-20 md:h-20 bg-white/80 rounded-full flex items-center justify-center transition-opacity duration-300
+                class="play-button w-14 h-14 sm:w-16 sm:h-16 bg-white/80 rounded-full flex items-center justify-center transition-opacity duration-300
                        opacity-100 md:opacity-0 group-hover:md:opacity-100"
               >
-                <svg class="w-6 h-6 md:w-8 md:h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-black" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M4 2v20l18-10L4 2z" />
                 </svg>
               </div>
             </div>
           </div>
 
-          <div class="p-6">
-            <h3 class="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:to-pink-300 transition-all">
+          <div class="p-4 sm:p-6 text-center">
+            <h3 class="text-base sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent group-hover:from-purple-300 group-hover:to-pink-300 transition-all">
               {{ category.name }}
             </h3>
           </div>
@@ -93,6 +94,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/*
+  The `play-button` styles remain, ensuring it is always visible on mobile/tablet 
+  (screens less than 1024px) for easy tapping.
+*/
 .play-button {
   @apply cursor-pointer;
 }
@@ -101,5 +106,23 @@ onMounted(() => {
   .play-button {
     opacity: 1 !important;
   }
+}
+
+/* Background Animations */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.15;
+    transform: scale(1.05);
+  }
+}
+.animate-pulse {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+.delay-1000 {
+  animation-delay: 1s;
 }
 </style>

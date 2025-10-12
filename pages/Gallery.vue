@@ -28,18 +28,12 @@
         </div>
       </div>
 
-      <p
-        class="text-center text-gray-300 mb-16 max-w-2xl mx-auto text-lg"
-      >
-        A glimpse of our latest campaigns and creative work.
-      </p>
-
       <!-- Initial Gallery View (Taller Portrait Images) -->
-      <!-- The grid layout handles showing 1 column on mobile and 3 on desktop -->
+      <!-- UPDATED: Changed grid-cols-1 to grid-cols-2 for mobile/small screens -->
       <div
-        class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+        class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-8"
       >
-        <!-- The v-for now only iterates over 1 item on mobile due to the computed property -->
+        <!-- The v-for now iterates over 2 images on mobile and 3 on desktop (controlled by initialImages computed property) -->
         <div
           v-for="(image, index) in initialImages"
           :key="index"
@@ -53,7 +47,7 @@
             <img
               :src="image.url"
               :alt="'Gallery image ' + (index + 1)"
-              class="w-full h-96 lg:h-[30rem] object-cover transition-transform duration-700 group-hover:scale-110"
+              class="w-full h-72 md:h-96 lg:h-[30rem] object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
             />
@@ -300,7 +294,7 @@ const isLightboxOpen = ref(false); // Controls the single image carousel pop-up
 const currentImageIndex = ref(0);
 let touchStartX = 0; // For swipe detection
 
-// **UPDATED** State to control the number of initial images displayed (1 for mobile, 3 for desktop)
+// **UPDATED** State to control the number of initial images displayed (2 for mobile, 3 for desktop)
 const initialDisplayCount = ref(3);
 
 // --- Gallery Image URLs (1.webp → 40.webp) ---
@@ -326,21 +320,21 @@ const fetchAndMergeGallery = async () => {
   try {
     // This API call is simulated since the real endpoint is not provided.
     // Replace this with your actual logic if needed.
-    const response = await fetch(API_URL);
-    if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
-    const fetchedUrls: string[] = await response.json();
+    // const response = await fetch(API_URL);
+    // if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
+    // const fetchedUrls: string[] = await response.json();
 
-    const existingUrlSet = new Set(galleryImages.value.map(img => img.url));
-    const newUniqueImages = fetchedUrls
-      .filter(url => !existingUrlSet.has(url))
-      .map(url => ({ url }));
+    // const existingUrlSet = new Set(galleryImages.value.map(img => img.url));
+    // const newUniqueImages = fetchedUrls
+    //   .filter(url => !existingUrlSet.has(url))
+    //   .map(url => ({ url }));
 
-    if (newUniqueImages.length > 0) {
-      galleryImages.value.push(...newUniqueImages);
-      console.log(`[Gallery] Added ${newUniqueImages.length} new images.`);
-    } else {
-      console.log('[Gallery] No new images found.');
-    }
+    // if (newUniqueImages.length > 0) {
+    //   galleryImages.value.push(...newUniqueImages);
+    //   console.log(`[Gallery] Added ${newUniqueImages.length} new images.`);
+    // } else {
+      console.log('[Gallery] No new images found from simulated fetch.');
+    // }
 
     hasFetchedAll.value = true;
   } catch (err) {
@@ -422,10 +416,10 @@ watch(isModalOpen, updateBodyClass);
 watch(isLightboxOpen, updateBodyClass);
 
 
-// **NEW/UPDATED** Function to check screen size and update the number of initial images
+// **UPDATED** Function to check screen size and update the number of initial images
 const handleResize = () => {
-    // Set to 1 image for screens under 768px (mobile), 3 otherwise (desktop)
-    initialDisplayCount.value = window.innerWidth < 768 ? 1 : 3;
+    // Set to 2 images for screens under 768px (mobile), 3 otherwise (desktop)
+    initialDisplayCount.value = window.innerWidth < 768 ? 2 : 3;
 }
 
 
