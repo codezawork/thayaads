@@ -14,6 +14,7 @@
       <OurServices />
       <Categories />
       <Gallery />
+      <Clients />
       <MakingVideo />
       <Footer />
     </div>
@@ -32,6 +33,7 @@ import Categories from './Categories.vue'
 import OurServices from './OurServices.vue'
 import Gallery from './Gallery.vue'
 import FeaturedProjects from './FeaturedProjects.vue'
+import Clients from './Clients.vue'
 import MakingVideo from './MakingVideo.vue'
 
 // Utility function to wait until all images are loaded
