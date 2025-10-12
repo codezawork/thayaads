@@ -34,14 +34,15 @@
         A glimpse of our latest campaigns and creative work.
       </p>
 
-      <!-- Initial Gallery View -->
+      <!-- Initial Gallery View (Taller Portrait Images) -->
       <div
         class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
       >
         <div
-          v-for="(image, index) in limitedImages"
+          v-for="(image, index) in initialImages"
           :key="index"
-          class="group bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2"
+          @click="openLightbox(index)"
+          class="group bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 hover:-translate-y-2 cursor-pointer"
         >
           <div class="relative overflow-hidden">
             <div
@@ -50,7 +51,7 @@
             <img
               :src="image.url"
               :alt="'Gallery image ' + (index + 1)"
-              class="w-full h-72 md:h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+              class="w-full h-96 lg:h-[30rem] object-cover transition-transform duration-700 group-hover:scale-110"
               loading="lazy"
               onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
             />
@@ -108,12 +109,12 @@
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Gallery Grid Modal (Opened by "Click to see more") -->
     <transition name="modal-fade">
       <div
         v-if="isModalOpen"
         @click.self="isModalOpen = false"
-        class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl overflow-y-auto p-4 md:p-12"
+        class="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl overflow-y-auto p-4 md:p-12"
       >
         <div class="max-w-7xl mx-auto">
           <div class="flex justify-between items-center mb-8">
@@ -145,14 +146,15 @@
             </button>
           </div>
 
-          <!-- Full Gallery -->
+          <!-- Full Gallery Grid -->
           <div
             class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6"
           >
             <div
               v-for="(image, index) in galleryImages"
               :key="'full-' + index"
-              class="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20"
+              @click="openLightbox(index)"
+              class="group bg-white/5 backdrop-blur-xl rounded-2xl border border-white/10 overflow-hidden hover:border-purple-500/50 transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/20 cursor-pointer"
             >
               <div class="relative overflow-hidden">
                 <div
@@ -161,7 +163,7 @@
                 <img
                   :src="image.url"
                   :alt="'Full gallery image ' + (index + 1)"
-                  class="w-full h-48 md:h-64 object-cover cursor-pointer transition-transform duration-700 group-hover:scale-110"
+                  class="w-full h-72 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
                   loading="lazy"
                   onerror="this.onerror=null; this.src='https://placehold.co/600x400/CCCCCC/333333?text=Image+Error';"
                 />
@@ -173,24 +175,128 @@
             v-if="hasFetchedAll && galleryImages.length > 0"
             class="text-center text-white/70 mt-10 text-lg"
           >
-            All {{ galleryImages.length }} images loaded.
+            All {{ galleryImages.length }} images loaded. Click any image to view it full-screen.
           </p>
         </div>
       </div>
     </transition>
+
+
+    <!-- Lightbox Modal (Carousel) - Overlays everything -->
+    <transition name="modal-fade">
+      <div
+        v-if="isLightboxOpen"
+        @click.self="isLightboxOpen = false"
+        class="fixed inset-0 z-50 bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+      >
+        <div class="relative w-full max-w-5xl h-full max-h-[80vh] flex flex-col justify-center items-center">
+          
+          <!-- Close Button -->
+          <button
+            @click="isLightboxOpen = false"
+            class="absolute top-4 right-4 text-white hover:text-red-400 transition-all p-3 rounded-full bg-black/50 hover:bg-black/70 backdrop-blur-sm border border-white/20 z-50"
+            aria-label="Close Lightbox"
+          >
+            <svg
+              class="h-8 w-8"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          <!-- Image Container (Supports Touch/Swipe) -->
+          <div
+            class="relative w-full h-full rounded-xl overflow-hidden shadow-2xl cursor-grab"
+            @touchstart="handleTouchStart"
+            @touchend="handleTouchEnd"
+          >
+            <transition name="image-slide" mode="out-in">
+              <img
+                :src="currentImageUrl"
+                :alt="'Zoomed image ' + (currentImageIndex + 1)"
+                :key="currentImageUrl"
+                class="w-full h-full object-contain object-center transition-opacity duration-300"
+                loading="eager"
+                onerror="this.onerror=null; this.src='https://placehold.co/1000x800/1e293b/d1d5db?text=Image+Error';"
+              />
+            </transition>
+
+            <!-- Navigation Buttons (Transparent, but visible/clickable) -->
+            <div class="absolute inset-y-0 w-full flex justify-between items-center px-2 md:px-4 z-10">
+                <!-- Previous Button (Left) -->
+                <button
+                @click.stop="prevImage"
+                class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/70 transition-all duration-300 backdrop-blur-sm focus:outline-none disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Previous image"
+                :disabled="galleryImages.length <= 1"
+                >
+                <svg
+                    class="w-6 h-6 md:w-8 md:h-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+                </button>
+                
+                <!-- Next Button (Right) -->
+                <button
+                @click.stop="nextImage"
+                class="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/70 transition-all duration-300 backdrop-blur-sm focus:outline-none disabled:opacity-30 disabled:cursor-not-allowed"
+                aria-label="Next image"
+                :disabled="galleryImages.length <= 1"
+                >
+                <svg
+                    class="w-6 h-6 md:w-8 md:h-8"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="3"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+                </button>
+            </div>
+          </div>
+
+          <!-- Counter -->
+          <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-black/50 backdrop-blur-sm rounded-full text-sm font-medium">
+            {{ currentImageIndex + 1 }} / {{ galleryImages.length }}
+          </div>
+        </div>
+      </div>
+    </transition>
+
   </section>
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
 
 // --- Cloudflare Worker URL ---
 const API_URL = 'https://YOUR_WORKER_DOMAIN/api/gallery';
 
 // --- State Variables ---
-const isModalOpen = ref(false);
+const isModalOpen = ref(false); // Controls the full gallery grid pop-up
 const isLoading = ref(false);
 const hasFetchedAll = ref(false);
+
+const isLightboxOpen = ref(false); // Controls the single image carousel pop-up
+const currentImageIndex = ref(0);
+let touchStartX = 0; // For swipe detection
 
 // --- Gallery Image URLs (1.webp → 40.webp) ---
 const galleryImages = ref(
@@ -199,13 +305,21 @@ const galleryImages = ref(
   }))
 );
 
-const limitedImages = computed(() => galleryImages.value.slice(0, 3));
+// --- Computed Properties ---
+const initialImages = computed(() => galleryImages.value.slice(0, 3));
+const currentImageUrl = computed(() => galleryImages.value[currentImageIndex.value]?.url);
 
+
+// --- Logic ---
+
+// Fetch data and open the full gallery grid modal
 const fetchAndMergeGallery = async () => {
   if (hasFetchedAll.value || isLoading.value) return;
   isLoading.value = true;
 
   try {
+    // This API call is simulated since the real endpoint is not provided.
+    // Replace this with your actual logic if needed.
     const response = await fetch(API_URL);
     if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
     const fetchedUrls: string[] = await response.json();
@@ -235,15 +349,99 @@ const openModalAndFetch = () => {
   fetchAndMergeGallery();
 };
 
+// Open the lightbox carousel at a specific index
+const openLightbox = (index: number) => {
+  currentImageIndex.value = index;
+  isLightboxOpen.value = true;
+  // Ensure we fetch all images when opening the lightbox if not already done
+  fetchAndMergeGallery();
+};
+
+const nextImage = () => {
+  if (galleryImages.value.length === 0) return;
+  if (currentImageIndex.value < galleryImages.value.length - 1) {
+    currentImageIndex.value++;
+  } else {
+    // Wrap around to the first image
+    currentImageIndex.value = 0;
+  }
+};
+
+const prevImage = () => {
+  if (galleryImages.value.length === 0) return;
+  if (currentImageIndex.value > 0) {
+    currentImageIndex.value--;
+  } else {
+    // Wrap around to the last image
+    currentImageIndex.value = galleryImages.value.length - 1;
+  }
+};
+
+// --- Mobile Touch/Swipe Handlers ---
+const handleTouchStart = (e: TouchEvent) => {
+  touchStartX = e.touches[0].clientX;
+};
+
+const handleTouchEnd = (e: TouchEvent) => {
+  const touchEndX = e.changedTouches[0].clientX;
+  const deltaX = touchEndX - touchStartX;
+  const swipeThreshold = 50; // Minimum distance for a swipe
+
+  if (deltaX > swipeThreshold) {
+    prevImage(); // Swiped right (to see previous image)
+  } else if (deltaX < -swipeThreshold) {
+    nextImage(); // Swiped left (to see next image)
+  }
+};
+
+
+// --- Header/Footer Visibility Control (Critical for hiding fixed header) ---
+
+/**
+ * Updates the 'modal-active' class on the body element.
+ * This class is used by global CSS to hide the header/footer and disable background scrolling.
+ */
+const updateBodyClass = () => {
+  if (isModalOpen.value || isLightboxOpen.value) {
+    // Add class when any full-screen modal is open
+    document.body.classList.add('modal-active');
+  } else {
+    // Remove class when all full-screen modals are closed
+    document.body.classList.remove('modal-active');
+  }
+};
+
+// Watchers trigger the function whenever the modal or lightbox state changes
+watch(isModalOpen, updateBodyClass);
+watch(isLightboxOpen, updateBodyClass);
+
+
+// --- Global Event Handlers (Keyboard) ---
 const handleKeydown = (event: KeyboardEvent) => {
-  if (isModalOpen.value && event.key === 'Escape') isModalOpen.value = false;
+  if (isLightboxOpen.value) {
+    if (event.key === 'Escape') {
+      isLightboxOpen.value = false;
+    } else if (event.key === 'ArrowRight') {
+      nextImage();
+    } else if (event.key === 'ArrowLeft') {
+      prevImage();
+    }
+  } else if (isModalOpen.value && event.key === 'Escape') {
+      isModalOpen.value = false;
+  }
 };
 
 onMounted(() => window.addEventListener('keydown', handleKeydown));
-onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+  // Clean up body class in case the user navigates away while a modal is open
+  document.body.classList.remove('modal-active');
+});
 </script>
 
 <style scoped>
+/* Modal Fade Transition */
 .modal-fade-enter-active,
 .modal-fade-leave-active {
   transition: opacity 0.3s ease;
@@ -253,6 +451,21 @@ onUnmounted(() => window.removeEventListener('keydown', handleKeydown));
   opacity: 0;
 }
 
+/* Image Slide Transition (for a smoother carousel feel) */
+.image-slide-enter-active,
+.image-slide-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.image-slide-enter-from {
+  opacity: 0;
+  transform: scale(0.98);
+}
+.image-slide-leave-to {
+  opacity: 0;
+  transform: scale(1.02);
+}
+
+/* Background Animations */
 @keyframes pulse {
   0%, 100% {
     opacity: 0.1;

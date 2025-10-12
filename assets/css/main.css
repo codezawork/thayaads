@@ -1,0 +1,12 @@
+body.modal-active header {
+  display: none !important;
+}
+
+body.modal-active footer {
+  display: none !important;
+}
+
+/* Prevent background scrolling when modal is active */
+body.modal-active {
+  overflow: hidden;
+}

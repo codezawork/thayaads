@@ -27,12 +27,12 @@
       <div class="bg-white/5 backdrop-blur-xl rounded-3xl border border-white/10 overflow-hidden shadow-2xl">
         <div class="grid md:grid-cols-2 gap-0">
           
-          <!-- Image Side (Overlay Removed) -->
+          <!-- Image Side -->
           <div class="relative overflow-hidden">
             <img
               src="https://assets.thayaads.com/public/assets/images/author/author.webp"
               alt="Vijay Prathapan"
-              class="w-full h-full min-h-[500px] object-cover transition-transform duration-700"
+              class="w-full h-full min-h-[500px] object-cover object-right transition-transform duration-700"
             />
             <!-- Floating Badge -->
             <div class="absolute bottom-8 left-8 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-2xl shadow-xl z-20">
@@ -62,19 +62,33 @@
                 </p>
               </div>
 
-              <!-- Stats Grid -->
-              <div class="grid grid-cols-3 gap-4 pt-6">
-                <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10">
-                  <p class="text-3xl font-bold text-purple-400">16+</p>
+              <!-- Stats Grid - Intersection Observer is attached to this container -->
+              <div ref="statsRef" class="grid grid-cols-3 gap-4 pt-6">
+                <!-- Stat 1: Years -->
+                <div class="relative text-center p-4 bg-white/5 rounded-xl border border-white/10">
+                  <p class="text-3xl font-bold text-purple-400">
+                    {{ animatedYears }}<span class="text-2xl">+</span>
+                  </p>
                   <p class="text-xs text-gray-400 mt-1">Years</p>
+                  <div v-if="showGlitter && animatedYears === targetYears" class="glitter-container purple-glitter"></div>
                 </div>
-                <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10">
-                  <p class="text-3xl font-bold text-pink-400">100+</p>
+                
+                <!-- Stat 2: Ad Films -->
+                <div class="relative text-center p-4 bg-white/5 rounded-xl border border-white/10">
+                  <p class="text-3xl font-bold text-pink-400">
+                    {{ animatedFilms }}<span class="text-2xl">+</span>
+                  </p>
                   <p class="text-xs text-gray-400 mt-1">Ad Films</p>
+                  <div v-if="showGlitter && animatedFilms === targetFilms" class="glitter-container pink-glitter"></div>
                 </div>
-                <div class="text-center p-4 bg-white/5 rounded-xl border border-white/10">
-                  <p class="text-3xl font-bold text-blue-400">4</p>
+                
+                <!-- Stat 3: TV Years -->
+                <div class="relative text-center p-4 bg-white/5 rounded-xl border border-white/10">
+                  <p class="text-3xl font-bold text-blue-400">
+                    {{ animatedTV }}
+                  </p>
                   <p class="text-xs text-gray-400 mt-1">Years Vijay TV</p>
+                  <div v-if="showGlitter && animatedTV === targetTV" class="glitter-container blue-glitter"></div>
                 </div>
               </div>
             </div>
@@ -110,7 +124,7 @@
                 <img
                   :src="slide.imgUrl"
                   :alt="'Work image ' + (index + 1)"
-                  class="w-full h-56 md:h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+                  class="w-full h-80 md:h-96 object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </div>
@@ -127,7 +141,7 @@
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import { Autoplay } from 'swiper/modules'
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const modules = [Autoplay]
 
@@ -141,6 +155,83 @@ const careerSlides = ref([
   { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/IMG_0085.webp' },
   { imgUrl: 'https://assets.thayaads.com/public/assets/images/author/author-with/IMG_20220222_092439.webp' },
 ])
+
+// --- Stat Counting Logic ---
+const targetYears = 16;
+const targetFilms = 100;
+const targetTV = 4;
+
+const animatedYears = ref(0);
+const animatedFilms = ref(0);
+const animatedTV = ref(0);
+
+const hasAnimated = ref(false);
+const showGlitter = ref(false); 
+const statsRef = ref(null); // Ref to attach the Intersection Observer
+
+const startCounting = () => {
+  if (hasAnimated.value) return;
+  hasAnimated.value = true;
+  showGlitter.value = false;
+
+  const duration = 1500; // 1.5 seconds animation
+  const startTime = performance.now();
+
+  const animate = (timestamp) => {
+    const elapsed = timestamp - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Linear progression for simplicity
+    animatedYears.value = Math.floor(progress * targetYears);
+    animatedFilms.value = Math.floor(progress * targetFilms);
+    animatedTV.value = Math.floor(progress * targetTV);
+
+    if (progress < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // Ensure final values are exactly the targets
+      animatedYears.value = targetYears;
+      animatedFilms.value = targetFilms;
+      animatedTV.value = targetTV;
+      
+      // Trigger glitter effect
+      showGlitter.value = true;
+      // Hide glitter after 1.5s
+      setTimeout(() => { showGlitter.value = false; }, 1500); 
+    }
+  };
+
+  requestAnimationFrame(animate);
+};
+
+// --- Intersection Observer Setup ---
+let observer = null;
+
+onMounted(() => {
+  observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting && !hasAnimated.value) {
+          startCounting();
+          // Stop observing once animation has run
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.7 } // Trigger when 70% of the element is visible
+  );
+
+  if (statsRef.value) {
+    observer.observe(statsRef.value);
+  }
+});
+
+onUnmounted(() => {
+  if (observer && statsRef.value) {
+    observer.unobserve(statsRef.value);
+  }
+});
+
 </script>
 
 <style scoped>
@@ -165,5 +256,69 @@ const careerSlides = ref([
 
 .delay-1000 {
   animation-delay: 1s;
+}
+
+/* --- GLITTER / SPARKLE EFFECT CSS --- */
+
+.glitter-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 0.75rem; /* Matches parent rounded-xl */
+  z-index: 20;
+}
+
+/* Base Glitter */
+.glitter-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* Creates tiny, randomized dots/sparks */
+  box-shadow: 
+    -50px -50px 0 0 white, 
+    50px 50px 0 0 white,
+    10px -30px 0 0 white,
+    -30px 10px 0 0 white,
+    -10px 40px 0 0 white;
+  animation: sparkle-burst 1.5s forwards;
+  filter: blur(1px); /* Soften the look */
+}
+
+@keyframes sparkle-burst {
+  0% { 
+    transform: scale(0); 
+    opacity: 1;
+    box-shadow: 
+      0 0 0 0; 
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3) rotate(30deg);
+    opacity: 0;
+    box-shadow: 
+      -50px -50px 0 10px, 
+      50px 50px 0 10px,
+      10px -30px 0 10px,
+      -30px 10px 0 10px,
+      -10px 40px 0 10px;
+  }
+}
+
+/* Color customization for glitter trails */
+.purple-glitter::before {
+  color: #a78bfa; /* purple-400 */
+}
+.pink-glitter::before {
+  color: #f472b6; /* pink-400 */
+}
+.blue-glitter::before {
+  color: #60a5fa; /* blue-400 */
 }
 </style>

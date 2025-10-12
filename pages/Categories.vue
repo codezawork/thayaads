@@ -33,11 +33,24 @@
             <!-- Gradient Overlay on Hover -->
             <div class="absolute inset-0 bg-gradient-to-br from-purple-600/30 to-blue-600/30 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
             
+            <!-- Image -->
             <img 
               :src="category.image" 
               :alt="category.name + ' category image'"
               class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110" 
             />
+
+            <!-- Play Button -->
+            <div class="absolute inset-0 flex items-center justify-center z-20">
+              <div
+                class="play-button w-16 h-16 md:w-20 md:h-20 bg-white/80 rounded-full flex items-center justify-center transition-opacity duration-300
+                       opacity-100 md:opacity-0 group-hover:md:opacity-100"
+              >
+                <svg class="w-6 h-6 md:w-8 md:h-8 text-black" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M4 2v20l18-10L4 2z" />
+                </svg>
+              </div>
+            </div>
           </div>
 
           <div class="p-6">
@@ -78,3 +91,15 @@ onMounted(() => {
   }
 })
 </script>
+
+<style scoped>
+.play-button {
+  @apply cursor-pointer;
+}
+@media (max-width: 1023px) {
+  /* Mobile: always show */
+  .play-button {
+    opacity: 1 !important;
+  }
+}
+</style>
