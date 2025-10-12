@@ -16,7 +16,7 @@
 
         <!-- Navigation Links -->
         <nav class="flex items-center gap-10 h-full relative">
-          <!-- Home Link (Fixed to only be active at pure root) -->
+          <!-- Home Link -->
           <NuxtLink to="/" 
             class="desktop-dot nav-link" 
             :class="{ 'active-link': isActiveLink('/') }">
@@ -43,7 +43,7 @@
             @mouseenter="isDropdownOpen = true"
             @mouseleave="isDropdownOpen = false"
           >
-            <!-- Categories Link (Handles both the anchor and any sub-page path starting with /category/) -->
+            <!-- Categories Link -->
             <a href="/#categories" 
               class="desktop-dot nav-link flex items-center focus:outline-none"
               :class="{ 'active-link': isActiveLink('/#categories') }">
@@ -193,44 +193,45 @@
 </template>
 
 <script setup>
-import { ref, watch, computed } from 'vue'
-// Assumes you have Vue Router available in your Nuxt environment
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
 
-// Function to check if a link is active
+// --- SCROLLSPY STATE ---
+const currentActiveId = ref(''); // Stores the ID of the section currently centered in the viewport
+let observer = null;
+// --- END SCROLLSPY STATE ---
+
+// Function to determine if a navigation link is active
 const isActiveLink = (link) => {
-    // 1. Handle Home Link '/' separately
-    if (link === '/') {
-        // Home is active ONLY if we are exactly at the root path AND have no hash.
-        return route.path === '/' && route.hash === '';
-    }
+    const isAnchor = link.includes('#');
     
-    // Normalize link: ensure it starts with '/' for consistent comparison.
-    // This turns '#main-footer' into '/#main-footer'
-    const normalizedLink = link.startsWith('/') ? link : '/' + link;
+    // --- 1. SCROLLSPY/ANCHOR LOGIC ---
+    if (isAnchor || link === '/') {
+        const targetId = link.split('#').pop() || 'home'; // 'home' for the root '/' link
+
+        // Home Link Logic: Active if we are at the root path AND scrolled to the top/home area.
+        if (targetId === 'home') {
+            // Check if we are at the top, OR if the router path is exactly the root.
+            return currentActiveId.value === '' && route.path === '/';
+        }
+
+        // Categories Link Logic: Active if 'categories' section is visible OR we are on a category page.
+        if (targetId === 'categories') {
+            return currentActiveId.value === 'categories' || route.path.startsWith('/category/');
+        }
+
+        // General Anchor Logic: Active if the corresponding section ID is currently in view.
+        return currentActiveId.value === targetId;
+
+    } 
     
-    // Current route combines path and hash (e.g., '/#about-us' or '/category/food')
-    const currentFullRoute = route.path + route.hash;
-
-    // 2. Exact match check (Handles anchors like /#about-us and direct paths like /category/food)
-    if (normalizedLink === currentFullRoute) {
-        return true;
+    // --- 2. ROUTER PATH LOGIC (for direct sub-pages like /category/food) ---
+    else {
+        const normalizedLink = link.startsWith('/') ? link : '/' + link;
+        return route.path === normalizedLink;
     }
-
-    // 3. Special case for the main 'Categories' link.
-    // It should be active if we are on its anchor OR any sub-category page.
-    if (normalizedLink === '/#categories') {
-        return route.path.startsWith('/category/') || route.hash === '#categories';
-    }
-
-    // 4. Check for direct category path match (e.g. /category/food)
-    if (route.path === normalizedLink) {
-        return true;
-    }
-
-    return false;
 }
 
 const categories = ref([
@@ -286,9 +287,66 @@ function closeMenu() {
   menuOpen.value = false
   mobileCategoriesOpen.value = false
 }
+
+
+// --- SCROLLSPY IMPLEMENTATION ---
+
+// Define the IDs of the sections we want to track
+const sectionIdsToObserve = [
+  'about-us', 
+  'our-services', 
+  'categories', 
+  'gallery', 
+  'main-footer'
+];
+
+onMounted(() => {
+  // Use a negative margin to treat the viewport as a smaller area, 
+  // so the link is only active when the section is near the center (40% from top/bottom).
+  observer = new IntersectionObserver(
+    (entries) => {
+      // Find the currently intersecting entry
+      const visibleEntry = entries.find(entry => entry.isIntersecting);
+      
+      if (visibleEntry) {
+        currentActiveId.value = visibleEntry.target.id;
+      } else if (window.scrollY < 200) {
+        // Fallback: If no section is intersecting and we are near the top, activate Home.
+        currentActiveId.value = '';
+      }
+    },
+    { 
+      rootMargin: '-40% 0px -40% 0px', // Center 20% of the screen is the "active zone"
+      threshold: 0 
+    }
+  );
+
+  // Start observing all relevant sections
+  sectionIdsToObserve.forEach(id => {
+    const section = document.getElementById(id);
+    if (section) {
+      observer.observe(section);
+    }
+  });
+
+  // Manual initial check for when the page loads already scrolled
+  if (window.scrollY < 200) {
+    currentActiveId.value = ''; // Ensure home is active on load
+  }
+});
+
+onUnmounted(() => {
+  if (observer) {
+    observer.disconnect();
+  }
+});
+
 </script>
 
 <style scoped>
+/* (The style block remains the same as provided by the user, 
+   except for the .active-link styles which were already good 
+   for the visual feedback.) */
 .nav-link {
   @apply text-white text-lg font-medium transition;
 }
