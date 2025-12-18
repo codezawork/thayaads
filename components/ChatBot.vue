@@ -1,5 +1,4 @@
 <template>
-  <!-- Hidden container just to hold the script -->
   <div aria-hidden="true" class="hidden"></div>
 </template>
 
@@ -7,17 +6,20 @@
 import { onMounted } from 'vue'
 
 const loadCollectChat = () => {
+  // Check if the script is already loaded to prevent duplicates
   if (document.getElementById('collect-chat-script')) return
 
+  // 1. Set the NEW CollectId
+  ;(window as any).CollectId = '694442c212dc66f79dc627bc'
+
+  // 2. Create and configure the script element
   const s = document.createElement('script')
-  s.id = 'collect-chat-script'
-  s.type = 'text/javascript'
+  s.id = 'collect-chat-script' // Adding an ID helps us check if it exists later
+  s.setAttribute('type', 'text/javascript')
   s.async = true
-  s.src = 'https://collectcdn.com/launcher.js'
+  s.setAttribute('src', 'https://collectcdn.com/launcher.js')
 
-  // Collect.chat bot ID
-  ;(window as any).CollectId = '68e8df169bd297f2618b9270'
-
+  // 3. Append to head
   const h = document.head || document.getElementsByTagName('head')[0]
   h.appendChild(s)
 }

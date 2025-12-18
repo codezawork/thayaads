@@ -25,7 +25,7 @@
         ]"
         :style="{
           animationDelay: `${rowIndex * 1.5}s`,
-          animationDuration: '40s'
+          animationDuration: '10s'
         }"
       >
         <!-- Logos (duplicated for seamless loop) -->

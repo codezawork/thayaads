@@ -73,7 +73,11 @@ const clientSlides = ref([
   { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay3.webp' },
   { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay4.webp' },
   { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay5.webp' },
-  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay6.webp' }
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Malay6.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Fenzez.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Paati.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/Thevaiyani.webp' },
+  { logoUrl: 'https://assets.thayaads.com/public/assets/images/carousel_images/add.webp' }
 ]);
 
 const imageRefs = ref([]);

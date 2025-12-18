@@ -74,8 +74,8 @@ const categories = ref([
   { name: 'Personal Care', image: 'https://assets.thayaads.com/public/assets/images/categories/personal-care.webp', link: '/category/personalCare' },
   { name: 'Textile & Apparels', image: 'https://assets.thayaads.com/public/assets/images/categories/textile-apparels.webp', link: '/category/textileApparels' },
   { name: 'Fashion & Lifestyle', image: 'https://assets.thayaads.com/public/assets/images/categories/fashion-lifestyle.webp', link: '/category/fashionLifestyle' },
-  { name: 'Album & Documentaries', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/albumDocumentaryFilms' },
-  { name: 'Corporate Films', image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp', link: '/category/corporateFilms' }
+  { name: 'Album & Documentaries', image: 'https://assets.thayaads.com/public/assets/images/categories/documentry.webp', link: '/category/albumDocumentaryFilms' },
+  { name: 'Corporate Films', image: 'https://assets.thayaads.com/public/assets/images/categories/Corporate%20film.webp', link: '/category/corporateFilms' }
 ])
 
 const categoryRefs = ref([])

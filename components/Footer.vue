@@ -55,6 +55,10 @@
               <span>+91 9841115673</span>
             </li>
             <li class="flex items-start gap-3">
+              <font-awesome-icon :icon="['fas', 'mobile-screen']" class="w-5 h-5 mt-0.5 shrink-0" />
+              <span>+91 9444305673</span>
+            </li>
+            <li class="flex items-start gap-3">
               <font-awesome-icon :icon="['fas', 'envelope']" class="w-5 h-5 mt-0.5 shrink-0" />
               <span>thayaads@gmail.com</span>
             </li>

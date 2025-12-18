@@ -47,7 +47,7 @@
                 <h3
                   class="text-4xl md:text-5xl lg:text-6xl font-black mb-2 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent"
                 >
-                  Vijay Prathapan
+                  Vijay
                 </h3>
                 <p class="text-xl md:text-2xl font-light text-purple-300 mb-8">Ad Film Director</p>
               </div>
