@@ -13,14 +13,21 @@ if (!globalThis.crypto?.subtle) {
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxtjs/tailwindcss'],
+
+  modules: [
+    '@nuxtjs/tailwindcss',
+    '@nuxtjs/sitemap' // ✅ sitemap module added
+  ],
 
   css: ['~/assets/css/main.css'],
-  
+
   app: {
     head: {
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/thaya.ico' }
+      ],
+      meta: [
+        { name: 'google-site-verification', content: 'ABC123xyz...' } // ✅ GSC verification code
       ]
     }
   },
@@ -30,4 +37,20 @@ export default defineNuxtConfig({
       autoprefixer: {},
     },
   },
+
+  // ✅ Sitemap configuration block
+  sitemap: {
+    hostname: 'https://thayaads.com',
+    gzip: true,
+    routes: [
+      '/', 
+      '/AboutUs', 
+      '/OurServices', 
+      '/Clients', 
+      '/FeaturedProjects', 
+      '/Gallery', 
+      '/MakingVideo', 
+      '/Categories'
+    ]
+  }
 })
