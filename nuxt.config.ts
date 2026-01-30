@@ -38,6 +38,12 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    preset: 'cloudflare-pages'
+  },
+
+
+
   // ✅ Sitemap configuration block
   sitemap: {
     hostname: 'https://thayaads.com',
