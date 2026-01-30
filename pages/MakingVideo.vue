@@ -130,6 +130,26 @@
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+
+import { useSeoMeta } from '#imports'
+
+
+
+useSeoMeta({
+  title: 'Making Videos | Thaya Ads',
+  description: 'Watch the making of our ad films and creative process in action. எங்கள் விளம்பர படங்களின் உருவாக்கம் மற்றும் படைப்பாற்றல் செயல்முறையை பார்வையிடுங்கள்.',
+  keywords: 'Ad film making, behind the scenes, Thaya Ads video, விளம்பர உருவாக்கம்',
+  ogTitle: 'Making Videos | Thaya Ads',
+  ogImage: '/images/making-banner.jpg',
+  ogUrl: 'https://thayaads.com/MakingVideo',
+  twitterCard: 'summary_large_image'
+})
+
+
+
+
+
+
 // Removed 'useRouter'
 
 const youtubeUrls = ref([

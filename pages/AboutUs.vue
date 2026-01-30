@@ -142,6 +142,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import { Autoplay } from 'swiper/modules'
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useSeoMeta } from '#imports'
 
 const modules = [Autoplay]
 
@@ -244,6 +245,23 @@ onUnmounted(() => {
     observer.unobserve(statsRef.value);
   }
 });
+
+//SEO Meta tags
+useSeoMeta({
+  title: 'About Vijay | Ad Film Director Tamil Nadu',
+  description: 'Meet Vijay, the creative mind behind Thaya Ads. Over 100+ ad films directed across Tamil Nadu. விஜய் - தயா Ads நிறுவனர். 100+ விளம்பர படங்கள் இயக்கிய அனுபவம்.',
+  keywords: 'Vijay ad director, Tamil Nadu filmmaker, Thaya Ads founder, விஜய் விளம்பர இயக்குநர்',
+  ogTitle: 'About Vijay | Thaya Ads',
+  ogImage: '/images/vijay-profile.jpg',
+  ogUrl: 'https://thayaads.com/AboutUs',
+  twitterCard: 'summary_large_image'
+})
+
+
+
+
+
+
 
 </script>
 

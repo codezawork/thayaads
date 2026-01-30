@@ -81,13 +81,22 @@ const categories = ref([
 const categoryRefs = ref([])
 
 onMounted(() => {
-  // Scroll to category if returning from slug page
-  const lastCategorySlug = sessionStorage.getItem('lastCategory')
-  if (lastCategorySlug) {
-    const index = categories.value.findIndex(cat => cat.link.includes(lastCategorySlug))
-    if (index !== -1 && categoryRefs.value[index]) {
-      categoryRefs.value[index].scrollIntoView({ behavior: 'smooth', block: 'center' })
-      sessionStorage.removeItem('lastCategory')
+  if (process.client && typeof window !== 'undefined') {
+    const lastCategorySlug = sessionStorage.getItem('lastCategory')
+
+    if (lastCategorySlug) {
+      const index = categories.value.findIndex(cat =>
+        cat.link.includes(lastCategorySlug)
+      )
+
+      if (index !== -1 && categoryRefs.value[index]) {
+        categoryRefs.value[index].scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        })
+
+        sessionStorage.removeItem('lastCategory')
+      }
     }
   }
 })

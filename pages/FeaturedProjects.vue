@@ -113,6 +113,21 @@ import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 
+import { useSeoMeta } from '#imports'
+
+//SEO META Tags
+useSeoMeta({
+  title: 'Featured Projects | Thaya Ads',
+  description: 'Explore our most impactful ad films and creative campaigns across industries. எங்கள் சிறந்த விளம்பர படங்கள் மற்றும் படைப்பாற்றல் பிரச்சாரங்களை பார்வையிடுங்கள்.',
+  keywords: 'Featured ad films, Tamil Nadu campaigns, Thaya Ads projects, சிறந்த விளம்பரங்கள்',
+  ogTitle: 'Featured Projects | Thaya Ads',
+  ogImage: '/images/featured-banner.jpg',
+  ogUrl: 'https://thayaads.com/FeaturedProjects',
+  twitterCard: 'summary_large_image'
+})
+
+
+
 const modules = [Autoplay]
 const activeIndex = ref(0)
 const swiperInstance = ref(null)

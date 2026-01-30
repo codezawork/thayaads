@@ -98,10 +98,19 @@
   </section>
 </template>
 
-<script setup>
-// No JS logic required
-</script>
+<script setup lang="ts">
+import { useSeoMeta } from '#imports'
 
+useSeoMeta({
+  title: 'Our Services | Thaya Ads',
+  description: 'We offer commercial ad films, branding videos, corporate documentaries, and creative direction. வணிக விளம்பரங்கள், பிராண்டிங் வீடியோக்கள், கார்ப்பரேட் ஆவணங்கள், படைப்பாற்றல் இயக்கம்.',
+  keywords: 'Ad film services Tamil Nadu, branding video, corporate documentary, விளம்பர சேவைகள்',
+  ogTitle: 'Our Services | Thaya Ads',
+  ogImage: '/images/services-banner.jpg',
+  ogUrl: 'https://thayaads.com/OurServices',
+  twitterCard: 'summary_large_image'
+})
+</script>
 <style scoped>
 @keyframes pulse {
   0%, 100% { opacity: 0.1; transform: scale(1); }

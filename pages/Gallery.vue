@@ -281,6 +281,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
+import { useSeoMeta } from '#imports'
 
 // --- Cloudflare Worker URL ---
 const API_URL = 'https://YOUR_WORKER_DOMAIN/api/gallery';
@@ -450,6 +451,22 @@ onUnmounted(() => {
   // Clean up body class in case the user navigates away while a modal is open
   document.body.classList.remove('modal-active');
 });
+
+//SEO META TAGS
+useSeoMeta({
+  title: 'Gallery | Thaya Ads',
+  description: 'Browse behind-the-scenes photos and visuals from our ad film shoots. எங்கள் விளம்பர படப்பிடிப்புகளின் பின்னணிப் புகைப்படங்கள் மற்றும் காட்சிகளை பார்வையிடுங்கள்.',
+  keywords: 'Ad film gallery, behind the scenes, Thaya Ads visuals, விளம்பர புகைப்படங்கள்',
+  ogTitle: 'Gallery | Thaya Ads',
+  ogImage: '/images/gallery-banner.jpg',
+  ogUrl: 'https://thayaads.com/Gallery',
+  twitterCard: 'summary_large_image'
+})
+
+
+
+
+
 </script>
 
 <style scoped>

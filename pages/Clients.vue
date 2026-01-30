@@ -49,6 +49,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import clientLogos from "~/data/clients.js";
+import { useSeoMeta } from '#imports'
 
 const logoRows = computed(() => {
   const rows = [];
@@ -69,6 +70,21 @@ onUnmounted(() => window.removeEventListener("resize", updateWidth));
 const visibleRows = computed(() =>
   width.value < 768 ? logoRows.value.slice(0, 2) : logoRows.value
 );
+
+//SEO META TAGS
+useSeoMeta({
+  title: 'Our Clients | Thaya Ads',
+  description: 'Trusted by top brands across Tamil Nadu. தமிழ்நாட்டின் முன்னணி பிராண்டுகளால் நம்பிக்கையுடன் தேர்ந்தெடுக்கப்பட்டது.',
+  keywords: 'Ad film clients, Tamil Nadu brands, Thaya Ads collaborations, விளம்பர கிளையன்ட்',
+  ogTitle: 'Our Clients | Thaya Ads',
+  ogImage: '/images/clients-banner.jpg',
+  ogUrl: 'https://thayaads.com/Clients',
+  twitterCard: 'summary_large_image'
+})
+
+
+
+
 </script>
 
 <style scoped>
