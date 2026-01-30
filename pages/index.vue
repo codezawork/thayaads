@@ -25,7 +25,7 @@
 import { ref, onMounted, nextTick } from 'vue'
 
 const isLoading = ref(true)
-
+//test
 // Components
 import ChatBot from '~/components/ChatBot.vue'
 import AboutUs from './AboutUs.vue'
