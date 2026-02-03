@@ -38,6 +38,8 @@
       </div>
     </section>
 
+    
+
     <!-- Footer -->
     <Footer />
   </div>
@@ -143,24 +145,4 @@ useHead(() => ({
 }))
 </script>
 
-<template>
-  <Header />
 
-  <section v-if="categoryData">
-    <h1>{{ categoryData.name }}</h1>
-    <img :src="categoryData.image" :alt="categoryData.name" />
-
-    <!-- Example: videos -->
-    <div v-if="categoryData.videos?.length">
-      <div v-for="(video, i) in categoryData.videos" :key="i">
-        {{ video.title }}
-      </div>
-    </div>
-  </section>
-
-  <section v-else>
-    <h1>Category not found</h1>
-  </section>
-
-  <Footer />
-</template>
