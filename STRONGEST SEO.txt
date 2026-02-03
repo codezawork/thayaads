@@ -1,0 +1,388 @@
+1.HOME PAGE
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+useSeoMeta({
+  title: 'Thaya Ads | Creative Advertising & Media Solutions',
+  description: 'Discover Thaya Ads, a leading advertising agency offering commercial ads, corporate films, documentaries, and creative video production services.',
+  keywords: 'Ad film director Tamil Nadu, commercial ads, branding films, Thaya Ads, விளம்பர இயக்குநர் தமிழ்நாடு, விளம்பர படம்',
+  ogTitle: 'Thaya Ads | Creative Advertising & Media Solutions',
+  ogDescription: 'Discover Thaya Ads, a leading advertising agency offering commercial ads, corporate films, documentaries, and creative video production services.',
+  ogImage: 'https://thayaads.com/images/og-home.jpg',
+  ogUrl: 'https://thayaads.com/',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AdvertisingAgency",
+      "name": "Thaya Ads",
+      "url": "https://thayaads.com/",
+      "logo": "https://thayaads.com/images/og-home.jpg",
+      "description": "Discover Thaya Ads, a leading advertising agency offering commercial ads, corporate films, documentaries, and creative video production services."
+    })
+  }]
+})
+</script>
+
+-----------------------------------------------------------------------------------
+2.ABOUT US PAGE
+
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+useSeoMeta({
+  title: 'About Thaya Ads | Innovative Advertising Agency',
+  description: 'Learn about Thaya Ads, our vision, mission, and expertise in delivering impactful advertising and media solutions for businesses.',
+  keywords: 'About Thaya Ads, advertising agency Tamil Nadu, branding, corporate films',
+  ogTitle: 'About Thaya Ads | Innovative Advertising Agency',
+  ogDescription: 'Learn about Thaya Ads, our vision, mission, and expertise in delivering impactful advertising and media solutions for businesses.',
+  ogImage: 'https://thayaads.com/images/about-banner.jpg',
+  ogUrl: 'https://thayaads.com/AboutUs',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/AboutUs' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "About Thaya Ads | Innovative Advertising Agency",
+      "url": "https://thayaads.com/AboutUs",
+      "description": "Learn about Thaya Ads, our vision, mission, and expertise in delivering impactful advertising and media solutions for businesses."
+    })
+  }]
+})
+</script>
+
+-------------------------------------------------------------------------------
+3.Categories Page
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+useSeoMeta({
+  title: 'Thaya Ads Categories | Advertising & Media Services',
+  description: 'Explore categories of services at Thaya Ads including commercials, corporate films, documentaries, and animation projects.',
+  keywords: 'Ad categories, commercials, corporate films, documentaries, animation',
+  ogTitle: 'Thaya Ads Categories | Advertising & Media Services',
+  ogDescription: 'Explore categories of services at Thaya Ads including commercials, corporate films, documentaries, and animation projects.',
+  ogImage: 'https://thayaads.com/images/categories-banner.jpg',
+  ogUrl: 'https://thayaads.com/Categories',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/Categories' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Thaya Ads Categories | Advertising & Media Services",
+      "url": "https://thayaads.com/Categories",
+      "description": "Explore categories of services at Thaya Ads including commercials, corporate films, documentaries, and animation projects."
+    })
+  }]
+})
+</script>
+
+----------------------------------------------------------------------------
+4.Client page
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+useSeoMeta({
+  title: 'Our Clients | Thaya Ads',
+  description: 'Trusted by top brands across Tamil Nadu. தமிழ்நாட்டின் முன்னணி பிராண்டுகளால் நம்பிக்கையுடன் தேர்ந்தெடுக்கப்பட்டது.',
+  keywords: 'Ad film clients, Tamil Nadu brands, Thaya Ads collaborations, விளம்பர கிளையன்ட்',
+  ogTitle: 'Our Clients | Thaya Ads',
+  ogDescription: 'Trusted by top brands across Tamil Nadu. தமிழ்நாட்டின் முன்னணி பிராண்டுகளால் நம்பிக்கையுடன் தேர்ந்தெடுக்கப்பட்டது.',
+  ogImage: 'https://thayaads.com/images/clients-banner.jpg',
+  ogUrl: 'https://thayaads.com/Clients',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/Clients' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Our Clients | Thaya Ads",
+      "url": "https://thayaads.com/Clients",
+      "description": "Trusted by top brands across Tamil Nadu. தமிழ்நாட்டின் முன்னணி பிராண்டுகளால் நம்பிக்கையுடன் தேர்ந்தெடுக்கப்பட்டது."
+    })
+  }]
+})
+</script>
+
+
+----------------------------------------------------------------------
+
+5.FeuaturedProjects
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+useSeoMeta({
+  title: 'Thaya Ads Projects | Creative Media Portfolio',
+  description: 'Browse featured projects from Thaya Ads showcasing our expertise in commercials, corporate films, and innovative media.',
+  keywords: 'Ad projects, portfolio, commercials, corporate films, documentaries',
+  ogTitle: 'Thaya Ads Projects | Creative Media Portfolio',
+  ogDescription: 'Browse featured projects from Thaya Ads showcasing our expertise in commercials, corporate films, and innovative media.',
+  ogImage: 'https://thayaads.com/images/projects-banner.jpg',
+  ogUrl: 'https://thayaads.com/FeaturedProjects',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/FeaturedProjects' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Thaya Ads Projects | Creative Media Portfolio",
+      "url": "https://thayaads.com/FeaturedProjects",
+      "description": "Browse featured projects from Thaya Ads showcasing our expertise in commercials, corporate films, and innovative media."
+    })
+  }]
+})
+</script>
+
+----------------------------------------------------------------------
+
+6.GALLERY PAGE
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+useSeoMeta({
+  title: 'Thaya Ads Gallery | Creative Works Showcase',
+  description: 'View the gallery of Thaya Ads projects including ads, films, animations, and creative video productions.',
+  keywords: 'Ad gallery, video showcase, commercials, animations',
+  ogTitle: 'Thaya Ads Gallery | Creative Works Showcase',
+  ogDescription: 'View the gallery of Thaya Ads projects including ads, films, animations, and creative video productions.',
+  ogImage: 'https://thayaads.com/images/gallery-banner.jpg',
+  ogUrl: 'https://thayaads.com/Gallery',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/Gallery' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "Thaya Ads Gallery | Creative Works Showcase",
+      "url": "https://thayaads.com/Gallery",
+      "description": "View the gallery of Thaya Ads projects including ads, films, animations, and creative video productions."
+    })
+  }]
+})
+</script>
+
+------------------------------------------------------------------------
+7.MAKING VIDEO PAGE
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+/* ✅ SEO Basics */
+useSeoMeta({
+  title: 'Thaya Ads | Making Videos That Inspire',
+  description: 'Discover how Thaya Ads creates impactful videos — from commercials to documentaries — with creativity and precision.',
+  keywords: 'Making videos, ad films, documentaries, video production, Thaya Ads',
+  ogTitle: 'Thaya Ads | Making Videos That Inspire',
+  ogDescription: 'Discover how Thaya Ads creates impactful videos — from commercials to documentaries — with creativity and precision.',
+  ogImage: 'https://thayaads.com/images/makingvideo-banner.jpg',
+  ogUrl: 'https://thayaads.com/MakingVideo',
+  twitterCard: 'summary_large_image'
+})
+
+/* ✅ Canonical + Structured Data */
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://thayaads.com/MakingVideo' }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": "Thaya Ads | Making Videos That Inspire",
+        "url": "https://thayaads.com/MakingVideo",
+        "description": "Discover how Thaya Ads creates impactful videos — from commercials to documentaries — with creativity and precision.",
+        "publisher": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "url": "https://thayaads.com",
+          "logo": "https://thayaads.com/images/og-home.jpg"
+        }
+      })
+    }
+  ]
+})
+</script>
+
+---------------------------------------------------------------------------------------
+8.SERVICE PAGE
+
+
+<script setup>
+import { useSeoMeta, useHead } from '#imports'
+
+/* ✅ SEO Basics */
+useSeoMeta({
+  title: 'Thaya Ads Services | Advertising & Video Production',
+  description: 'Explore Thaya Ads services including commercial ads, corporate films, documentaries, 2D/3D animation, and pre‑wedding shoots.',
+  keywords: 'Advertising services, video production, corporate films, documentaries, animation, Thaya Ads',
+  ogTitle: 'Thaya Ads Services | Advertising & Video Production',
+  ogDescription: 'Explore Thaya Ads services including commercial ads, corporate films, documentaries, 2D/3D animation, and pre‑wedding shoots.',
+  ogImage: 'https://thayaads.com/images/services-banner.jpg',
+  ogUrl: 'https://thayaads.com/OurServices',
+  twitterCard: 'summary_large_image'
+})
+
+/* ✅ Canonical + Structured Data */
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://thayaads.com/OurServices' }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Thaya Ads Services",
+        "url": "https://thayaads.com/OurServices",
+        "description": "Explore Thaya Ads services including commercial ads, corporate films, documentaries, 2D/3D animation, and pre‑wedding shoots.",
+        "provider": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "url": "https://thayaads.com",
+          "logo": "https://thayaads.com/images/og-home.jpg"
+        },
+        "areaServed": {
+          "@type": "Place",
+          "name": "Tamil Nadu, India"
+        }
+      })
+    }
+  ]
+})
+</script>
+
+---------------------------------------------------------------------------------------
+🚀 Next Steps After Adding Meta + Canonical
+1. Deploy Updated Nuxt App
+• 	Push your changes to your hosting (Cloudflare Pages / Vercel / Netlify).
+• 	Confirm build succeeds and pages load with updated<head>  tags.
+2. Verify Canonical + Meta Tags
+• 	Open each page in browser → Right‑click → “View Page Source”.
+• 	Check <title>,<meta name="descripion"> ,<link rel= "canonical"> .
+• 	Confirm they match what you set.
+3. Google Search Console (GSC)
+• 	Go to GSC → URL Inspection → Enter each page URL.
+• 	Click “Request Indexing” → This forces Google to crawl your updated meta + canonical.
+• 	Do this for all 8 pages.
+4. Rich Results Test
+• 	Use Google Rich Results Test (search.google.com in Bing) → Enter each page URL.
+• 	Confirm JSON‑LD structured data is valid (no errors).
+• 	If valid → Google can show enhanced snippets.
+5. Sitemap.xml
+• 	Ensure your sitemap includes all 8 canonical URLs.
+• 	Example:
+https://thayaads.com/
+https://thayaads.com/AboutUs
+https://thayaads.com/Categories
+https://thayaads.com/Clients
+https://thayaads.com/FeaturedProjects
+https://thayaads.com/Gallery
+https://thayaads.com/MakingVideo
+https://thayaads.com/OurServices
+
+
+• 	Re‑submit sitemap in GSC.
+6. Performance Monitoring
+• 	After 1–2 weeks → Check GSC → Performance report.
+• 	Track impressions, clicks, CTR.
+• 	See which pages rank for keywords (e.g., “Ad film director Tamil Nadu”).
+7. Backlinks + Social Sharing
+• 	Share your site on Facebook, Instagram, LinkedIn, YouTube.
+• 	Each share will use your OG/Twitter tags → attractive previews.
+• 	Backlinks improve authority → faster ranking.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
