@@ -46,17 +46,16 @@
 <script setup>
 import { useSeoMeta, useHead } from '#imports'
 import { useRoute } from 'vue-router'
-import { computed, onMounted } from 'vue'
-import Header from '~/components/Header.vue'
-import Footer from '~/components/Footer.vue'
+import { computed } from 'vue'
 import categories from '~/data/categories.js'
 
 const route = useRoute()
-const slug = route.params.slug
 
-// ✅ Find category data (SSR-safe)
+const slug = computed(() => route.params.slug)
+
+// ✅ Make categoryData reactive
 const categoryData = computed(() => {
-  return categories.find(c => c.slug === slug) || {
+  return categories.find(c => c.slug === slug.value) || {
     name: '',
     description: '',
     image: '',
@@ -64,83 +63,104 @@ const categoryData = computed(() => {
   }
 })
 
-// ✅ Save clicked category slug for back navigation (CLIENT ONLY)
+// ✅ Store last visited category (client only)
 onMounted(() => {
   if (process.client) {
     sessionStorage.setItem('lastCategory', slug)
   }
 })
 
-// ✅ Dynamic SEO (works in SSR)
-useSeoMeta({
-  title: () => `${categoryData.value.name} | Thaya Ads Category`,
-  description: () =>
-    categoryData.value.description ||
-    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
-  ogTitle: () => `${categoryData.value.name} | Thaya Ads Category`,
-  ogDescription: () =>
-    categoryData.value.description ||
-    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
-  ogImage: () =>
-    categoryData.value.image || 'https://thayaads.com/images/default-banner.jpg',
-  ogUrl: () => `https://thayaads.com/category/${slug}`,
-  twitterCard: 'summary_large_image'
-})
 
-// ✅ Canonical + Structured Data
-useHead({
+
+// ✅ Dynamic SEO (SSR + GSC friendly)
+useSeoMeta(() => ({
+  title: `${categoryData.value.name} | Thaya Ads Category`,
+  description:
+    categoryData.value.description ||
+    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+  ogTitle: `${categoryData.value.name} | Thaya Ads Category`,
+  ogDescription:
+    categoryData.value.description ||
+    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+  ogImage:
+    categoryData.value.image || 'https://thayaads.com/images/default-banner.jpg',
+  ogUrl: `https://thayaads.com/category/${slug.value}`,
+  twitterCard: 'summary_large_image'
+}))
+
+useHead(() => ({
   link: [
-    { rel: 'canonical', href: `https://thayaads.com/category/${slug}` }
+    { rel: 'canonical', href: `https://thayaads.com/category/${slug.value}` }
   ],
   script: [
     {
       type: 'application/ld+json',
-      children: () =>
-        JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": "CollectionPage",
-          "name": `${categoryData.value.name} | Thaya Ads Category`,
-          "alternateName": `Thayaads ${categoryData.value.name}`,
-          "url": `https://thayaads.com/category/${slug}`,
-          "description":
-            categoryData.value.description ||
-            `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
-          "publisher": {
-            "@type": "Organization",
-            "name": "Thaya Ads",
-            "alternateName": "Thayaads",
-            "url": "https://thayaads.com/",
-            "logo": "https://thayaads.com/images/og-home.jpg",
-            "address": {
-              "@type": "PostalAddress",
-              "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
-              "addressLocality": "Thoothukudi",
-              "addressRegion": "Tamil Nadu",
-              "postalCode": "628101",
-              "addressCountry": "IN"
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": `${categoryData.value.name} | Thaya Ads Category`,
+        "alternateName": `Thayaads ${categoryData.value.name}`,
+        "url": `https://thayaads.com/category/${slug.value}`,
+        "description":
+          categoryData.value.description ||
+          `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+        "publisher": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "alternateName": "Thayaads",
+          "url": "https://thayaads.com/",
+          "logo": "https://thayaads.com/images/og-home.jpg",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+            "addressLocality": "Thoothukudi",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "628101",
+            "addressCountry": "IN"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9841115673",
+              "contactType": "customer service"
             },
-            "contactPoint": [
-              {
-                "@type": "ContactPoint",
-                "telephone": "+91-9841115673",
-                "contactType": "customer service"
-              },
-              {
-                "@type": "ContactPoint",
-                "telephone": "+91-9444305673",
-                "contactType": "sales"
-              }
-            ],
-            "sameAs": [
-              "https://www.facebook.com/thayaads",
-              "https://www.instagram.com/thayaads",
-              "https://www.linkedin.com/company/thayaads",
-              "https://x.com/Thayaads"
-            ]
-          }
-        })
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9444305673",
+              "contactType": "sales"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/thayaads",
+            "https://www.instagram.com/thayaads",
+            "https://www.linkedin.com/company/thayaads",
+            "https://x.com/Thayaads"
+          ]
+        }
+      })
     }
   ]
-})
+}))
 </script>
 
+<template>
+  <Header />
+
+  <section v-if="categoryData">
+    <h1>{{ categoryData.name }}</h1>
+    <img :src="categoryData.image" :alt="categoryData.name" />
+
+    <!-- Example: videos -->
+    <div v-if="categoryData.videos?.length">
+      <div v-for="(video, i) in categoryData.videos" :key="i">
+        {{ video.title }}
+      </div>
+    </div>
+  </section>
+
+  <section v-else>
+    <h1>Category not found</h1>
+  </section>
+
+  <Footer />
+</template>
