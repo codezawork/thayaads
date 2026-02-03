@@ -44,17 +44,103 @@
 </template>
 
 <script setup>
+import { useSeoMeta, useHead } from '#imports'
 import { useRoute } from 'vue-router'
+import { computed, onMounted } from 'vue'
 import Header from '~/components/Header.vue'
 import Footer from '~/components/Footer.vue'
-import categories from '~/data/categories.js' // default import
+import categories from '~/data/categories.js'
 
 const route = useRoute()
+const slug = route.params.slug
 
-// Save clicked category slug for back navigation
-sessionStorage.setItem('lastCategory', route.params.slug)
+// ✅ Find category data (SSR-safe)
+const categoryData = computed(() => {
+  return categories.find(c => c.slug === slug) || {
+    name: '',
+    description: '',
+    image: '',
+    videos: []
+  }
+})
 
-// Get category data
-const categoryData = categories[route.params.slug] || { name: '', image: '', videos: [] }
+// ✅ Save clicked category slug for back navigation (CLIENT ONLY)
+onMounted(() => {
+  if (process.client) {
+    sessionStorage.setItem('lastCategory', slug)
+  }
+})
+
+// ✅ Dynamic SEO (works in SSR)
+useSeoMeta({
+  title: () => `${categoryData.value.name} | Thaya Ads Category`,
+  description: () =>
+    categoryData.value.description ||
+    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+  ogTitle: () => `${categoryData.value.name} | Thaya Ads Category`,
+  ogDescription: () =>
+    categoryData.value.description ||
+    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+  ogImage: () =>
+    categoryData.value.image || 'https://thayaads.com/images/default-banner.jpg',
+  ogUrl: () => `https://thayaads.com/category/${slug}`,
+  twitterCard: 'summary_large_image'
+})
+
+// ✅ Canonical + Structured Data
+useHead({
+  link: [
+    { rel: 'canonical', href: `https://thayaads.com/category/${slug}` }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: () =>
+        JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": `${categoryData.value.name} | Thaya Ads Category`,
+          "alternateName": `Thayaads ${categoryData.value.name}`,
+          "url": `https://thayaads.com/category/${slug}`,
+          "description":
+            categoryData.value.description ||
+            `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+          "publisher": {
+            "@type": "Organization",
+            "name": "Thaya Ads",
+            "alternateName": "Thayaads",
+            "url": "https://thayaads.com/",
+            "logo": "https://thayaads.com/images/og-home.jpg",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+              "addressLocality": "Thoothukudi",
+              "addressRegion": "Tamil Nadu",
+              "postalCode": "628101",
+              "addressCountry": "IN"
+            },
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "telephone": "+91-9841115673",
+                "contactType": "customer service"
+              },
+              {
+                "@type": "ContactPoint",
+                "telephone": "+91-9444305673",
+                "contactType": "sales"
+              }
+            ],
+            "sameAs": [
+              "https://www.facebook.com/thayaads",
+              "https://www.instagram.com/thayaads",
+              "https://www.linkedin.com/company/thayaads",
+              "https://x.com/Thayaads"
+            ]
+          }
+        })
+    }
+  ]
+})
 </script>
 
