@@ -49,7 +49,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import clientLogos from "~/data/clients.js";
-import { useSeoMeta } from '#imports'
+import { useSeoMeta,useHead } from '#imports'
 
 const logoRows = computed(() => {
   const rows = [];
@@ -73,15 +73,56 @@ const visibleRows = computed(() =>
 
 //SEO META TAGS
 useSeoMeta({
-  title: 'Our Clients | Thaya Ads',
-  description: 'Trusted by top brands across Tamil Nadu. தமிழ்நாட்டின் முன்னணி பிராண்டுகளால் நம்பிக்கையுடன் தேர்ந்தெடுக்கப்பட்டது.',
-  keywords: 'Ad film clients, Tamil Nadu brands, Thaya Ads collaborations, விளம்பர கிளையன்ட்',
-  ogTitle: 'Our Clients | Thaya Ads',
-  ogImage: '/images/clients-banner.jpg',
-  ogUrl: 'https://thayaads.com/Clients',
+  title: 'Thaya Ads | Creative Advertising & Media Solutions',
+  description: 'Discover Thaya Ads (also known as Thayaads), a leading advertising agency in Tamil Nadu offering ad films, corporate videos, documentaries, and branding solutions.',
+  keywords: 'Thaya Ads, Thayaads, Ad film director Tamil Nadu, commercial ads, branding films, corporate films, விளம்பர இயக்குநர் தமிழ்நாடு',
+  ogTitle: 'Thaya Ads | Creative Advertising & Media Solutions',
+  ogDescription: 'Discover Thaya Ads (Thayaads), a leading advertising agency in Tamil Nadu offering ad films, corporate videos, documentaries, and branding solutions.',
+  ogImage: 'https://thayaads.com/images/og-home.jpg',
+  ogUrl: 'https://thayaads.com/',
   twitterCard: 'summary_large_image'
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: 'https://thayaads.com/' }],
+  script: [{
+    type: 'application/ld+json',
+    children: JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AdvertisingAgency",
+      "name": "Thaya Ads",
+      "alternateName": "Thayaads",
+      "url": "https://thayaads.com/",
+      "logo": "https://thayaads.com/images/og-home.jpg",
+      "description": "Leading advertising agency in Tamil Nadu offering ad films, corporate videos, documentaries, and creative media solutions.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+        "addressLocality": "Thoothukudi",
+        "addressRegion": "Tamil Nadu",
+        "postalCode": "628101",
+        "addressCountry": "IN"
+      },
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-9841115673",
+          "contactType": "customer service"
+        },
+        {
+          "@type": "ContactPoint",
+          "telephone": "+91-9444305673",
+          "contactType": "sales"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/thayaads",
+        "https://www.instagram.com/thayaads",
+        "https://www.linkedin.com/company/thayaads"
+      ]
+    })
+  }]
+})
 
 
 

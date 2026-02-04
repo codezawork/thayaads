@@ -281,7 +281,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue';
-import { useSeoMeta } from '#imports'
+import { useSeoMeta,useHead } from '#imports'
 
 // --- Cloudflare Worker URL ---
 const API_URL = 'https://YOUR_WORKER_DOMAIN/api/gallery';
@@ -453,16 +453,74 @@ onUnmounted(() => {
 });
 
 //SEO META TAGS
+const url = 'https://thayaads.com/Gallery'
+const title = 'Gallery | Thaya Ads – Creative Advertising Works'
+const description =
+  'View the gallery of Thaya Ads (also known as Thayaads) projects including ad films, commercials, corporate videos, animations, and creative productions.'
+
 useSeoMeta({
-  title: 'Gallery | Thaya Ads',
-  description: 'Browse behind-the-scenes photos and visuals from our ad film shoots. எங்கள் விளம்பர படப்பிடிப்புகளின் பின்னணிப் புகைப்படங்கள் மற்றும் காட்சிகளை பார்வையிடுங்கள்.',
-  keywords: 'Ad film gallery, behind the scenes, Thaya Ads visuals, விளம்பர புகைப்படங்கள்',
-  ogTitle: 'Gallery | Thaya Ads',
-  ogImage: '/images/gallery-banner.jpg',
-  ogUrl: 'https://thayaads.com/Gallery',
-  twitterCard: 'summary_large_image'
+  title,
+  description,
+  keywords: 'Thaya Ads, Thayaads, ad film gallery, video showcase, commercials, animations, corporate films Tamil Nadu',
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: 'https://thayaads.com/images/gallery-banner.jpg',
+  ogUrl: url,
+  twitterCard: 'summary_large_image',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: 'https://thayaads.com/images/gallery-banner.jpg'
 })
 
+useHead({
+  link: [{ rel: 'canonical', href: url }],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": title,
+        "alternateName": "Thayaads Gallery",
+        "url": url,
+        "description": description,
+        "publisher": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "alternateName": "Thayaads",
+          "url": "https://thayaads.com/",
+          "logo": "https://thayaads.com/images/og-home.jpg",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+            "addressLocality": "Thoothukudi",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "628101",
+            "addressCountry": "IN"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9841115673",
+              "contactType": "customer service"
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9444305673",
+              "contactType": "sales"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/thayaads",
+            "https://www.instagram.com/thayaads",
+            "https://www.linkedin.com/company/thayaads",
+            "https://x.com/Thayaads"
+          ]
+        }
+      })
+    }
+  ]
+})
 
 
 

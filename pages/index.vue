@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, nextTick } from 'vue'
-import { useSeoMeta } from '#imports' 
+import { useSeoMeta,useHead } from '#imports' 
 
 const isLoading = ref(true)
 //test
@@ -40,14 +40,74 @@ import MakingVideo from './MakingVideo.vue'
 
 //  SEO Meta Tags (Nuxt 4 way)
 useSeoMeta({
-  title: 'Thaya Ads | Ad Film Director Tamil Nadu',
-  description: 'Thaya Ads is led by Vijay, a renowned ad film director with 100+ projects across Tamil Nadu. தாயா Ads - விஜய் இயக்கிய 100+ விளம்பர படங்கள். தமிழ்நாட்டின் முன்னணி விளம்பர இயக்குநர்.',
-  keywords: 'Ad film director Tamil Nadu, commercial ads, branding films, Thaya Ads, விளம்பர இயக்குநர் தமிழ்நாடு, விளம்பர படம்',
-  ogTitle: 'Thaya Ads | Ad Film Director Tamil Nadu',
-  ogDescription: 'Explore our portfolio of 100+ ad films directed by Vijay.',
-  ogImage: '/images/og-home.jpg',
-  ogUrl: 'https://thayaads.com',
-  twitterCard: 'summary_large_image'
+  title: 'Thaya Ads (thayaads) | Creative Advertising & Media Solutions',
+  description: 'Thaya Ads, also known as thayaads, is a leading advertising agency in Thoothukudi, Tamil Nadu offering commercial ads, corporate films, documentaries, and creative video production services.',
+  keywords: 'thayaads, thaya ads, Ad film director Tamil Nadu, commercial ads, branding films, Thaya Ads, விளம்பர இயக்குநர் தமிழ்நாடு, விளம்பர படம்',
+
+  ogTitle: 'Thaya Ads (thayaads) | Creative Advertising & Media Solutions',
+  ogDescription: 'Thaya Ads (thayaads) is a creative advertising agency in Thoothukudi providing ads, corporate films, documentaries and branding services.',
+  ogImage: 'https://thayaads.com/images/og-home.jpg',
+  ogUrl: 'https://thayaads.com/',
+  ogType: 'website',
+
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Thaya Ads (thayaads) | Creative Advertising & Media Solutions',
+  twitterDescription: 'Official website of Thaya Ads (thayaads) – Creative advertising agency in Thoothukudi, Tamil Nadu.',
+  twitterImage: 'https://thayaads.com/images/og-home.jpg'
+})
+
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://thayaads.com/' }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "AdvertisingAgency",
+        "name": "Thaya Ads",
+        "alternateName": "thayaads",
+        "url": "https://thayaads.com/",
+        "logo": "https://thayaads.com/images/og-home.jpg",
+        "image": "https://thayaads.com/images/og-home.jpg",
+        "description": "Thaya Ads, also known as thayaads, is a creative advertising agency in Thoothukudi, Tamil Nadu offering commercial ads, corporate films, documentaries, and video production services.",
+
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+          "addressLocality": "Thoothukudi",
+          "addressRegion": "Tamil Nadu",
+          "postalCode": "628101",
+          "addressCountry": "IN"
+        },
+
+        "contactPoint": [
+          {
+            "@type": "ContactPoint",
+            "telephone": "+91-9841115673",
+            "contactType": "customer service",
+            "areaServed": "IN",
+            "availableLanguage": ["Tamil", "English"]
+          },
+          {
+            "@type": "ContactPoint",
+            "telephone": "+91-9444305673",
+            "contactType": "sales",
+            "areaServed": "IN",
+            "availableLanguage": ["Tamil", "English"]
+          }
+        ],
+
+        "sameAs": [
+          "https://www.facebook.com/thayaads",
+          "https://www.instagram.com/thayaads",
+          "https://www.linkedin.com/company/thayaads",
+          "https://x.com/Thayaads"
+        ]
+      })
+    }
+  ]
 })
 
 

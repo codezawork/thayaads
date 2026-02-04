@@ -99,17 +99,89 @@
 </template>
 
 <script setup lang="ts">
-import { useSeoMeta } from '#imports'
+import { useSeoMeta,useHead } from '#imports'
+
+const url = 'https://thayaads.com/OurServices'
+const title = 'Our Services | Thaya Ads – Advertising & Video Production'
+const description =
+  'Explore Thaya Ads (also known as Thayaads) services including commercial ads, corporate films, documentaries, 2D/3D animation, and pre-wedding shoots across Tamil Nadu.'
 
 useSeoMeta({
-  title: 'Our Services | Thaya Ads',
-  description: 'We offer commercial ad films, branding videos, corporate documentaries, and creative direction. வணிக விளம்பரங்கள், பிராண்டிங் வீடியோக்கள், கார்ப்பரேட் ஆவணங்கள், படைப்பாற்றல் இயக்கம்.',
-  keywords: 'Ad film services Tamil Nadu, branding video, corporate documentary, விளம்பர சேவைகள்',
-  ogTitle: 'Our Services | Thaya Ads',
-  ogImage: '/images/services-banner.jpg',
-  ogUrl: 'https://thayaads.com/OurServices',
-  twitterCard: 'summary_large_image'
+  title,
+  description,
+  keywords:
+    'Thaya Ads, Thayaads, advertising services Tamil Nadu, video production, corporate films, documentaries, 2D 3D animation, pre wedding shoots',
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: 'https://thayaads.com/images/services-banner.jpg',
+  ogUrl: url,
+  twitterCard: 'summary_large_image',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: 'https://thayaads.com/images/services-banner.jpg'
 })
+
+useHead({
+  link: [{ rel: 'canonical', href: url }],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Advertising & Video Production Services by Thaya Ads",
+        "alternateName": "Thayaads Services",
+        "url": url,
+        "description": description,
+        "serviceType": [
+          "Commercial Ads",
+          "Corporate Films",
+          "Documentaries",
+          "2D/3D Animation",
+          "Pre-wedding Shoots"
+        ],
+        "provider": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "alternateName": "Thayaads",
+          "url": "https://thayaads.com/",
+          "logo": "https://thayaads.com/images/og-home.jpg",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+            "addressLocality": "Thoothukudi",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "628101",
+            "addressCountry": "IN"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9841115673",
+              "contactType": "customer service"
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9444305673",
+              "contactType": "sales"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/thayaads",
+            "https://www.instagram.com/thayaads",
+            "https://www.linkedin.com/company/thayaads",
+            "https://x.com/Thayaads"
+          ]
+        },
+        "areaServed": {
+          "@type": "AdministrativeArea",
+          "name": "Tamil Nadu, India"
+        }
+      })
+    }
+  ]
+})
+
 </script>
 <style scoped>
 @keyframes pulse {

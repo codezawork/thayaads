@@ -131,18 +131,77 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 
-import { useSeoMeta } from '#imports'
+import { useSeoMeta,useHead } from '#imports'
 
 
+
+const url = 'https://thayaads.com/MakingVideo'
+const title = 'Making Videos That Inspire | Thaya Ads'
+const description =
+  'Discover how Thaya Ads (also known as Thayaads) creates impactful videos — from commercials to documentaries — with creativity, storytelling, and precision.'
 
 useSeoMeta({
-  title: 'Making Videos | Thaya Ads',
-  description: 'Watch the making of our ad films and creative process in action. எங்கள் விளம்பர படங்களின் உருவாக்கம் மற்றும் படைப்பாற்றல் செயல்முறையை பார்வையிடுங்கள்.',
-  keywords: 'Ad film making, behind the scenes, Thaya Ads video, விளம்பர உருவாக்கம்',
-  ogTitle: 'Making Videos | Thaya Ads',
-  ogImage: '/images/making-banner.jpg',
-  ogUrl: 'https://thayaads.com/MakingVideo',
-  twitterCard: 'summary_large_image'
+  title,
+  description,
+  keywords: 'Thaya Ads, Thayaads, video production Tamil Nadu, making videos, ad films, commercials, documentaries, corporate videos',
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: 'https://thayaads.com/images/makingvideo-banner.jpg',
+  ogUrl: url,
+  twitterCard: 'summary_large_image',
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: 'https://thayaads.com/images/makingvideo-banner.jpg'
+})
+
+useHead({
+  link: [{ rel: 'canonical', href: url }],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": title,
+        "alternateName": "Thayaads Making Videos",
+        "url": url,
+        "description": description,
+        "publisher": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "alternateName": "Thayaads",
+          "url": "https://thayaads.com/",
+          "logo": "https://thayaads.com/images/og-home.jpg",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+            "addressLocality": "Thoothukudi",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "628101",
+            "addressCountry": "IN"
+          },
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9841115673",
+              "contactType": "customer service"
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9444305673",
+              "contactType": "sales"
+            }
+          ],
+          "sameAs": [
+            "https://www.facebook.com/thayaads",
+            "https://www.instagram.com/thayaads",
+            "https://www.linkedin.com/company/thayaads",
+            "https://x.com/Thayaads"
+          ]
+        }
+      })
+    }
+  ]
 })
 
 

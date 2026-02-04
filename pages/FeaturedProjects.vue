@@ -113,7 +113,7 @@ import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/autoplay'
 
-import { useSeoMeta } from '#imports'
+import { useSeoMeta,useHead } from '#imports'
 
 //SEO META Tags
 useSeoMeta({

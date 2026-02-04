@@ -67,6 +67,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useSeoMeta, useHead } from '#imports'
 
 const categories = ref([
   { name: 'Food', image: 'https://assets.thayaads.com/public/assets/images/categories/food.webp', link: '/category/food' },
@@ -100,6 +101,91 @@ onMounted(() => {
     }
   }
 })
+
+//SEO META
+
+
+useSeoMeta({
+  title: 'Thaya Ads Categories (thayaads) | Advertising & Media Services',
+  description: 'Explore service categories at Thaya Ads (also known as thayaads) including commercials, corporate films, documentaries, animation, and branding projects in Tamil Nadu.',
+  keywords: 'thayaads, thaya ads categories, advertising services Tamil Nadu, commercials, corporate films, documentaries, animation, branding',
+
+  ogTitle: 'Thaya Ads Categories (thayaads) | Advertising & Media Services',
+  ogDescription: 'Explore service categories at Thaya Ads (thayaads) including commercials, corporate films, documentaries, animation, and branding projects.',
+  ogImage: 'https://thayaads.com/images/categories-banner.jpg',
+  ogUrl: 'https://thayaads.com/Categories',
+  ogType: 'website',
+
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'Thaya Ads Categories (thayaads) | Advertising & Media Services',
+  twitterDescription: 'Browse advertising and media service categories offered by Thaya Ads (thayaads) in Tamil Nadu.',
+  twitterImage: 'https://thayaads.com/images/categories-banner.jpg'
+})
+
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://thayaads.com/Categories' }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Thaya Ads Categories (thayaads) | Advertising & Media Services",
+        "alternateName": "Thayaads Categories",
+        "url": "https://thayaads.com/Categories",
+        "description": "Explore service categories at Thaya Ads (thayaads) including commercials, corporate films, documentaries, animation, and branding projects.",
+
+        "publisher": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "alternateName": "thayaads",
+          "url": "https://thayaads.com/",
+          "logo": "https://thayaads.com/images/og-home.jpg",
+          "image": "https://thayaads.com/images/og-home.jpg",
+
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+            "addressLocality": "Thoothukudi",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "628101",
+            "addressCountry": "IN"
+          },
+
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9841115673",
+              "contactType": "customer service",
+              "areaServed": "IN",
+              "availableLanguage": ["Tamil", "English"]
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9444305673",
+              "contactType": "sales",
+              "areaServed": "IN",
+              "availableLanguage": ["Tamil", "English"]
+            }
+          ],
+
+          "sameAs": [
+            "https://www.facebook.com/thayaads",
+            "https://www.instagram.com/thayaads",
+            "https://www.linkedin.com/company/thayaads",
+            "https://x.com/Thayaads"
+          ]
+        }
+      })
+    }
+  ]
+})
+
+
+
+
 </script>
 
 <style scoped>

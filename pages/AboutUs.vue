@@ -142,7 +142,7 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import { Autoplay } from 'swiper/modules'
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useSeoMeta } from '#imports'
+import { useSeoMeta,useHead } from '#imports'
 
 const modules = [Autoplay]
 
@@ -248,15 +248,83 @@ onUnmounted(() => {
 
 //SEO Meta tags
 useSeoMeta({
-  title: 'About Vijay | Ad Film Director Tamil Nadu',
-  description: 'Meet Vijay, the creative mind behind Thaya Ads. Over 100+ ad films directed across Tamil Nadu. விஜய் - தயா Ads நிறுவனர். 100+ விளம்பர படங்கள் இயக்கிய அனுபவம்.',
-  keywords: 'Vijay ad director, Tamil Nadu filmmaker, Thaya Ads founder, விஜய் விளம்பர இயக்குநர்',
-  ogTitle: 'About Vijay | Thaya Ads',
-  ogImage: '/images/vijay-profile.jpg',
+  title: 'About Thaya Ads (thayaads) | Innovative Advertising Agency',
+  description: 'Learn about Thaya Ads (also known as thayaads), our vision, mission, and expertise in delivering impactful advertising and media solutions for businesses in Tamil Nadu.',
+  keywords: 'About Thaya Ads, thayaads, advertising agency Tamil Nadu, branding, corporate films',
+
+  ogTitle: 'About Thaya Ads (thayaads) | Innovative Advertising Agency',
+  ogDescription: 'Learn about Thaya Ads (thayaads), our vision, mission, and expertise in delivering impactful advertising and media solutions for businesses.',
+  ogImage: 'https://thayaads.com/images/about-banner.jpg',
   ogUrl: 'https://thayaads.com/AboutUs',
-  twitterCard: 'summary_large_image'
+  ogType: 'website',
+
+  twitterCard: 'summary_large_image',
+  twitterTitle: 'About Thaya Ads (thayaads) | Innovative Advertising Agency',
+  twitterDescription: 'Know more about Thaya Ads (thayaads), our vision, mission and creative advertising services in Tamil Nadu.',
+  twitterImage: 'https://thayaads.com/images/about-banner.jpg'
 })
 
+useHead({
+  link: [
+    { rel: 'canonical', href: 'https://thayaads.com/AboutUs' }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "AboutPage",
+        "name": "About Thaya Ads (thayaads) | Innovative Advertising Agency",
+        "alternateName": "thayaads",
+        "url": "https://thayaads.com/AboutUs",
+        "description": "Learn about Thaya Ads (thayaads), our vision, mission, and expertise in delivering impactful advertising and media solutions for businesses in Tamil Nadu.",
+
+        "publisher": {
+          "@type": "Organization",
+          "name": "Thaya Ads",
+          "alternateName": "thayaads",
+          "url": "https://thayaads.com/",
+          "logo": "https://thayaads.com/images/og-home.jpg",
+          "image": "https://thayaads.com/images/og-home.jpg",
+          "description": "Thaya Ads is a creative advertising agency in Tamil Nadu specializing in commercial ads, corporate films, documentaries, and branding solutions.",
+
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+            "addressLocality": "Thoothukudi",
+            "addressRegion": "Tamil Nadu",
+            "postalCode": "628101",
+            "addressCountry": "IN"
+          },
+
+          "contactPoint": [
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9841115673",
+              "contactType": "customer service",
+              "areaServed": "IN",
+              "availableLanguage": ["Tamil", "English"]
+            },
+            {
+              "@type": "ContactPoint",
+              "telephone": "+91-9444305673",
+              "contactType": "sales",
+              "areaServed": "IN",
+              "availableLanguage": ["Tamil", "English"]
+            }
+          ],
+
+          "sameAs": [
+            "https://www.facebook.com/thayaads",
+            "https://www.instagram.com/thayaads",
+            "https://www.linkedin.com/company/thayaads",
+            "https://x.com/Thayaads"
+          ]
+        }
+      })
+    }
+  ]
+})
 
 
 

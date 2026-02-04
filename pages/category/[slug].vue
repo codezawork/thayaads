@@ -48,101 +48,105 @@
 <script setup>
 import { useSeoMeta, useHead } from '#imports'
 import { useRoute } from 'vue-router'
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import categories from '~/data/categories.js'
 
 const route = useRoute()
 
-const slug = computed(() => route.params.slug)
+const slug = computed(() => String(route.params.slug || ''))
 
-// ✅ Make categoryData reactive
+// ✅ Lookup category safely
 const categoryData = computed(() => {
-  return categories.find(c => c.slug === slug.value) || {
-    name: '',
-    description: '',
-    image: '',
+  return categories[slug.value] || {
+    name: 'Category not found',
+    description: 'Creative advertising projects by Thaya Ads.',
+    image: 'https://thayaads.com/images/default-banner.jpg',
     videos: []
   }
 })
 
 // ✅ Store last visited category (client only)
 onMounted(() => {
-  if (process.client) {
-    sessionStorage.setItem('lastCategory', slug)
+  if (process.client && slug.value) {
+    sessionStorage.setItem('lastCategory', slug.value)
   }
 })
 
-
-
-// ✅ Dynamic SEO (SSR + GSC friendly)
-useSeoMeta(() => ({
-  title: `${categoryData.value.name} | Thaya Ads Category`,
-  description:
+// ✅ SEO (Reactive & SSR Friendly)
+useSeoMeta(() => {
+  const title = `${categoryData.value.name} | Thaya Ads`
+  const desc =
     categoryData.value.description ||
-    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
-  ogTitle: `${categoryData.value.name} | Thaya Ads Category`,
-  ogDescription:
-    categoryData.value.description ||
-    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
-  ogImage:
-    categoryData.value.image || 'https://thayaads.com/images/default-banner.jpg',
-  ogUrl: `https://thayaads.com/category/${slug.value}`,
-  twitterCard: 'summary_large_image'
-}))
+    `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`
+  const image =
+    categoryData.value.image || 'https://thayaads.com/images/default-banner.jpg'
+  const url = `https://thayaads.com/category/${slug.value}`
 
-useHead(() => ({
-  link: [
-    { rel: 'canonical', href: `https://thayaads.com/category/${slug.value}` }
-  ],
-  script: [
-    {
-      type: 'application/ld+json',
-      children: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": `${categoryData.value.name} | Thaya Ads Category`,
-        "alternateName": `Thayaads ${categoryData.value.name}`,
-        "url": `https://thayaads.com/category/${slug.value}`,
-        "description":
-          categoryData.value.description ||
-          `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
-        "publisher": {
-          "@type": "Organization",
-          "name": "Thaya Ads",
-          "alternateName": "Thayaads",
-          "url": "https://thayaads.com/",
-          "logo": "https://thayaads.com/images/og-home.jpg",
-          "address": {
-            "@type": "PostalAddress",
-            "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
-            "addressLocality": "Thoothukudi",
-            "addressRegion": "Tamil Nadu",
-            "postalCode": "628101",
-            "addressCountry": "IN"
-          },
-          "contactPoint": [
-            {
-              "@type": "ContactPoint",
-              "telephone": "+91-9841115673",
-              "contactType": "customer service"
+  return {
+    title,
+    description: desc,
+    ogTitle: title,
+    ogDescription: desc,
+    ogImage: image,
+    ogUrl: url,
+    twitterCard: 'summary_large_image'
+  }
+})
+
+// ✅ Canonical + Structured Data
+useHead(() => {
+  const url = `https://thayaads.com/category/${slug.value}`
+
+  return {
+    link: [{ rel: 'canonical', href: url }],
+    script: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "CollectionPage",
+          "name": `${categoryData.value.name} | Thaya Ads`,
+          "alternateName": `Thayaads ${categoryData.value.name}`,
+          "url": url,
+          "description":
+            categoryData.value.description ||
+            `Explore ${categoryData.value.name} projects from Thaya Ads (Thayaads).`,
+          "publisher": {
+            "@type": "Organization",
+            "name": "Thaya Ads",
+            "alternateName": "Thayaads",
+            "url": "https://thayaads.com/",
+            "logo": "https://thayaads.com/images/og-home.jpg",
+            "address": {
+              "@type": "PostalAddress",
+              "streetAddress": "School of MIRI PIRI, Puyula Nagar, Korampallam",
+              "addressLocality": "Thoothukudi",
+              "addressRegion": "Tamil Nadu",
+              "postalCode": "628101",
+              "addressCountry": "IN"
             },
-            {
-              "@type": "ContactPoint",
-              "telephone": "+91-9444305673",
-              "contactType": "sales"
-            }
-          ],
-          "sameAs": [
-            "https://www.facebook.com/thayaads",
-            "https://www.instagram.com/thayaads",
-            "https://www.linkedin.com/company/thayaads",
-            "https://x.com/Thayaads"
-          ]
-        }
-      })
-    }
-  ]
-}))
+            "contactPoint": [
+              {
+                "@type": "ContactPoint",
+                "telephone": "+91-9841115673",
+                "contactType": "customer service"
+              },
+              {
+                "@type": "ContactPoint",
+                "telephone": "+91-9444305673",
+                "contactType": "sales"
+              }
+            ],
+            "sameAs": [
+              "https://www.facebook.com/thayaads",
+              "https://www.instagram.com/thayaads",
+              "https://www.linkedin.com/company/thayaads",
+              "https://x.com/Thayaads"
+            ]
+          }
+        })
+      }
+    ]
+  }
+})
 </script>
-
-
