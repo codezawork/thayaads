@@ -17,8 +17,8 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
-  // ✅ IMPORTANT: Static site for Cloudflare Pages
-  ssr: false,
+  // ✅ IMPORTANT: Enable SSR so meta tags appear in HTML
+  ssr: true,
 
   modules: [
     '@nuxtjs/tailwindcss',
@@ -44,11 +44,13 @@ export default defineNuxtConfig({
     }
   },
 
-  // ✅ Static output for Cloudflare Pages
+  // ✅ Cloudflare Pages Static Output (Pre-rendered HTML)
   nitro: {
-    preset: 'static',
+    preset: 'cloudflare-pages',
 
     prerender: {
+      crawlLinks: true, // auto-detect internal links
+
       routes: [
         '/',
         '/AboutUs',
@@ -58,10 +60,12 @@ export default defineNuxtConfig({
         '/Categories',
         ...categoryRoutes
       ],
+
       ignore: [
         '/Clients',
         '/MakingVideo'
       ],
+
       failOnError: false
     }
   },
