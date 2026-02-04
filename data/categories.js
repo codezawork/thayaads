@@ -86,7 +86,7 @@ const categories = {
   },
   albumDocumentaryFilms: {
     name: 'Album & Documentaries',
-    image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/documentry.webp',
     videos: [
       // Album Making Videos
       { id: 'iOi65sOIhaI', title: 'Motor Song Making' },
@@ -101,7 +101,7 @@ const categories = {
   },
   corporateFilms: {
     name: 'Corporate Films',
-    image: 'https://assets.thayaads.com/public/assets/images/categories/financial-service.webp',
+    image: 'https://assets.thayaads.com/public/assets/images/categories/Corporate%20film.webp',
     videos: [
       { id: 'DtOQngTmzYQ', title: 'Sabari Corporate Ad' }
     ]
