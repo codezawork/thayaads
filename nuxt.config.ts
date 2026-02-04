@@ -1,7 +1,7 @@
 import { webcrypto } from 'node:crypto'
 import categories from './data/categories.js'
 
-// ✅ Patch crypto for Cloudflare / Nitro (SSR)
+// ✅ Patch crypto for Cloudflare / Nitro
 if (!globalThis.crypto?.subtle) {
   Object.defineProperty(globalThis, 'crypto', {
     value: webcrypto,
@@ -17,10 +17,11 @@ export default defineNuxtConfig({
 
   devtools: { enabled: true },
 
+  // ✅ IMPORTANT: Static site for Cloudflare Pages
+  ssr: false,
+
   modules: [
     '@nuxtjs/tailwindcss',
-    // ⚠️ nuxt-simple-sitemap supports Nuxt 3.x officially
-    // Works in Nuxt 4 with compatibility mode (can remove if issues)
     'nuxt-simple-sitemap'
   ],
 
@@ -43,11 +44,11 @@ export default defineNuxtConfig({
     }
   },
 
-  // ✅ Cloudflare Pages + Static Prerender Safe Config
+  // ✅ Static output for Cloudflare Pages
   nitro: {
-    preset: 'cloudflare-pages',
+    preset: 'static',
+
     prerender: {
-      // Only prerender public static pages
       routes: [
         '/',
         '/AboutUs',
@@ -57,19 +58,15 @@ export default defineNuxtConfig({
         '/Categories',
         ...categoryRoutes
       ],
-
-      // ❌ Do NOT prerender dynamic / client-only pages
       ignore: [
         '/Clients',
         '/MakingVideo'
       ],
-
-      // Optional safety: build should not fail even if some page errors
       failOnError: false
     }
   },
 
-  // ✅ Sitemap (only public SEO pages)
+  // ✅ Sitemap for SEO
   sitemap: {
     siteUrl: 'https://thayaads.com',
     gzip: true,
