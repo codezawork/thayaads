@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // ✅ IMPORTANT: Enable SSR so meta tags appear in HTML
-  ssr: true,
+  //ssr: true,
 
   modules: [
     '@nuxtjs/tailwindcss',
