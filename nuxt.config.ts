@@ -28,20 +28,28 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
 
 app: {
-    head: {
-      title: 'Thaya Ads (ThayaAds.com) – Creative Advertising Agency',
-      meta: [
-        {
-          name: 'description',
-          content: 'Thaya Ads (thayaads.com) is a creative advertising agency offering branding, video production and digital marketing services.'
-        },
-        { name: 'google-site-verification', content: 'ABC123xyz...' }
-      ],
-      link: [
-        { rel: 'icon', type: 'image/x-icon', href: '/thaya.ico' }
-      ]
-    }
-  },
+  head: {
+    title: 'Thaya Ads (Thayaads.com) – Creative Advertising Agency',
+    meta: [
+      {
+        name: 'description',
+        content: 'Thaya Ads (thayaads.com) is a creative advertising agency offering branding, video production and digital marketing services.'
+      },
+      { name: 'google-site-verification', content: 'ABC123xyz...' },
+
+      // Social + SEO signals
+      { property: 'og:title', content: 'Thaya Ads (Thayaads.com) – Creative Advertising Agency' },
+      { property: 'og:description', content: 'Explore Thaya Ads (Thayaads.com) projects, videos, and creative services.' },
+      { property: 'og:image', content: 'https://thayaads.com/images/og-home.jpg' },
+      { property: 'og:url', content: 'https://thayaads.com/' },
+      { name: 'twitter:card', content: 'summary_large_image' }
+    ],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/thaya.ico' },
+      { rel: 'canonical', href: 'https://thayaads.com/' }
+    ]
+  }
+},
 
   postcss: {
     plugins: {
