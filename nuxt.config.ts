@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // ✅ IMPORTANT: Enable SSR so meta tags appear in HTML
-  ssr: false,
+  ssr: true,
 
   modules: [
     '@nuxtjs/tailwindcss',
@@ -27,13 +27,18 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
-  app: {
+app: {
     head: {
+      title: 'Thaya Ads (ThayaAds.com) – Creative Advertising Agency',
+      meta: [
+        {
+          name: 'description',
+          content: 'Thaya Ads (thayaads.com) is a creative advertising agency offering branding, video production and digital marketing services.'
+        },
+        { name: 'google-site-verification', content: 'ABC123xyz...' }
+      ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/thaya.ico' }
-      ],
-      meta: [
-        { name: 'google-site-verification', content: 'ABC123xyz...' }
       ]
     }
   },
@@ -46,8 +51,8 @@ export default defineNuxtConfig({
 
   // ✅ Cloudflare Pages Static Output (Pre-rendered HTML)
   nitro: {
-    //preset: 'cloudflare-pages',
-      preset: 'static',
+    preset: 'cloudflare-pages',
+      //preset: 'static',
     prerender: {
       crawlLinks: true, // auto-detect internal links
 
