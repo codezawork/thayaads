@@ -18,7 +18,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
 
   // ✅ IMPORTANT: Enable SSR so meta tags appear in HTML
-  ssr: true,
+  ssr: false,
 
   modules: [
     '@nuxtjs/tailwindcss',
@@ -51,8 +51,8 @@ app: {
 
   // ✅ Cloudflare Pages Static Output (Pre-rendered HTML)
   nitro: {
-    preset: 'cloudflare-pages',
-      //preset: 'static',
+    //preset: 'cloudflare-pages',
+      preset: 'static',
     prerender: {
       crawlLinks: true, // auto-detect internal links
 
